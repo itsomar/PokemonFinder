@@ -15,8 +15,17 @@ import {
   NavigatorIOS,
   ListView,
   Dimensions,
-  Alert
+  Alert,
+  Picker
 } from 'react-native';
+
+// const DropDown = require('react-native-dropdown');
+// const {
+//   Select,
+//   Option,
+//   OptionList,
+//   updatePosition
+// } = DropDown;
 
 var reactNative = require('react-native');
 
@@ -28,6 +37,7 @@ var Register = React.createClass({
     return {
       username: "",
       password: "",
+      team: "",
       message: ""
     }
   },
@@ -40,7 +50,8 @@ var Register = React.createClass({
   },
   body: JSON.stringify({
     username: this.state.username,
-    password: this.state.password
+    password: this.state.password,
+    team: this.state.team
     })
   }).then((response) => response.json())
   .then((responseJSON) => {
@@ -76,6 +87,12 @@ var Register = React.createClass({
             placeholder="Enter your password"
             onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
           />
+          <Picker
+            selectedValue={this.state.language}
+            onValueChange={(lang) => this.setState({language: lang})}>
+            <Picker.Item label="Java" value="java" />
+            <Picker.Item label="JavaScript" value="js" />
+          </Picker>
         <TouchableOpacity
           onPress={this.submit} style={[styles.button, styles.buttonGreen]}>
           <Text style={styles.buttonLabel}>Register</Text>
@@ -98,6 +115,10 @@ render() {
 }
 
 })
+
+
+
+
 
 
 var Pokegame = React.createClass({
@@ -135,6 +156,17 @@ var Pokegame = React.createClass({
     })
   },
 
+  register() {
+    this.props.navigator.push({
+      component: Register,
+      title: "Register"
+    })
+  },
+
+  random() {
+    console.log("ON PRESS WORKS")
+  },
+
   render() {
     return <View style={styles.container}>
       <Text style={styles.textBig}>PokeMe!</Text>
@@ -164,6 +196,20 @@ var Pokegame = React.createClass({
     </View>
   }
 })
+
+var Start = React.createClass({
+  render() {
+    return (
+      <NavigatorIOS
+        initialRoute={{
+          component: Pokegame,
+          title: "Pokegame"
+        }}
+        style={{flex: 1}}
+      />
+    );
+  }
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -223,4 +269,4 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('Pokegame', () => Pokegame);
+AppRegistry.registerComponent('Pokegame', () => Start);
