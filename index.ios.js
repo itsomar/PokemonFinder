@@ -32,34 +32,34 @@ var Register = React.createClass({
     }
   },
 
-  // submit() {
-  //   fetch('https://hohoho-backend.herokuapp.com/register', {
-  // method: 'POST',
-  // headers: {
-  //   "Content-Type": "application/json"
-  // },
-  // body: JSON.stringify({
-  //   username: this.state.username,
-  //   password: this.state.password
-  //   })
-  // }).then((response) => response.json())
-  // .then((responseJSON) => {
-  //   console.log("OBKECT", responseJSON)
-  //   if(responseJSON.success) {
-  //     this.props.navigator.pop()
-  //   }
-  //   else {
-  //     this.setState({
-  //       message: responseJSON.error
-  //     })
-  //
-  //   }
-  //
-  // }).catch((error) => {
-  //   console.log(error)
-  // })
-  //
-  // },
+  submit() {
+    fetch('http://localhost:3000/register', {
+  method: 'POST',
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    username: this.state.username,
+    password: this.state.password
+    })
+  }).then((response) => response.json())
+  .then((responseJSON) => {
+    console.log("OBKECT", responseJSON)
+    if(responseJSON.success) {
+      this.props.navigator.pop()
+    }
+    else {
+      this.setState({
+        message: responseJSON.error
+      })
+
+    }
+
+  }).catch((error) => {
+    console.log(error)
+  })
+
+  },
 
   render() {
     return (
@@ -89,6 +89,17 @@ var Register = React.createClass({
   }
 });
 
+var Home = React.createClass({
+
+render() {
+  <View style={styles.container}>
+    <Text style={styles.textBig}>PokeMe! Home</Text>
+    </View>
+}
+
+})
+
+
 var Pokegame = React.createClass({
   getInitialState() {
     return {
@@ -97,41 +108,32 @@ var Pokegame = React.createClass({
       message: ""
     }
   },
-  //
-  // submit() {
-  //   fetch('https://hohoho-backend.herokuapp.com/login', {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       username: this.state.username,
-  //       password: this.state.password
-  //     })
-  //   }).then((response) => (response.json()))
-  //   .then((response) => {
-  //     if(response.success) {
-  //       this.props.navigator.push({
-  //         component: Users,
-  //         title: "Users",
-  //         rightButtonTitle: 'Messages',
-  //         onRightButtonPress: this.messages
-  //       })
-  //     }
-  //     else {
-  //       this.setState({
-  //         message: response.error
-  //       })
-  //     }
-  //   })
-  // },
-  //
-  // messages() {
-  //   this.props.navigator.push({
-  //     component: Messages,
-  //     title: "Messages"
-  //   })
-  // },
+
+  submit() {
+    fetch('http://localhost:3000/login', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      })
+    }).then((response) => (response.json()))
+    .then((response) => {
+      if(response.success) {
+        this.props.navigator.push({
+          component: Home,
+          title: "Home"
+        })
+      }
+      else {
+        this.setState({
+          message: response.error
+        })
+      }
+    })
+  },
 
   render() {
     return <View style={styles.container}>
