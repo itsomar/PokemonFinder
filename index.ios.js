@@ -44,6 +44,7 @@ var Register = React.createClass({
 
   submit() {
     fetch('http://localhost:3000/register', {
+
   method: 'POST',
   headers: {
     "Content-Type": "application/json"
@@ -64,12 +65,11 @@ var Register = React.createClass({
         message: responseJSON.error
       })
 
-    }
+      }
 
-  }).catch((error) => {
-    console.log(error)
-  })
-
+    }).catch((error) => {
+      console.log(error)
+    });
   },
 
   render() {
@@ -107,13 +107,13 @@ var Register = React.createClass({
 });
 
 var Home = React.createClass({
-
-render() {
-  <View style={styles.container}>
-    <Text style={styles.textBig}>PokeMe! Home</Text>
+  render() {
+    return (
+    <View style={styles.container}>
+      <Text style={styles.textBig}>PokeMe! Home</Text>
     </View>
-}
-
+    )
+  }
 })
 
 
@@ -128,6 +128,13 @@ var Pokegame = React.createClass({
       password: "",
       message: ""
     }
+  },
+
+  register() {
+    this.props.navigator.push({
+      component: Register,
+      title: 'Register'
+    });
   },
 
   submit() {
