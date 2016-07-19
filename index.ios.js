@@ -45,29 +45,26 @@ var Register = React.createClass({
 
   submit() {
     fetch('http://localhost:3000/register', {
-
-  method: 'POST',
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    username: this.state.username,
-    password: this.state.password,
-    team: this.state.team
-    })
-  }).then((response) => response.json())
-  .then((responseJSON) => {
-    console.log("OBKECT", responseJSON)
-    if(responseJSON.success) {
-      this.props.navigator.pop()
-    }
-    else {
-      this.setState({
-        message: responseJSON.error
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password,
+        team: this.state.team
       })
-
+    })
+    .then((response) => response.json())
+    .then((responseJSON) => {
+      console.log("OBKECT", responseJSON)
+      if(responseJSON.success) {
+        this.props.navigator.pop()
+      } else {
+        this.setState({
+          message: responseJSON.error
+        });
       }
-
     }).catch((error) => {
       console.log(error)
     });
