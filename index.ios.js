@@ -85,12 +85,14 @@ var Register = React.createClass({
             placeholder="Enter your password"
             onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
           />
+          <Text style={styles.textMed}>Pick your team</Text>
           <Picker
-            selectedValue={this.state.language}
-            onValueChange={(lang) => this.setState({language: lang})}>
-              <Text style={styles.textMed}>Pick your team</Text>
-            <Picker.Item label="Mistic" value="Mistic" />
+            selectedValue={this.state.team}
+            onValueChange={(text) => this.setState({team: text})}>
+            <Picker.Item label="No team yet" value="Noteam" />
+            <Picker.Item label="Mystic" value="Mystic" />
             <Picker.Item label="Instinct" value="Instinct" />
+            <Picker.Item label="Valor" value="Valor" />
           </Picker>
         <TouchableOpacity
           onPress={this.submit} style={[styles.button, styles.buttonGreen]}>
