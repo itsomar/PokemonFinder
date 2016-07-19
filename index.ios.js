@@ -118,6 +118,14 @@ var Home = React.createClass({
   }
 })
 
+var Map = React.createClass({
+  render() {
+    return (
+      <View><Text>hi</Text></View>
+    )
+  }
+})
+
 var Feed = React.createClass({
   getInitialState() {
     return {
@@ -171,17 +179,6 @@ var Feed = React.createClass({
     )
   }
 })
-
-var Map = React.createClass({
-  render() {
-    return (
-    <View>
-      <Text>Placeholder for the map</Text>
-    </View>
-    )
-  }
-})
-
 
 
 
@@ -356,4 +353,4 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('Pokegame', () => Start);
+AppRegistry.registerComponent('Pokegame', () => Home);
