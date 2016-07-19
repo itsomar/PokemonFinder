@@ -88,8 +88,9 @@ var Register = React.createClass({
           <Picker
             selectedValue={this.state.language}
             onValueChange={(lang) => this.setState({language: lang})}>
-            <Picker.Item label="Java" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
+              <Text style={styles.textMed}>Pick your team</Text>
+            <Picker.Item label="Mistic" value="Mistic" />
+            <Picker.Item label="Instinct" value="Instinct" />
           </Picker>
         <TouchableOpacity
           onPress={this.submit} style={[styles.button, styles.buttonGreen]}>
