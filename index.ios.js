@@ -206,35 +206,14 @@ var Pokegame = React.createClass({
 })
 
 var Start = React.createClass({
-  getInitialState() {
-    return {
-      color: '#ffcccc',
-      textColor: 'white'
-    }
-    // return null;
-  },
-  componentDidMount() {
-    this.setState({color: 'red', textColor: 'white'})
-  },
   render() {
     return (
-      <View style={{flex: 1}}>
         <NavigatorIOS
           initialRoute={{
             component: Pokegame,
             title: "Pokegame"
           }}
-          style={{flex: 1}}
-          titleTextColor={this.state.textColor}
-          tintColor={this.state.textColor}
-          barTintColor={this.state.color}
         />
-        <StatusBar
-          barStyle={this.state.textColor === 'white' ? 'light-content' : null}
-        />
-
-     </View>
-
     );
 
   }
