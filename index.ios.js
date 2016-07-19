@@ -173,26 +173,31 @@ var Pokegame = React.createClass({
   },
 
   render() {
-    return <View style={styles.container}>
-      <Text style={styles.textBig}>PokeMe!</Text>
-      <Text style={styles.textMed}>Login</Text>
+    return <View style={{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#F5FCFF',
+    }}>
+      <Text style={{fontSize: 40, fontWeight: 'bold', color: 'yellow', textShadowOffset: {width: 2, height: 2}, textShadowRadius: 1, textShadowColor: 'blue', marginBottom: 5}}>PokeFinder!</Text>
+      <Text>Please sign in</Text>
       <View style={{width:width*.7}}>
         <TextInput
-          style={{height: 40, textAlign: "center", borderColor: 'black', borderWidth: 1}}
-          placeholder="Enter your username"
+          style={{height: 30, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+          placeholder="Username"
           onChangeText={(username) => this.setState({username})} value={this.state.username}
         />
         <TextInput
-          style={{height: 40, textAlign: "center", borderColor: 'black', borderWidth: 1}}
-          placeholder="Enter your password"
+          style={{height: 30, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+          placeholder="Password"
           onChangeText={(password) => this.setState({password})} value={this.state.password} secureTextEntry={true}
         />
         <TouchableOpacity
-          onPress={this.submit} style={[styles.button, styles.buttonGreen]}>
+          onPress={this.submit} style={[styles.button, styles.buttonRed]}>
           <Text style={styles.buttonLabel}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={this.register}>
-            <Text style={styles.buttonLabel}>Register</Text>
+            <Text style={styles.buttonLabel2}>Register</Text>
           </TouchableOpacity>
         <Text>
           {this.state.message}
@@ -209,12 +214,11 @@ var Start = React.createClass({
           initialRoute={{
             component: Pokegame,
             title: "Pokegame"
-          }}
+          }} style={{flex: 1}}
         />
-    );
-
+    )
   }
-});
+})
 
 const styles = StyleSheet.create({
   container: {
@@ -251,9 +255,9 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'stretch',
-    paddingTop: 10,
-    paddingBottom: 10,
-    marginTop: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
+    marginTop: 5,
     marginLeft: 5,
     marginRight: 5,
     borderRadius: 5
@@ -262,7 +266,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF585B',
   },
   buttonBlue: {
-    backgroundColor: '#0074D9',
+    backgroundColor: 'white'
   },
   buttonGreen: {
     backgroundColor: '#2ECC40'
@@ -271,6 +275,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     color: 'white'
+  },
+  buttonLabel2: {
+    textAlign: 'center',
+    fontSize: 16
   }
 });
 
