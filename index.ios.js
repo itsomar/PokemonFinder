@@ -17,16 +17,9 @@ import {
   Dimensions,
   Alert,
   Picker,
-  StatusBar
+  StatusBar,
+  AsyncStorage
 } from 'react-native';
-
-// const DropDown = require('react-native-dropdown');
-// const {
-//   Select,
-//   Option,
-//   OptionList,
-//   updatePosition
-// } = DropDown;
 
 var reactNative = require('react-native');
 
@@ -183,11 +176,6 @@ var Map = React.createClass({
 })
 
 
-
-
-
-
-
 var Pokegame = React.createClass({
   getInitialState() {
     return {
@@ -196,6 +184,28 @@ var Pokegame = React.createClass({
       message: ""
     }
   },
+
+  componentDidMount() {
+    AsyncStorage.getItem('user')
+  .then(result => {
+    var parsedResult = JSON.parse(result);
+    var username = parsedResult.username;
+    var password = parsedResult.password;
+    if (username && password) {
+      this.setState({
+        username: username,
+        password: password
+      })
+      return this.submit()
+    }
+    // Don't really need an else clause, we don't do anything in this case.
+  })
+  .catch(err => {
+    this.setState({
+      message: JSON.stringify(err)
+    })
+  })
+},
 
   register() {
     this.props.navigator.push({
@@ -217,6 +227,10 @@ var Pokegame = React.createClass({
     }).then((response) => (response.json()))
     .then((response) => {
       if(response.success) {
+        AsyncStorage.setItem('user', JSON.stringify({
+          username: this.state.username,
+          password: this.state.password
+      }));
         this.props.navigator.push({
           component: Home,
           title: "Home"
@@ -242,13 +256,14 @@ var Pokegame = React.createClass({
   },
 
   render() {
+    console.log("state upon render", this.state);
     return <View style={{
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
     }}>
-    
+
       <Text style={{fontSize: 40, fontWeight: 'bold', color: 'yellow', textShadowOffset: {width: 2, height: 2}, textShadowRadius: 1, textShadowColor: 'blue', marginBottom: 5}}>PokeFinder!</Text>
       <Text>Please sign in</Text>
       <View style={{width:width*.7}}>
