@@ -109,11 +109,77 @@ var Home = React.createClass({
   render() {
     return (
     <View style={styles.container}>
-      <Text style={styles.textBig}>PokeMe! Home</Text>
+      <Map />
+      <Feed />
     </View>
     )
   }
 })
+
+var Feed = React.createClass({
+  getInitialState() {
+    return {
+      pokemon: ''
+    }
+  },
+  post() {
+    fetch('https://localhost:3000/post', {
+      headers: {
+         "Content-Type": "application/json"
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        pokemon: this.state.pokemon
+      })
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if(responseJson.success) {
+
+      } else {
+        console.log(responseJson.error);
+      }
+    })
+    .catch((err) => {
+    /* do something if there was an error with fetching */
+      console.log(err);
+    });
+  },
+  render() {
+    return (
+    <View>
+      <Text>Placeholder</Text>
+      <Text>Placeholder</Text>
+      <Text>Placeholder</Text>
+      <Text>Placeholder</Text>
+      <Text>Placeholder</Text>
+      <Text>Placeholder</Text>
+      <Text>Placeholder</Text>
+      <Text>Placeholder</Text>
+      <Text>Placeholder</Text>
+      <View style={{width:width*.7}}>
+        <TextInput
+          style={{height: 30, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+          placeholder="Enter Pokemon"
+          onChangeText={(pokemon) => this.setState({pokemon})} value={this.state.pokemon}
+        />
+        <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
+      </View>
+    </View>
+    )
+  }
+})
+
+var Map = React.createClass({
+  render() {
+    return (
+    <View>
+      <Text>Placeholder for the map</Text>
+    </View>
+    )
+  }
+})
+
 
 
 
@@ -180,6 +246,7 @@ var Pokegame = React.createClass({
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
     }}>
+    
       <Text style={{fontSize: 40, fontWeight: 'bold', color: 'yellow', textShadowOffset: {width: 2, height: 2}, textShadowRadius: 1, textShadowColor: 'blue', marginBottom: 5}}>PokeFinder!</Text>
       <Text>Please sign in</Text>
       <View style={{width:width*.7}}>
@@ -220,6 +287,7 @@ var Start = React.createClass({
     )
   }
 })
+
 
 const styles = StyleSheet.create({
   container: {
@@ -271,6 +339,9 @@ const styles = StyleSheet.create({
   },
   buttonGreen: {
     backgroundColor: '#2ECC40'
+  },
+  buttonPost: {
+    backgroundColor: 'orange'
   },
   buttonLabel: {
     textAlign: 'center',
