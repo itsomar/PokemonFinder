@@ -135,12 +135,12 @@ var Feed = React.createClass({
         pokemon: this.state.pokemon
       })
     })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      if(responseJson.success) {
-
+    .then((post) => post.json())
+    .then((postJson) => {
+      if(postJson) {
+        console.log(postJson)
       } else {
-        console.log(responseJson.error);
+        console.log('error');
       }
     })
     .catch((err) => {
@@ -370,4 +370,4 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('Pokegame', () => Home);
+AppRegistry.registerComponent('Pokegame', () => Start);
