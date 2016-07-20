@@ -28,6 +28,8 @@ var MapView = require('react-native-maps')
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
 
+// REGISTER
+
 var Register = React.createClass({
   getInitialState() {
     return {
@@ -102,6 +104,8 @@ var Register = React.createClass({
     );
   }
 });
+
+// HOME/MAP/FEED
 
 var Home = React.createClass({
   render() {
@@ -186,16 +190,97 @@ var Map = React.createClass({
   }
 })
 
+
           // image={require('./001.png')}
+
+
+// class Feed extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.socket = io('ws://localhost:3000', {jsonp: false, transports: ['websocket']});
+//     // this.socket = io;
+//     // this.socket = new WebSocket('ws://localhost:3000');
+//     // this.socket.connect();
+//     this.state = {
+//       pokemon: '',
+//       postList: []
+//     }
+//   }
+// // var Feed = React.createClass({
+//   // initialState: {
+//   //   pokemon: '',
+//   //   postList: []
+//   // }
+//   componentDidMount() {
+//     console.log("[1] Feed mouting.")
+//     console.log("[2] Socket connected ??: ", this.socket.connected);
+//     console.log("[3] Socket: ", this.socket);
+//     // this.socket.error((err) => {
+//     //   console.log("[Socket error] ", err);
+//     // })
+//     this.socket.on('update', (data) => {
+//       console.log("Got something from server: ", data);
+//       // trigger list reload
+//       // add data yo your list view
+//       this.setState({
+//         postList: []
+//       })
+//     })
+//   }
+
+
+var FeedView = React.createClass({
+  render() {
+    return (<ListView
+        enableEmptySections={true}
+        dataSource={this.props.feed}
+        renderRow={(rowData) => {
+          return (<TouchableOpacity
+            style={{
+              backgroundColor: 'white',
+              borderColor: 'black',
+              borderWidth: 1,
+              borderRadius: 3,
+              padding: 2,
+              paddingLeft: 10,
+              paddingRight: 10
+            }}>
+            <Text>{rowData.pokemon + ' was spotted ' + Math.floor((Date.now() - new Date(rowData.time).getTime()) / 60000) + ' minutes ago'}</Text>
+          </TouchableOpacity>)
+        }
+    } />)
+  }
+})
 
 var Feed = React.createClass({
   getInitialState() {
-    return {
-      pokemon: ''
-    }
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.refresh()
+    return({
+      pokemon: '',
+      feed: ds.cloneWithRows([])
+    })
+  },
+  refresh() {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    fetch('http://localhost:3000/feed')
+    .then((feed) => feed.json())
+    .then((feedJson) => {
+      console.log(feedJson);
+      if (feedJson.success) {
+        var reversefeed = feedJson.feed.reverse();
+        this.setState({
+          feed: ds.cloneWithRows(reversefeed)
+        })
+      }
+    }).catch((err) => console.log(err))
+  },
+  componentDidMount() {
+    setInterval(this.refresh, 6*10*1000);
   },
   post() {
-    fetch('https://localhost:3000/post', {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    fetch('http://localhost:3000/post', {
       headers: {
          "Content-Type": "application/json"
       },
@@ -204,12 +289,20 @@ var Feed = React.createClass({
         pokemon: this.state.pokemon
       })
     })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      if(responseJson.success) {
-
+    .then((post) => post.json())
+    .then((postJson) => {
+      if(postJson) {
+        // var reversefeed = feed.reverse();
+        var feed = [].concat(postJson);
+        feed.concat(this.state.feed);
+        // var update = reversefeed.concat(postJson);
+        this.setState({
+          feed: ds.cloneWithRows(feed),
+          pokemon: ''
+        });
+        this.refresh();
       } else {
-        console.log(responseJson.error);
+        console.log('error');
       }
     })
     .catch((err) => {
@@ -218,31 +311,24 @@ var Feed = React.createClass({
     });
   },
   render() {
+    console.log("Feed state upon render", this.state);
     return (
-    <View>
-      <Text>Placeholder</Text>
-      <Text>Placeholder</Text>
-      <Text>Placeholder</Text>
-      <Text>Placeholder</Text>
-      <Text>Placeholder</Text>
-      <Text>Placeholder</Text>
-      <Text>Placeholder</Text>
-      <Text>Placeholder</Text>
-      <Text>Placeholder</Text>
-      <View style={{width:width*.7}}>
-        <TextInput
-          style={{height: 30, textAlign: "center", borderColor: 'black', borderWidth: 1}}
-          placeholder="Enter Pokemon"
-          onChangeText={(pokemon) => this.setState({pokemon})} value={this.state.pokemon}
-        />
-        <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
+      <View>
+        <FeedView feed={this.state.feed} />
+        <View style={{width:width*.9}}>
+          <TextInput
+            style={{height: 25, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+            placeholder="Enter Pokemon"
+            onChangeText={(pokemon) => this.setState({pokemon})} value={this.state.pokemon}
+          />
+          <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
+        </View>
       </View>
-    </View>
     )
   }
 })
 
-
+// LOGIN OR REGISTER
 
 var Pokegame = React.createClass({
   getInitialState() {
