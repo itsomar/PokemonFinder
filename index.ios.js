@@ -229,29 +229,18 @@ var Register = React.createClass({
 
 // HOME/MAP/FEED
 var Home = React.createClass({
-  render() {
-    return (
-      <View style={{flex: 1}}>
-        <Map />
-        <Feed />
-      </View>
-
-    )
-  }
-})
-
-
-var Map = React.createClass({
   getInitialState() {
     return {
-      latitude: "unknown",
-      longitude: "unknown",
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-      markers: [{
-        latitude: 37.785834,
-        longitude: -122.406417
-      }]
+      location: {
+        latitude: "unknown",
+        longitude: "unknown",
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+        markers: [{
+          latitude: 37.785834,
+          longitude: -122.406417
+        }]
+      }
     }
   },
 
@@ -282,23 +271,34 @@ var Map = React.createClass({
 
   render() {
     return (
+      <View style={{flex: 1}}>
+        <Map location={this.state.location}/>
+        <Feed location={this.state.location}/>
+      </View>
+
+    )
+  }
+})
+
+
+var Map = React.createClass({
+  render() {
+    return (
       <MapView style={{
         flex: 1}}
         region={{
-          latitude: this.state.latitude,
-          longitude: this.state.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          latitude: this.props.location.latitude,
+          longitude: this.props.location.longitude,
+          latitudeDelta: this.props.location.latitudeDelta,
+          longitudeDelta: this.props.location.longitudeDelta
         }}
         showsUserLocation={true}
       >
-      {this.state.markers.map(marker => (
+      {this.props.location.markers.map(marker => (
         <MapView.Marker
           coordinate={{
             latitude: marker.latitude,
-            longitude: marker.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
+            longitude: marker.longitude
           }}
           title={marker.title}
           description={marker.description}
@@ -338,39 +338,11 @@ var Feed = React.createClass({
     return({
       pokemon: '',
       feed: ds.cloneWithRows([]),
-      latitude: "unknown",
-      longitude: "unknown",
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-      markers: [{
-        latitude: 37.785834,
-        longitude: -122.406417
-      }]
     })
   },
 
   componentDidMount() {
     setInterval(this.refresh, 6*10*1000);
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          longitude: position.coords.longitude,
-          latitude: position.coords.latitude
-        });
-      },
-      (error) => alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000}
-    );
-    this.watchId = navigator.geolocation.watchPosition((position) => {
-      this.setState({
-        longitude: position.coords.longitude,
-        latitude: position.coords.latitude
-      })
-    });
-  },
-
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchId);
   },
 
   refresh() {
@@ -397,8 +369,8 @@ var Feed = React.createClass({
       method: 'POST',
       body: JSON.stringify({
         pokemon: this.state.pokemon,
-        longitude: this.state.longitude,
-        latitude: this.state.latitude
+        longitude: this.props.location.longitude,
+        latitude: this.props.location.latitude
       })
     })
     .then((post) => post.json())
@@ -422,7 +394,7 @@ var Feed = React.createClass({
       console.log(err);
     });
   },
-  
+
   render() {
     console.log("Feed state upon render", this.state);
     return (
