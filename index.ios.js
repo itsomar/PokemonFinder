@@ -18,10 +18,12 @@ import {
   Alert,
   Picker,
   StatusBar,
-  AsyncStorage
+  AsyncStorage,
+  Image
 } from 'react-native';
 
 var reactNative = require('react-native');
+var MapView = require('react-native-maps')
 
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
@@ -37,6 +39,7 @@ var Register = React.createClass({
   },
 
   submit() {
+    console.log("ENTERED FUNCTION");
     fetch('http://localhost:3000/register', {
       method: 'POST',
       headers: {
@@ -103,21 +106,87 @@ var Register = React.createClass({
 var Home = React.createClass({
   render() {
     return (
-    <View style={styles.container}>
-      <Map />
-      <Feed />
-    </View>
+      <View style={{flex: 1}}>
+        <Map />
+        <Feed />
+      </View>
+
     )
   }
 })
 
+
+
 var Map = React.createClass({
+  getInitialState() {
+    return {
+      latitude: "unknown",
+      longitude: "unknown",
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+      markers: [{
+        latitude: 37.785834,
+        longitude: -122.406417
+      }]
+    }
+  },
+
+  componentDidMount: function() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log("POSITION", position);
+        this.setState({
+          longitude: position.coords.longitude,
+          latitude: position.coords.latitude
+        });
+      },
+      (error) => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000}
+    );
+    navigator.geolocation.watchPosition((position) => {
+      this.setState({
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude
+      })
+    });
+  },
+
   render() {
     return (
-      <View><Text>hi</Text></View>
+      <MapView style={{
+        flex: 1}}
+        region={{
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421
+        }}
+        onRegionChange={this.onRegionChange}
+        showsUserLocation={true}
+        initialRegion={{
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      >
+      {this.state.markers.map(marker => (
+        <MapView.Marker
+          coordinate={{
+            latitude: marker.latitude,
+            longitude: marker.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
+          }}
+          title={marker.title}
+          description={marker.description}
+        />
+      ))}</MapView>
     )
   }
 })
+
+          // image={require('./001.png')}
 
 var Feed = React.createClass({
   getInitialState() {
@@ -370,4 +439,4 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('Pokegame', () => Home);
+AppRegistry.registerComponent('Pokegame', () => Start);
