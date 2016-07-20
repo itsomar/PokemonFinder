@@ -235,23 +235,26 @@ var Home = React.createClass({
         latitude: "unknown",
         longitude: "unknown",
         latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-        markers: [{
-          latitude: 37.785834,
-          longitude: -122.406417
-        }]
-      }
+        longitudeDelta: 0.0421
+      },
+      markers: [{
+        latitude: 37.785834,
+        longitude: -122.406417
+      }]
     }
   },
 
   watchID: (null: ?number),
 
   componentDidMount: function() {
+    console.log("[MOUNTING]")
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
-          longitude: position.coords.longitude,
-          latitude: position.coords.latitude
+          location: {
+            longitude: position.coords.longitude,
+            latitude: position.coords.latitude
+          }
         });
       },
       (error) => alert(error.message),
@@ -259,8 +262,10 @@ var Home = React.createClass({
     );
     this.watchId = navigator.geolocation.watchPosition((position) => {
       this.setState({
-        longitude: position.coords.longitude,
-        latitude: position.coords.latitude
+        location: {
+          longitude: position.coords.longitude,
+          latitude: position.coords.latitude
+        }
       })
     });
   },
@@ -272,8 +277,8 @@ var Home = React.createClass({
   render() {
     return (
       <View style={{flex: 1}}>
-        <Map location={this.state.location}/>
-        <Feed location={this.state.location}/>
+        <Map location={this.state.location} markers={this.state.markers}/>
+        <Feed location={this.state.location} markers={this.state.markers}/>
       </View>
 
     )
@@ -294,7 +299,7 @@ var Map = React.createClass({
         }}
         showsUserLocation={true}
       >
-      {this.props.location.markers.map(marker => (
+      {this.props.markers.map(marker => (
         <MapView.Marker
           coordinate={{
             latitude: marker.latitude,
