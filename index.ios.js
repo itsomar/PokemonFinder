@@ -308,45 +308,6 @@ var Map = React.createClass({
   }
 })
 
-
-          // image={require('./001.png')}
-
-
-// class Feed extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.socket = io('ws://localhost:3000', {jsonp: false, transports: ['websocket']});
-//     // this.socket = io;
-//     // this.socket = new WebSocket('ws://localhost:3000');
-//     // this.socket.connect();
-//     this.state = {
-//       pokemon: '',
-//       postList: []
-//     }
-//   }
-// // var Feed = React.createClass({
-//   // initialState: {
-//   //   pokemon: '',
-//   //   postList: []
-//   // }
-//   componentDidMount() {
-//     console.log("[1] Feed mouting.")
-//     console.log("[2] Socket connected ??: ", this.socket.connected);
-//     console.log("[3] Socket: ", this.socket);
-//     // this.socket.error((err) => {
-//     //   console.log("[Socket error] ", err);
-//     // })
-//     this.socket.on('update', (data) => {
-//       console.log("Got something from server: ", data);
-//       // trigger list reload
-//       // add data yo your list view
-//       this.setState({
-//         postList: []
-//       })
-//     })
-//   }
-
-
 var FeedView = React.createClass({
   render() {
     return (<ListView
@@ -376,9 +337,42 @@ var Feed = React.createClass({
     this.refresh()
     return({
       pokemon: '',
-      feed: ds.cloneWithRows([])
+      feed: ds.cloneWithRows([]),
+      latitude: "unknown",
+      longitude: "unknown",
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+      markers: [{
+        latitude: 37.785834,
+        longitude: -122.406417
+      }]
     })
   },
+
+  componentDidMount() {
+    setInterval(this.refresh, 6*10*1000);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          longitude: position.coords.longitude,
+          latitude: position.coords.latitude
+        });
+      },
+      (error) => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000}
+    );
+    this.watchId = navigator.geolocation.watchPosition((position) => {
+      this.setState({
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude
+      })
+    });
+  },
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId);
+  },
+
   refresh() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     fetch('http://localhost:3000/feed')
@@ -393,9 +387,7 @@ var Feed = React.createClass({
       }
     }).catch((err) => console.log(err))
   },
-  componentDidMount() {
-    setInterval(this.refresh, 6*10*1000);
-  },
+
   post() {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     fetch('http://localhost:3000/post', {
@@ -404,7 +396,9 @@ var Feed = React.createClass({
       },
       method: 'POST',
       body: JSON.stringify({
-        pokemon: this.state.pokemon
+        pokemon: this.state.pokemon,
+        longitude: this.state.longitude,
+        latitude: this.state.latitude
       })
     })
     .then((post) => post.json())
@@ -428,12 +422,13 @@ var Feed = React.createClass({
       console.log(err);
     });
   },
+  
   render() {
     console.log("Feed state upon render", this.state);
     return (
-      <View>
+      <View style={{flex:1}}>
         <FeedView feed={this.state.feed} />
-        <View style={{width:width*.9}}>
+        <View style={{width:width}}>
           <TextInput
             style={{height: 25, textAlign: "center", borderColor: 'black', borderWidth: 1}}
             placeholder="Enter Pokemon"
