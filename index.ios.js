@@ -289,8 +289,7 @@ var Home = React.createClass({
 var Map = React.createClass({
   render() {
     return (
-      <MapView style={{
-        flex: 1}}
+      <MapView style={{flex: 1}}
         region={{
           latitude: this.props.location.latitude,
           longitude: this.props.location.longitude,
@@ -313,29 +312,29 @@ var Map = React.createClass({
   }
 })
 
-var FeedView = React.createClass({
-  render() {
-    return (<ListView
-        automaticallyAdjustContentInsets={false}
-        enableEmptySections={true}
-        dataSource={this.props.feed}
-        renderRow={(rowData) => {
-          return (<TouchableOpacity
-            style={{
-              backgroundColor: 'white',
-              borderColor: 'black',
-              borderWidth: 1,
-              borderRadius: 3,
-              padding: 2,
-              paddingLeft: 10,
-              paddingRight: 10
-            }}>
-            <Text>{rowData.pokemon + ' was spotted ' + Math.floor((Date.now() - new Date(rowData.time).getTime()) / 60000) + ' minutes ago'}</Text>
-          </TouchableOpacity>)
-        }
-    } />)
-  }
-})
+// var FeedView = React.createClass({
+//   render() {
+//     return (<ListView
+//         automaticallyAdjustContentInsets={false}
+//         enableEmptySections={true}
+//         dataSource={this.props.feed}
+//         renderRow={(rowData) => {
+//           return (<TouchableOpacity
+//             style={{
+//               backgroundColor: 'white',
+//               borderColor: 'black',
+//               borderWidth: 1,
+//               borderRadius: 3,
+//               padding: 2,
+//               paddingLeft: 10,
+//               paddingRight: 10
+//             }}>
+//             <Text>{rowData.pokemon + ' was spotted ' + Math.floor((Date.now() - new Date(rowData.time).getTime()) / 60000) + ' minute(s) ago'}</Text>
+//           </TouchableOpacity>)
+//         }
+//     } />)
+//   }
+// })
 
 var Feed = React.createClass({
   getInitialState() {
@@ -405,7 +404,26 @@ var Feed = React.createClass({
     console.log("Feed state upon render", this.state);
     return (
       <View style={{flex:1}}>
-        <FeedView feed={this.state.feed} />
+        <ListView
+        automaticallyAdjustContentInsets={false}
+        enableEmptySections={true}
+        dataSource={this.state.feed}
+        renderRow={(rowData) => {
+          return (
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'white',
+              borderColor: 'black',
+              borderWidth: 1,
+              borderRadius: 3,
+              padding: 2,
+              paddingLeft: 10,
+              paddingRight: 10
+            }}>
+            <Text>{rowData.pokemon + ' was spotted ' + Math.floor((Date.now() - new Date(rowData.time).getTime()) / 60000) + ' minute(s) ago'}</Text>
+          </TouchableOpacity>)
+          }
+        } />
         <View style={{width:width}}>
           <TextInput
             style={{height: 25, textAlign: "center", borderColor: 'black', borderWidth: 1}}
