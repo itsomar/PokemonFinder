@@ -28,7 +28,131 @@ var MapView = require('react-native-maps')
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
 
-// REGISTER
+
+//MAKES NAVIGATOR WORK
+var Start = React.createClass({
+  render() {
+    return (
+        <NavigatorIOS
+          initialRoute={{
+            component: Pokegame,
+            title: "Pokegame"
+          }} style={{flex: 1}}
+        />
+    )
+  }
+})
+
+//LOGIN and REGISTER BUTTON
+var Pokegame = React.createClass({
+  getInitialState() {
+    return {
+      username: "",
+      password: "",
+      message: ""
+    }
+  },
+
+  componentDidMount() {
+    AsyncStorage.getItem('user')
+      .then(result => {
+      var parsedResult = JSON.parse(result);
+      var username = parsedResult.username;
+      var password = parsedResult.password;
+      if (username && password) {
+        this.setState({
+          username: username,
+          password: password
+        })
+        return this.submit()
+      }
+      // Don't really need an else clause, we don't do anything in this case.
+    })
+    .catch(err => {
+      this.setState({
+        message: JSON.stringify(err)
+      })
+    })
+  },
+
+  submit() {
+    fetch('http://localhost:3000/login', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      })
+    }).then((response) => (response.json()))
+    .then((response) => {
+      if(response.success) {
+        AsyncStorage.setItem('user', JSON.stringify({
+          username: this.state.username,
+          password: this.state.password
+      }));
+        this.props.navigator.push({
+          component: Home,
+          title: "Home"
+        })
+      }
+      else {
+        this.setState({
+          message: response.error
+        })
+      }
+    })
+  },
+//LOGOUT
+
+  register() {
+    this.props.navigator.push({
+      component: Register,
+      title: "Register"
+    })
+  },
+
+  random() {
+    console.log("ON PRESS WORKS")
+  },
+
+  render() {
+    console.log("state upon render", this.state);
+    return <View style={{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#F5FCFF',
+    }}>
+
+      <Text style={{fontSize: 40, fontWeight: 'bold', color: 'yellow', textShadowOffset: {width: 2, height: 2}, textShadowRadius: 1, textShadowColor: 'blue', marginBottom: 5}}>PokeFinder!</Text>
+      <Text>Please sign in</Text>
+      <View style={{width:width*.7}}>
+        <TextInput
+          style={{height: 30, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+          placeholder="Username"
+          onChangeText={(username) => this.setState({username})} value={this.state.username}
+        />
+        <TextInput
+          style={{height: 30, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+          placeholder="Password"
+          onChangeText={(password) => this.setState({password})} value={this.state.password} secureTextEntry={true}
+        />
+        <TouchableOpacity
+          onPress={this.submit} style={[styles.button, styles.buttonRed]}>
+          <Text style={styles.buttonLabel}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={this.register}>
+            <Text style={styles.buttonLabel2}>Register</Text>
+          </TouchableOpacity>
+        <Text>
+          {this.state.message}
+        </Text>
+      </View>
+    </View>
+  }
+})
 
 var Register = React.createClass({
   getInitialState() {
@@ -41,7 +165,6 @@ var Register = React.createClass({
   },
 
   submit() {
-    console.log("ENTERED FUNCTION");
     fetch('http://localhost:3000/register', {
       method: 'POST',
       headers: {
@@ -55,7 +178,6 @@ var Register = React.createClass({
     })
     .then((response) => response.json())
     .then((responseJSON) => {
-      console.log("OBKECT", responseJSON)
       if(responseJSON.success) {
         this.props.navigator.pop()
       } else {
@@ -106,7 +228,6 @@ var Register = React.createClass({
 });
 
 // HOME/MAP/FEED
-
 var Home = React.createClass({
   render() {
     return (
@@ -118,7 +239,6 @@ var Home = React.createClass({
     )
   }
 })
-
 
 
 var Map = React.createClass({
@@ -135,10 +255,11 @@ var Map = React.createClass({
     }
   },
 
+  watchID: (null: ?number),
+
   componentDidMount: function() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log("POSITION", position);
         this.setState({
           longitude: position.coords.longitude,
           latitude: position.coords.latitude
@@ -147,12 +268,16 @@ var Map = React.createClass({
       (error) => alert(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000}
     );
-    navigator.geolocation.watchPosition((position) => {
+    this.watchId = navigator.geolocation.watchPosition((position) => {
       this.setState({
         longitude: position.coords.longitude,
         latitude: position.coords.latitude
       })
     });
+  },
+
+  componentWillUnmount: function() {
+    navigator.geolocation.clearWatch(this.watchId);
   },
 
   render() {
@@ -165,14 +290,7 @@ var Map = React.createClass({
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }}
-        onRegionChange={this.onRegionChange}
         showsUserLocation={true}
-        initialRegion={{
-          latitude: this.state.latitude,
-          longitude: this.state.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
       >
       {this.state.markers.map(marker => (
         <MapView.Marker
@@ -329,135 +447,6 @@ var Feed = React.createClass({
 })
 
 // LOGIN OR REGISTER
-
-var Pokegame = React.createClass({
-  getInitialState() {
-    return {
-      username: "",
-      password: "",
-      message: ""
-    }
-  },
-
-  componentDidMount() {
-    AsyncStorage.getItem('user')
-  .then(result => {
-    var parsedResult = JSON.parse(result);
-    var username = parsedResult.username;
-    var password = parsedResult.password;
-    if (username && password) {
-      this.setState({
-        username: username,
-        password: password
-      })
-      return this.submit()
-    }
-    // Don't really need an else clause, we don't do anything in this case.
-  })
-  .catch(err => {
-    this.setState({
-      message: JSON.stringify(err)
-    })
-  })
-},
-
-  register() {
-    this.props.navigator.push({
-      component: Register,
-      title: 'Register'
-    });
-  },
-
-  submit() {
-    fetch('http://localhost:3000/login', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username: this.state.username,
-        password: this.state.password
-      })
-    }).then((response) => (response.json()))
-    .then((response) => {
-      if(response.success) {
-        AsyncStorage.setItem('user', JSON.stringify({
-          username: this.state.username,
-          password: this.state.password
-      }));
-        this.props.navigator.push({
-          component: Home,
-          title: "Home"
-        })
-      }
-      else {
-        this.setState({
-          message: response.error
-        })
-      }
-    })
-  },
-
-  register() {
-    this.props.navigator.push({
-      component: Register,
-      title: "Register"
-    })
-  },
-
-  random() {
-    console.log("ON PRESS WORKS")
-  },
-
-  render() {
-    console.log("state upon render", this.state);
-    return <View style={{
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#F5FCFF',
-    }}>
-
-      <Text style={{fontSize: 40, fontWeight: 'bold', color: 'yellow', textShadowOffset: {width: 2, height: 2}, textShadowRadius: 1, textShadowColor: 'blue', marginBottom: 5}}>PokeFinder!</Text>
-      <Text>Please sign in</Text>
-      <View style={{width:width*.7}}>
-        <TextInput
-          style={{height: 30, textAlign: "center", borderColor: 'black', borderWidth: 1}}
-          placeholder="Username"
-          onChangeText={(username) => this.setState({username})} value={this.state.username}
-        />
-        <TextInput
-          style={{height: 30, textAlign: "center", borderColor: 'black', borderWidth: 1}}
-          placeholder="Password"
-          onChangeText={(password) => this.setState({password})} value={this.state.password} secureTextEntry={true}
-        />
-        <TouchableOpacity
-          onPress={this.submit} style={[styles.button, styles.buttonRed]}>
-          <Text style={styles.buttonLabel}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={this.register}>
-            <Text style={styles.buttonLabel2}>Register</Text>
-          </TouchableOpacity>
-        <Text>
-          {this.state.message}
-        </Text>
-      </View>
-    </View>
-  }
-})
-
-var Start = React.createClass({
-  render() {
-    return (
-        <NavigatorIOS
-          initialRoute={{
-            component: Pokegame,
-            title: "Pokegame"
-          }} style={{flex: 1}}
-        />
-    )
-  }
-})
 
 
 const styles = StyleSheet.create({
