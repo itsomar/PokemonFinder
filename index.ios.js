@@ -316,6 +316,7 @@ var Map = React.createClass({
 var FeedView = React.createClass({
   render() {
     return (<ListView
+        automaticallyAdjustContentInsets={false}
         enableEmptySections={true}
         dataSource={this.props.feed}
         renderRow={(rowData) => {
