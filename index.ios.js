@@ -19,7 +19,9 @@ import {
   Picker,
   StatusBar,
   AsyncStorage,
-  Image
+  Image,
+  Modal,
+  TouchableHighlight
 } from 'react-native';
 
 var reactNative = require('react-native');
@@ -269,7 +271,6 @@ var Home = React.createClass({
 
   componentDidMount: function() {
     setInterval(this.refresh, 6*10*1000);
-    console.log("[MOUNTING]")
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
@@ -302,7 +303,7 @@ var Home = React.createClass({
     return (
       <View style={{flex: 1}}>
         <Map location={this.state.location} markers={this.state.markers}/>
-        <Feed location={this.state.location} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh}/>
+        <Feed location={this.state.location} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh}/>
       </View>
     )
   }
@@ -337,15 +338,41 @@ var Map = React.createClass({
   }
 })
 
-var Feed = React.createClass({
 
-  getInitialState() {
-    return({
-        pokemon: ''
-    })
-  },
+class Feed extends Component {
+
+  constructor(props) {
+    var pokemonList = [];
+    fetch('http://localhost:3000/pokemon')
+    .then((pokemon) => pokemon.json())
+    .then((pokemonJson) => {
+      console.log(pokemonJson);
+      if (pokemonJson.success) {
+        for (var i = 0; i < pokemonJson.pokemon.length; i ++) {
+          var pokemon = pokemonJson.pokemon[i];
+          pokemonList.push(pokemon.name);
+        }
+      }
+    }).catch((err) => console.log(err))
+    super(props);
+    this.state = {
+      pokemon: '',
+      modalVisible1: false,
+      modalVisible2: false,
+      pokemonList
+    };
+  }
+
+  setModalVisible1(visible) {
+    this.setState({modalVisible1: visible});
+  }
+
+  setModalVisible2(visible) {
+    this.setState({modalVisible2: visible});
+  }
 
   post() {
+    console.log("Current state", this.state);
     fetch('http://localhost:3000/post', {
       headers: {
          "Content-Type": "application/json"
@@ -362,20 +389,77 @@ var Feed = React.createClass({
       if(postJson) {
         console.log("[HELLO]", postJson);
         this.props.refresh();
+        this.props.navigator.push({
+          component: Home,
+          title: "Home"
+        });
       } else {
         console.log('error');
       }
     })
     .catch((err) => {
-    /* do something if there was an error with fetching */
       console.log(err);
     });
-  },
+  }
 
   render() {
     console.log("Feed state upon render", this.state);
     return (
       <View style={{flex:1}}>
+        <Modal
+          animationType={"slide"}
+          transparent={false}
+          visible={this.state.modalVisible1}
+          onRequestClose={() => {alert("Modal has been closed.")}}
+        >
+          <Map location={this.props.location} markers={this.props.markers} feed={this.props.feed} />
+          <View style={{
+            flex:1
+          }}>
+            <View>
+              <Text>POST!</Text>
+              <View style={{width:width}}>
+                <Picker
+                  selectedValue={this.state.pokemon}
+                  onValueChange={(text) => this.setState({pokemon: text})}>
+                  {this.state.pokemonList.map((pokemon) => (
+                    <Picker.Item label={pokemon} value={pokemon} />
+                    ))
+                  }
+                </Picker>
+                <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post.bind(this)}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
+              </View>
+
+              <TouchableHighlight onPress={() => {
+                this.setModalVisible1(!this.state.modalVisible1)
+              }}>
+                <Text>Cancel</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+        <Modal
+          animationType={"slide"}
+          transparent={false}
+          visible={this.state.modalVisible2}
+          onRequestClose={() => {alert("Modal has been closed.")}}
+        >
+          <Map location={this.props.location} markers={this.props.markers} feed={this.props.feed} />
+          <View style={{
+            flex:1
+          }}>
+            <View>
+              <Text>FILTER!</Text>
+
+              <TouchableHighlight onPress={() => {
+                this.setModalVisible2(!this.state.modalVisible2)
+              }}>
+                <Text>Cancel</Text>
+              </TouchableHighlight>
+
+            </View>
+          </View>
+        </Modal>
         <ListView
         automaticallyAdjustContentInsets={false}
         enableEmptySections={true}
@@ -396,23 +480,34 @@ var Feed = React.createClass({
           </TouchableOpacity>)
           }
         } />
-        <View style={{width:width}}>
-          <Picker
-            selectedValue={this.state.pokemon}
-            onValueChange={(text) => this.setState({pokemon: text})}>
-            <Picker.Item label="Snorlax" value="Snorlax" />
-            <Picker.Item label="Pikachu" value="Pikachu" />
-            <Picker.Item label="MewTwo" value="MewTwo" />
-            <Picker.Item label="Tom" value="Tom" />
-          </Picker>
-          <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
-        </View>
+        <TouchableHighlight style={[styles.button, styles.buttonRed]} onPress={() => {
+          this.setModalVisible1(true)
+        }}>
+          <Text style={styles.buttonLabel}>Post</Text>
+        </TouchableHighlight>
+        <TouchableHighlight style={[styles.button, styles.buttonBlue]} onPress={() => {
+          this.setModalVisible2(true)
+        }}>
+          <Text style={styles.buttonLabel2}>Filter</Text>
+        </TouchableHighlight>
       </View>
     )
   }
-})
+}
 
-// LOGIN OR REGISTER
+// <View style={{width:width}}>
+//           <Picker
+//             selectedValue={this.state.pokemon}
+//             onValueChange={(text) => this.setState({pokemon: text})}>
+//             <Picker.Item label="Snorlax" value="Snorlax" />
+//             <Picker.Item label="Pikachu" value="Pikachu" />
+//             <Picker.Item label="MewTwo" value="MewTwo" />
+//             <Picker.Item label="Tom" value="Tom" />
+//           </Picker>
+//           <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
+//         </View>
+
+
 
 
 const styles = StyleSheet.create({
