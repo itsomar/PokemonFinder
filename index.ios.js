@@ -473,7 +473,8 @@ class Feed extends Component {
               paddingLeft: 10,
               paddingRight: 10
             }}>
-            <Text>{rowData.pokemon + ' was spotted ' + Math.floor((Date.now() - new Date(rowData.time).getTime()) / 60000) + ' minute(s) ago'}</Text>
+            <Text>User:   {rowData.user.username}</Text>
+            <Text>Found: {rowData.pokemon + ' was spotted ' + Math.floor((Date.now() - new Date(rowData.time).getTime()) / 60000) + ' minute(s) ago'}</Text>
           </TouchableOpacity>)
           }
         } />
