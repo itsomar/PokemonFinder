@@ -237,35 +237,31 @@ var Register = React.createClass({
 
 var Home = React.createClass({
   getInitialState() {
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.refresh()
+    console.log("INITIAL STATE", this.state);
     return {
-      feed: ds.cloneWithRows([]),
+      markers: [],
       location: {
         latitude: "unknown",
         longitude: "unknown",
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421
-      },
-      markers: [{
-        latitude: 37.785834,
-        longitude: -122.406417
-      }]
+      }
     }
   },
 
   watchID: (null: ?number),
 
   refresh() {
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     fetch('http://localhost:3000/feed')
     .then((feed) => feed.json())
     .then((feedJson) => {
       console.log(feedJson);
       if (feedJson.success) {
         var reversefeed = feedJson.feed.reverse();
+        console.log("FROM MONGO", reversefeed);
         this.setState({
-          feed: ds.cloneWithRows(reversefeed)
+          markers: reversefeed
         })
       }
     }).catch((err) => console.log(err))
@@ -301,19 +297,22 @@ var Home = React.createClass({
   },
 
   render() {
+    console.log("STATE OF HOME", this.state.markers);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
       <View style={{flex: 1}}>
-        <Map location={this.state.location} markers={this.state.markers} feed={this.state.feed}/>
-        <Feed location={this.state.location} markers={this.state.markers} feed={this.state.feed} refresh={this.refresh}/>
+        <Map location={this.state.location} markers={this.state.markers}/>
+        <Feed location={this.state.location} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh}/>
       </View>
-
     )
   }
 })
 
 
 var Map = React.createClass({
+
   render() {
+    console.log("MARKERS YO", this.props.markers);
     return (
       <MapView style={{flex: 1}}
         region={{
@@ -327,10 +326,10 @@ var Map = React.createClass({
       {this.props.markers.map(marker => (
         <MapView.Marker
           coordinate={{
-            latitude: marker.latitude,
-            longitude: marker.longitude
+            latitude: marker.location.latitude,
+            longitude: marker.location.longitude
           }}
-          title={marker.title}
+          title={marker.pokemon}
           description={marker.description}
         />
       ))}</MapView>
@@ -338,58 +337,7 @@ var Map = React.createClass({
   }
 })
 
-// var FeedView = React.createClass({
-//   render() {
-//     return (<ListView
-//         automaticallyAdjustContentInsets={false}
-//         enableEmptySections={true}
-//         dataSource={this.props.feed}
-//         renderRow={(rowData) => {
-//           return (<TouchableOpacity
-//             style={{
-//               backgroundColor: 'white',
-//               borderColor: 'black',
-//               borderWidth: 1,
-//               borderRadius: 3,
-//               padding: 2,
-//               paddingLeft: 10,
-//               paddingRight: 10
-//             }}>
-//             <Text>{rowData.pokemon + ' was spotted ' + Math.floor((Date.now() - new Date(rowData.time).getTime()) / 60000) + ' minute(s) ago'}</Text>
-//           </TouchableOpacity>)
-//         }
-//     } />)
-//   }
-// })
-
 var Feed = React.createClass({
-  // getInitialState() {
-  //   const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-  //   this.refresh()
-  //   return({
-  //     pokemon: '',
-  //     feed: ds.cloneWithRows([]),
-  //   })
-  // },
-  //
-  // componentDidMount() {
-  //   setInterval(this.refresh, 6*10*1000);
-  // },
-  //
-  // refresh() {
-  //   const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-  //   fetch('http://localhost:3000/feed')
-  //   .then((feed) => feed.json())
-  //   .then((feedJson) => {
-  //     console.log(feedJson);
-  //     if (feedJson.success) {
-  //       var reversefeed = feedJson.feed.reverse();
-  //       this.setState({
-  //         feed: ds.cloneWithRows(reversefeed)
-  //       })
-  //     }
-  //   }).catch((err) => console.log(err))
-  // },
 
   getInitialState() {
     return({
