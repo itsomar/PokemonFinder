@@ -389,10 +389,7 @@ class Feed extends Component {
       if(postJson) {
         console.log("[HELLO]", postJson);
         this.props.refresh();
-        this.props.navigator.push({
-          component: Home,
-          title: "Home"
-        });
+        this.setModalVisible1(!this.state.modalVisible1);
       } else {
         console.log('error');
       }
