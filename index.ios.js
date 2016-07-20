@@ -21,10 +21,16 @@ import {
   AsyncStorage
 } from 'react-native';
 
+import io from 'socket.io-client/socket.io';
+
 var reactNative = require('react-native');
+
+window.navigator.userAgent = 'react-native';
 
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
+
+// REGISTER
 
 var Register = React.createClass({
   getInitialState() {
@@ -100,6 +106,8 @@ var Register = React.createClass({
   }
 });
 
+// HOME/MAP/FEED
+
 var Home = React.createClass({
   render() {
     return (
@@ -121,12 +129,27 @@ var Map = React.createClass({
 
 var Feed = React.createClass({
   getInitialState() {
+    var socket = io('localhost:3000', {jsonp: false});
     return {
-      pokemon: ''
+      pokemon: '',
+      postList: [],
+      socket: socket
     }
   },
+  componentDidMount() {
+    console.log("[1] Feed mouting.")
+    console.log("[2] Socket: ", this.state.socket);
+    this.state.socket.on('update', (data) => {
+      console.log("Got something from server: ", data);
+      // trigger list reload
+      // add data yo your list view
+      this.setState({
+        postList: []
+      })
+    })
+  },
   post() {
-    fetch('https://localhost:3000/post', {
+    fetch('http://localhost:3000/post', {
       headers: {
          "Content-Type": "application/json"
       },
@@ -160,6 +183,7 @@ var Feed = React.createClass({
       <Text>Placeholder</Text>
       <Text>Placeholder</Text>
       <Text>Placeholder</Text>
+
       <View style={{width:width*.7}}>
         <TextInput
           style={{height: 30, textAlign: "center", borderColor: 'black', borderWidth: 1}}
@@ -173,7 +197,7 @@ var Feed = React.createClass({
   }
 })
 
-
+// LOGIN OR REGISTER
 
 var Pokegame = React.createClass({
   getInitialState() {
