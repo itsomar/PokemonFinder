@@ -227,10 +227,20 @@ var Register = React.createClass({
   }
 });
 
-// HOME/MAP/FEED
+// HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
+// HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
+// HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
+// HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
+// HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
+// HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
+// HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
+
 var Home = React.createClass({
   getInitialState() {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.refresh()
     return {
+      feed: ds.cloneWithRows([]),
       location: {
         latitude: "unknown",
         longitude: "unknown",
@@ -246,7 +256,23 @@ var Home = React.createClass({
 
   watchID: (null: ?number),
 
+  refresh() {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    fetch('http://localhost:3000/feed')
+    .then((feed) => feed.json())
+    .then((feedJson) => {
+      console.log(feedJson);
+      if (feedJson.success) {
+        var reversefeed = feedJson.feed.reverse();
+        this.setState({
+          feed: ds.cloneWithRows(reversefeed)
+        })
+      }
+    }).catch((err) => console.log(err))
+  },
+
   componentDidMount: function() {
+    setInterval(this.refresh, 6*10*1000);
     console.log("[MOUNTING]")
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -277,8 +303,8 @@ var Home = React.createClass({
   render() {
     return (
       <View style={{flex: 1}}>
-        <Map location={this.state.location} markers={this.state.markers}/>
-        <Feed location={this.state.location} markers={this.state.markers}/>
+        <Map location={this.state.location} markers={this.state.markers} feed={this.state.feed}/>
+        <Feed location={this.state.location} markers={this.state.markers} feed={this.state.feed} refresh={this.refresh}/>
       </View>
 
     )
@@ -337,36 +363,41 @@ var Map = React.createClass({
 // })
 
 var Feed = React.createClass({
+  // getInitialState() {
+  //   const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+  //   this.refresh()
+  //   return({
+  //     pokemon: '',
+  //     feed: ds.cloneWithRows([]),
+  //   })
+  // },
+  //
+  // componentDidMount() {
+  //   setInterval(this.refresh, 6*10*1000);
+  // },
+  //
+  // refresh() {
+  //   const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+  //   fetch('http://localhost:3000/feed')
+  //   .then((feed) => feed.json())
+  //   .then((feedJson) => {
+  //     console.log(feedJson);
+  //     if (feedJson.success) {
+  //       var reversefeed = feedJson.feed.reverse();
+  //       this.setState({
+  //         feed: ds.cloneWithRows(reversefeed)
+  //       })
+  //     }
+  //   }).catch((err) => console.log(err))
+  // },
+
   getInitialState() {
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.refresh()
     return({
-      pokemon: '',
-      feed: ds.cloneWithRows([]),
+        pokemon: ''
     })
   },
 
-  componentDidMount() {
-    setInterval(this.refresh, 6*10*1000);
-  },
-
-  refresh() {
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    fetch('http://localhost:3000/feed')
-    .then((feed) => feed.json())
-    .then((feedJson) => {
-      console.log(feedJson);
-      if (feedJson.success) {
-        var reversefeed = feedJson.feed.reverse();
-        this.setState({
-          feed: ds.cloneWithRows(reversefeed)
-        })
-      }
-    }).catch((err) => console.log(err))
-  },
-
   post() {
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     fetch('http://localhost:3000/post', {
       headers: {
          "Content-Type": "application/json"
@@ -381,15 +412,8 @@ var Feed = React.createClass({
     .then((post) => post.json())
     .then((postJson) => {
       if(postJson) {
-        // var reversefeed = feed.reverse();
-        var feed = [].concat(postJson);
-        feed.concat(this.state.feed);
-        // var update = reversefeed.concat(postJson);
-        this.setState({
-          feed: ds.cloneWithRows(feed),
-          pokemon: ''
-        });
-        this.refresh();
+        console.log("[HELLO]", postJson);
+        this.props.refresh();
       } else {
         console.log('error');
       }
@@ -407,7 +431,7 @@ var Feed = React.createClass({
         <ListView
         automaticallyAdjustContentInsets={false}
         enableEmptySections={true}
-        dataSource={this.state.feed}
+        dataSource={this.props.feed}
         renderRow={(rowData) => {
           return (
           <TouchableOpacity
@@ -425,11 +449,14 @@ var Feed = React.createClass({
           }
         } />
         <View style={{width:width}}>
-          <TextInput
-            style={{height: 25, textAlign: "center", borderColor: 'black', borderWidth: 1}}
-            placeholder="Enter Pokemon"
-            onChangeText={(pokemon) => this.setState({pokemon})} value={this.state.pokemon}
-          />
+          <Picker
+            selectedValue={this.state.pokemon}
+            onValueChange={(text) => this.setState({pokemon: text})}>
+            <Picker.Item label="Snorlax" value="Snorlax" />
+            <Picker.Item label="Pikachu" value="Pikachu" />
+            <Picker.Item label="MewTwo" value="MewTwo" />
+            <Picker.Item label="Tom" value="Tom" />
+          </Picker>
           <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
         </View>
       </View>
