@@ -472,7 +472,7 @@ var Feed = React.createClass({
                     Search for a pokemon
                     </Text>
                     <AutoComplete
-                      onTyping={this.onTyping} style={styles.autocomplete} suggestions={this.state.data} placeholder='Type Pokemon'
+                      onSelect={this.onTyping} onTyping={this.onTyping} style={styles.autocomplete} suggestions={this.state.data} placeholder='Type Pokemon' showTextFieldDropShadowWhenAutoCompleteTableIsOpen={true}
                       />
                   </View>
 
