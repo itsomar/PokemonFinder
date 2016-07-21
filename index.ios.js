@@ -271,8 +271,8 @@ var Home = React.createClass({
     return {
       markers: [],
       location: {
-        latitude: "unknown",
-        longitude: "unknown",
+        latitude: 0,
+        longitude: 0,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421
       }
@@ -355,13 +355,14 @@ var Map = React.createClass({
         }}
         showsUserLocation={true}
       >
-      {this.props.markers.map(marker => (
+      {this.props.markers.map((marker, i) => (
         <MapView.Marker
           coordinate={{
-            latitude: marker.location.latitude,
-            longitude: marker.location.longitude
+            latitude: parseInt(marker.location.latitude),
+            longitude: parseInt(marker.location.longitude)
           }}
           title={marker.pokemon}
+          key={i}
           description={marker.description}
         />
       ))}</MapView>
