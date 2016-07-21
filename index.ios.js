@@ -30,6 +30,31 @@ var MapView = require('react-native-maps')
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
 
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
+
+function getDistanceFromLatLonInMiles(lat1,lon1,lat2,lon2) {
+  lat2 = parseFloat(lat2)
+  lon2 = parseFloat(lon2)
+  console.log('[OUR LATITUDE]', lat1)
+  console.log('[OUR LONGITUDE]', lon1)
+  console.log('[FAR LATITUDE]', lat2)
+  console.log('[FAR LATITUDE]', lon2)
+
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return d * 0.621371; // Distance in miles
+}
+
 
 //MAKES NAVIGATOR WORK
 var Start = React.createClass({
@@ -353,13 +378,13 @@ class Feed extends Component {
           pokemonList.push(pokemon.name);
         }
       }
-    }).catch((err) => console.log(err))
+    }).catch((err) => console.log(err));
     super(props);
     this.state = {
       pokemon: '',
       modalVisible1: false,
       modalVisible2: false,
-      pokemonList
+      pokemonList,
     };
   }
 
@@ -473,8 +498,8 @@ class Feed extends Component {
               paddingLeft: 10,
               paddingRight: 10
             }}>
-            <Text>User:   {rowData.user.username}</Text>
-            <Text>Found: {rowData.pokemon + ' was spotted ' + Math.floor((Date.now() - new Date(rowData.time).getTime()) / 60000) + ' minute(s) ago'}</Text>
+            <Text>{rowData.pokemon + ' was spotted ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,rowData.location.latitude,rowData.location.longitude).toFixed(1) + ' miles away'}</Text>
+            <Text>by {rowData.user.username + ' ' + Math.floor((Date.now() - new Date(rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
           </TouchableOpacity>)
           }
         } />
