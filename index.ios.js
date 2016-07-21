@@ -60,12 +60,14 @@ function getDistanceFromLatLonInMiles(lat1,lon1,lat2,lon2) {
 var Start = React.createClass({
   render() {
     return (
-        <NavigatorIOS
-          initialRoute={{
-            component: Pokegame,
-            title: "Pokegame"
-          }} style={{flex: 1}}
-        />
+      <NavigatorIOS
+        initialRoute={{
+          component: Pokegame,
+          title: "Pokegame"
+        }}
+        style={{flex: 1}}
+        navigationBarHidden={true}
+      />
     )
   }
 })
@@ -422,6 +424,9 @@ var Feed = React.createClass({
   },
 
   post() {
+    if (this.state.pokemonList.indexOf(this.state.pokemon) === -1) {
+      return Alert.alert('Please enter a valid pokemon name');
+    }
     console.log("Current state", this.state);
     fetch('http://localhost:3000/post', {
       headers: {
@@ -481,9 +486,9 @@ var Feed = React.createClass({
                 <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
 
 
-              <TouchableHighlight onPress={() => {
-                this.setModalVisible1(!this.state.modalVisible1)
-              }}>
+                <TouchableHighlight onPress={() => {
+                  this.setModalVisible1(!this.state.modalVisible1)
+                }}>
                 <Text>Cancel</Text>
               </TouchableHighlight>
             </View>
