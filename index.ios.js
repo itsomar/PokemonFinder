@@ -378,7 +378,8 @@ var Feed = React.createClass({
       modalVisible2: false,
       pokemon: '',
       pokemonList: [],
-      data: []
+      data: [],
+      pokemonObj: {}
     }
   },
   componentDidMount() {
@@ -398,8 +399,6 @@ var Feed = React.createClass({
         });
       }
     }).catch((err) => console.log(err));
-
-
   },
 
   setModalVisible1(visible) {
@@ -417,7 +416,30 @@ var Feed = React.createClass({
       return pokemon;
     });
 
-
+    for (var i = 0; i < this.state.pokemonList.length; i ++) {
+      if (text === this.state.pokemonList[i]) {
+        fetch('http://localhost:3000/pokemon/'+text)
+        .then((pokemon) => pokemon.json())
+        .then((pokemonJson) => {
+          if (pokemonJson.success) {
+            // pokemonJson.pokemon.types.map(function(type) {
+            //   var word = '';
+            //   for (var i = 0; i < type.length; i ++) {
+            //     if (i = 0) {
+            //       word += type[i].toUpperCase();
+            //     } else {
+            //       word += type[i];
+            //     }
+            //   }
+            //   return word;
+            // });
+            this.setState({
+              pokemonObj: pokemonJson.pokemon
+            });
+          }
+        }).catch((err) => console.log(err));;
+      }
+    }
 
     this.setState({
       data: pokemonComplete,
@@ -494,7 +516,12 @@ var Feed = React.createClass({
                 <View style={{flexDirection: 'row'}}>
                   <Image source={{uri: 'http://localhost:3000/emojis/'+this.state.pokemon.toLowerCase()+'.png'}}
                          style={{width: 225, height: 225, marginTop: 25, marginLeft: 10}} />
-                  <Text>Name: {this.state.pokemon}</Text>
+                  <View>
+                    <Text>Name: {this.state.pokemonObj.name}</Text>
+                    <Text>No: {this.state.pokemonObj.number}</Text>
+                    <Text>Type: {this.state.pokemonObj.types}</Text>
+                    <Text>Rarity: {this.state.pokemonObj.rarity}</Text>
+                  </View>
                 </View>
                   <TouchableHighlight style={[styles.button, styles.buttonBlue, {marginTop: 15}]} onPress={() => {
                     this.setModalVisible1(!this.state.modalVisible1)
