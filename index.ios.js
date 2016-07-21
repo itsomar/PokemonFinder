@@ -462,10 +462,11 @@ var Feed = React.createClass({
           <View style={{
             flex:1
           }}>
-            <View>
+
               <Text>POST!</Text>
               <View style={{width:width}}>
                 <Text>Search for a Pokemon</Text>
+
                   <View style={styles.containerAuto}>
                     <Text style={styles.welcome}>
                     Search for a pokemon
@@ -474,8 +475,9 @@ var Feed = React.createClass({
                       onTyping={this.onTyping} style={styles.autocomplete} suggestions={this.state.data} placeholder='Type Pokemon'
                       />
                   </View>
+
                 <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post.bind(this)}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
-              </View>
+
 
               <TouchableHighlight onPress={() => {
                 this.setModalVisible1(!this.state.modalVisible1)
