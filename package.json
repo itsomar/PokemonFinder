@@ -9,6 +9,7 @@
     "mongoose": "^4.5.5",
     "react": "15.2.1",
     "react-native": "0.29.1",
+    "react-native-autocomplete": "^0.1.4",
     "react-native-maps": "^0.7.1",
     "react-transform-hmr": "^1.0.4"
   }
