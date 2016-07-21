@@ -22,10 +22,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		281DF8A11D400954001D625B /* AirMaps in Resources */ = {isa = PBXBuildFile; fileRef = 281DF8A01D400954001D625B /* AirMaps */; };
-		281DF8CB1D406B35001D625B /* libRCTAutoComplete.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 281DF8C11D406AF7001D625B /* libRCTAutoComplete.a */; };
-		281DF8CC1D406BBF001D625B /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 497DB2CF1D3EF2D100A25758 /* libAirMaps.a */; };
-		497DB2DB1D3EF3BA00A25758 /* ios in Resources */ = {isa = PBXBuildFile; fileRef = 497DB2DA1D3EF3BA00A25758 /* ios */; };
+		49D755AA1D407610007BDDD0 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49D755991D4075D1007BDDD0 /* libAirMaps.a */; };
+		49D755AB1D407612007BDDD0 /* libRCTAutoComplete.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49D755A91D407608007BDDD0 /* libRCTAutoComplete.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -93,19 +91,19 @@
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
 		};
-		281DF8C01D406AF7001D625B /* PBXContainerItemProxy */ = {
+		49D755981D4075D1007BDDD0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 281DF8BA1D406AF7001D625B /* RCTAutoComplete.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RCTAutoComplete;
-		};
-		497DB2CE1D3EF2D100A25758 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D2E2583F53A946268BDDEC8D /* AirMaps.xcodeproj */;
+			containerPortal = 49D755941D4075D1007BDDD0 /* AirMaps.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
 			remoteInfo = AirMaps;
+		};
+		49D755A81D407608007BDDD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49D755A41D407608007BDDD0 /* RCTAutoComplete.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTAutoComplete;
 		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -143,12 +141,10 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Pokegame/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Pokegame/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		281DF8A01D400954001D625B /* AirMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AirMaps; sourceTree = "<group>"; };
-		281DF8BA1D406AF7001D625B /* RCTAutoComplete.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAutoComplete.xcodeproj; path = "../node_modules/react-native-autocomplete/RCTAutoComplete.xcodeproj"; sourceTree = "<group>"; };
-		497DB2DA1D3EF3BA00A25758 /* ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ios; path = "../node_modules/react-native-maps/ios"; sourceTree = "<group>"; };
+		49D755941D4075D1007BDDD0 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
+		49D755A41D407608007BDDD0 /* RCTAutoComplete.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAutoComplete.xcodeproj; path = "../node_modules/react-native-autocomplete/RCTAutoComplete.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		D2E2583F53A946268BDDEC8D /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,8 +160,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				281DF8CC1D406BBF001D625B /* libAirMaps.a in Frameworks */,
-				281DF8CB1D406B35001D625B /* libRCTAutoComplete.a in Frameworks */,
+				49D755AB1D407612007BDDD0 /* libRCTAutoComplete.a in Frameworks */,
+				49D755AA1D407610007BDDD0 /* libAirMaps.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -277,18 +273,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		281DF8BB1D406AF7001D625B /* Products */ = {
+		49D755951D4075D1007BDDD0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				281DF8C11D406AF7001D625B /* libRCTAutoComplete.a */,
+				49D755991D4075D1007BDDD0 /* libAirMaps.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		497DB2CB1D3EF2D000A25758 /* Products */ = {
+		49D755A51D407608007BDDD0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				497DB2CF1D3EF2D100A25758 /* libAirMaps.a */,
+				49D755A91D407608007BDDD0 /* libRCTAutoComplete.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -314,7 +310,6 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				D2E2583F53A946268BDDEC8D /* AirMaps.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -330,9 +325,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				281DF8BA1D406AF7001D625B /* RCTAutoComplete.xcodeproj */,
-				281DF8A01D400954001D625B /* AirMaps */,
-				497DB2DA1D3EF3BA00A25758 /* ios */,
+				49D755A41D407608007BDDD0 /* RCTAutoComplete.xcodeproj */,
+				49D755941D4075D1007BDDD0 /* AirMaps.xcodeproj */,
 				13B07FAE1A68108700A75B9A /* Pokegame */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* PokegameTests */,
@@ -396,7 +390,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 610;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -418,16 +412,16 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 497DB2CB1D3EF2D000A25758 /* Products */;
-					ProjectRef = D2E2583F53A946268BDDEC8D /* AirMaps.xcodeproj */;
+					ProductGroup = 49D755951D4075D1007BDDD0 /* Products */;
+					ProjectRef = 49D755941D4075D1007BDDD0 /* AirMaps.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
 				{
-					ProductGroup = 281DF8BB1D406AF7001D625B /* Products */;
-					ProjectRef = 281DF8BA1D406AF7001D625B /* RCTAutoComplete.xcodeproj */;
+					ProductGroup = 49D755A51D407608007BDDD0 /* Products */;
+					ProjectRef = 49D755A41D407608007BDDD0 /* RCTAutoComplete.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -531,18 +525,18 @@
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		281DF8C11D406AF7001D625B /* libRCTAutoComplete.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTAutoComplete.a;
-			remoteRef = 281DF8C01D406AF7001D625B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		497DB2CF1D3EF2D100A25758 /* libAirMaps.a */ = {
+		49D755991D4075D1007BDDD0 /* libAirMaps.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libAirMaps.a;
-			remoteRef = 497DB2CE1D3EF2D100A25758 /* PBXContainerItemProxy */;
+			remoteRef = 49D755981D4075D1007BDDD0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		49D755A91D407608007BDDD0 /* libRCTAutoComplete.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTAutoComplete.a;
+			remoteRef = 49D755A81D407608007BDDD0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
@@ -573,8 +567,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				281DF8A11D400954001D625B /* AirMaps in Resources */,
-				497DB2DB1D3EF3BA00A25758 /* ios in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
@@ -651,10 +643,6 @@
 				INFOPLIST_FILE = PokegameTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pokegame.app/Pokegame";
 			};
@@ -668,10 +656,6 @@
 				INFOPLIST_FILE = PokegameTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pokegame.app/Pokegame";
 			};
@@ -686,11 +670,9 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 				);
 				INFOPLIST_FILE = Pokegame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -708,11 +690,9 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 				);
 				INFOPLIST_FILE = Pokegame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -742,7 +722,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -761,7 +740,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -802,11 +780,9 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

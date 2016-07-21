@@ -301,7 +301,9 @@ var Home = React.createClass({
         this.setState({
           location: {
             longitude: position.coords.longitude,
-            latitude: position.coords.latitude
+            latitude: position.coords.latitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
           }
         });
       },
@@ -312,7 +314,9 @@ var Home = React.createClass({
       this.setState({
         location: {
           longitude: position.coords.longitude,
-          latitude: position.coords.latitude
+          latitude: position.coords.latitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421
         }
       })
     });
@@ -364,9 +368,18 @@ var Map = React.createClass({
 })
 
 
-class Feed extends Component {
-
-  constructor(props) {
+var Feed = React.createClass({
+  getInitialState() {
+    return {
+      modalVisible1: false,
+      modalVisible2: false,
+      pokemon: '',
+      pokemonList: [],
+      data: []
+    }
+  },
+  componentDidMount() {
+    console.log('lol')
     var pokemonList = [];
     fetch('http://localhost:3000/pokemon')
     .then((pokemon) => pokemon.json())
@@ -377,37 +390,35 @@ class Feed extends Component {
           var pokemon = pokemonJson.pokemon[i];
           pokemonList.push(pokemon.name);
         }
+
+        this.setState({
+          pokemonList: pokemonList
+        });
       }
     }).catch((err) => console.log(err));
-    super(props);
-    this.state = {
-      pokemon: '',
-      modalVisible1: false,
-      modalVisible2: false,
-      pokemonList,
-      data: []
-    };
-  }
+
+
+  },
 
   setModalVisible1(visible) {
     this.setState({modalVisible1: visible});
-  }
+  },
 
   setModalVisible2(visible) {
     this.setState({modalVisible2: visible});
-  }
+  },
 
   onTyping(text) {
     var pokemonComplete = this.state.pokemonList.filter(function (pokemon) {
-      return pokemon.name.toLowerCase().startsWith(text.toLowerCase())
+      return pokemon.toLowerCase().startsWith(text.toLowerCase())
     }).map(function (pokemon) {
-      return pokemon.name;
+      return pokemon;
     });
 
     this.setState({
         data: pokemonComplete
     });
-  }
+  },
 
   post() {
     console.log("Current state", this.state);
@@ -435,7 +446,7 @@ class Feed extends Component {
     .catch((err) => {
       console.log(err);
     });
-  }
+  },
 
   render() {
     console.log("Feed state upon render", this.state);
@@ -455,9 +466,14 @@ class Feed extends Component {
               <Text>POST!</Text>
               <View style={{width:width}}>
                 <Text>Search for a Pokemon</Text>
-                <AutoComplete onTyping={this.onTyping}
-                  suggestions={this.state.data}
-                />
+                  <View style={styles.containerAuto}>
+                    <Text style={styles.welcome}>
+                    Search for a pokemon
+                    </Text>
+                    <AutoComplete
+                      onTyping={this.onTyping} style={styles.autocomplete} suggestions={this.state.data} placeholder='Type Pokemon'
+                      />
+                  </View>
                 <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post.bind(this)}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
               </View>
 
@@ -532,7 +548,7 @@ class Feed extends Component {
       </View>
     )
   }
-}
+});
 
 
 
@@ -598,7 +614,25 @@ const styles = StyleSheet.create({
   buttonLabel2: {
     textAlign: 'center',
     fontSize: 16
-  }
+  },
+  autocomplete: {
+        alignSelf: 'stretch',
+        height: 50,
+        backgroundColor: '#FFF',
+        borderColor: 'lightblue',
+        borderWidth: 1
+    },
+    containerAuto: {
+        flex: 1,
+        backgroundColor: '#F5FCFF',
+    },
+    welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        marginBottom: 10,
+        marginTop: 50,
+
+    }
 });
 
 AppRegistry.registerComponent('Pokegame', () => Start);
