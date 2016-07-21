@@ -498,8 +498,14 @@ class Feed extends Component {
               paddingLeft: 10,
               paddingRight: 10
             }}>
-            <Text>{rowData.pokemon + ' was spotted ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,rowData.location.latitude,rowData.location.longitude).toFixed(1) + ' miles away'}</Text>
-            <Text>by {rowData.user.username + ' ' + Math.floor((Date.now() - new Date(rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Image source={{uri: 'http://localhost:3000/emojis/'+rowData.pokemon.toLowerCase()+'.png'}}
+                style={{width: 40, height: 40}} />
+              <View style={{marginLeft: 10, marginTop: 3}}>
+                <Text>{rowData.pokemon + ' was spotted ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,rowData.location.latitude,rowData.location.longitude).toFixed(1) + ' miles away'}</Text>
+                <Text>by {rowData.user.username + ' ' + Math.floor((Date.now() - new Date(rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
+              </View>
+            </View>
           </TouchableOpacity>)
           }
         } />
@@ -517,19 +523,6 @@ class Feed extends Component {
     )
   }
 }
-
-// <View style={{width:width}}>
-//           <Picker
-//             selectedValue={this.state.pokemon}
-//             onValueChange={(text) => this.setState({pokemon: text})}>
-//             <Picker.Item label="Snorlax" value="Snorlax" />
-//             <Picker.Item label="Pikachu" value="Pikachu" />
-//             <Picker.Item label="MewTwo" value="MewTwo" />
-//             <Picker.Item label="Tom" value="Tom" />
-//           </Picker>
-//           <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
-//         </View>
-
 
 
 
