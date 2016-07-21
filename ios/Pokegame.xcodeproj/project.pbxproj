@@ -23,9 +23,10 @@
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		281DF8A11D400954001D625B /* AirMaps in Resources */ = {isa = PBXBuildFile; fileRef = 281DF8A01D400954001D625B /* AirMaps */; };
+		281DF8CB1D406B35001D625B /* libRCTAutoComplete.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 281DF8C11D406AF7001D625B /* libRCTAutoComplete.a */; };
+		281DF8CC1D406BBF001D625B /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 497DB2CF1D3EF2D100A25758 /* libAirMaps.a */; };
 		497DB2DB1D3EF3BA00A25758 /* ios in Resources */ = {isa = PBXBuildFile; fileRef = 497DB2DA1D3EF3BA00A25758 /* ios */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		BDB7BD727DC14FEFBD664360 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B13B9F60DC44CE3A955703F /* libAirMaps.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,13 @@
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
 		};
+		281DF8C01D406AF7001D625B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 281DF8BA1D406AF7001D625B /* RCTAutoComplete.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTAutoComplete;
+		};
 		497DB2CE1D3EF2D100A25758 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2E2583F53A946268BDDEC8D /* AirMaps.xcodeproj */;
@@ -136,8 +144,8 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Pokegame/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		281DF8A01D400954001D625B /* AirMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AirMaps; sourceTree = "<group>"; };
+		281DF8BA1D406AF7001D625B /* RCTAutoComplete.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAutoComplete.xcodeproj; path = "../node_modules/react-native-autocomplete/RCTAutoComplete.xcodeproj"; sourceTree = "<group>"; };
 		497DB2DA1D3EF3BA00A25758 /* ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ios; path = "../node_modules/react-native-maps/ios"; sourceTree = "<group>"; };
-		5B13B9F60DC44CE3A955703F /* libAirMaps.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAirMaps.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		D2E2583F53A946268BDDEC8D /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
@@ -156,6 +164,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				281DF8CC1D406BBF001D625B /* libAirMaps.a in Frameworks */,
+				281DF8CB1D406B35001D625B /* libRCTAutoComplete.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -166,7 +176,6 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				BDB7BD727DC14FEFBD664360 /* libAirMaps.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +277,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		281DF8BB1D406AF7001D625B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				281DF8C11D406AF7001D625B /* libRCTAutoComplete.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		497DB2CB1D3EF2D000A25758 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,6 +330,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				281DF8BA1D406AF7001D625B /* RCTAutoComplete.xcodeproj */,
 				281DF8A01D400954001D625B /* AirMaps */,
 				497DB2DA1D3EF3BA00A25758 /* ios */,
 				13B07FAE1A68108700A75B9A /* Pokegame */,
@@ -406,6 +424,10 @@
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
+				},
+				{
+					ProductGroup = 281DF8BB1D406AF7001D625B /* Products */;
+					ProjectRef = 281DF8BA1D406AF7001D625B /* RCTAutoComplete.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -507,6 +529,13 @@
 			fileType = archive.ar;
 			path = libReact.a;
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		281DF8C11D406AF7001D625B /* libRCTAutoComplete.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTAutoComplete.a;
+			remoteRef = 281DF8C01D406AF7001D625B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		497DB2CF1D3EF2D100A25758 /* libAirMaps.a */ = {

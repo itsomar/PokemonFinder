@@ -20,11 +20,12 @@ import {
   AsyncStorage,
   Image,
   Modal,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native';
 
 var reactNative = require('react-native');
-var MapView = require('react-native-maps')
+var MapView = require('react-native-maps');
+var AutoComplete = require('react-native-autocomplete');
 
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
@@ -384,6 +385,7 @@ class Feed extends Component {
       modalVisible1: false,
       modalVisible2: false,
       pokemonList,
+      data: []
     };
   }
 
@@ -393,6 +395,18 @@ class Feed extends Component {
 
   setModalVisible2(visible) {
     this.setState({modalVisible2: visible});
+  }
+
+  onTyping(text) {
+    var pokemonComplete = this.state.pokemonList.filter(function (pokemon) {
+      return pokemon.name.toLowerCase().startsWith(text.toLowerCase())
+    }).map(function (pokemon) {
+      return pokemon.name;
+    });
+
+    this.setState({
+        data: pokemonComplete
+    });
   }
 
   post() {
@@ -440,14 +454,10 @@ class Feed extends Component {
             <View>
               <Text>POST!</Text>
               <View style={{width:width}}>
-                <Picker
-                  selectedValue={this.state.pokemon}
-                  onValueChange={(text) => this.setState({pokemon: text})}>
-                  {this.state.pokemonList.map((pokemon) => (
-                    <Picker.Item label={pokemon} value={pokemon} />
-                    ))
-                  }
-                </Picker>
+                <Text>Search for a Pokemon</Text>
+                <AutoComplete onTyping={this.onTyping}
+                  suggestions={this.state.data}
+                />
                 <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post.bind(this)}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
               </View>
 
