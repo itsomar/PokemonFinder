@@ -358,8 +358,8 @@ var Map = React.createClass({
       {this.props.markers.map((marker, i) => (
         <MapView.Marker
           coordinate={{
-            latitude: parseInt(marker.location.latitude),
-            longitude: parseInt(marker.location.longitude)
+            latitude: marker.location.latitude,
+            longitude: marker.location.longitude 
           }}
           title={marker.pokemon}
           key={i}
@@ -460,38 +460,45 @@ var Feed = React.createClass({
     return (
       <View style={{flex:1}}>
         <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.modalVisible1}
-          onRequestClose={() => {alert("Modal has been closed.")}}
+        animationType={"slide"}
+        transparent={false}
+        visible={this.state.modalVisible1}
+        onRequestClose={() => {alert("Modal has been closed.")}}
         >
           <Map location={this.props.location} markers={this.props.markers} feed={this.props.feed} />
           <View style={{
             flex:1
           }}>
-
-              <Text>POST!</Text>
-              <View style={{width:width}}>
-                <Text>Search for a Pokemon</Text>
-
-                  <View style={styles.containerAuto}>
-                    <Text style={styles.welcome}>
-                    Search for a pokemon
-                    </Text>
-                    <AutoComplete
-                      onSelect={this.onTyping}
-                      onTyping={this.onTyping} style={styles.autocomplete} suggestions={this.state.data} placeholder='Type Pokemon'
-                    />
-                  </View>
-
-                <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
-
-
-                <TouchableHighlight onPress={() => {
+            <View style={{width:width}}>
+              <View style={styles.containerAuto}>
+                <Text style={styles.welcome}>
+                Search for a pokemon
+                </Text>
+                <View style={{flexDirection: 'row'}}>
+                  <AutoComplete
+                  onSelect={this.onTyping}
+                  onTyping={this.onTyping} 
+                  autoCompleteFontSize={15}
+                  autoCompleteTableBorderWidth={1}
+                  autoCompleteRowHeight={25}
+                  maximumNumberOfAutoCompleteRows={10}
+                  style={styles.autocomplete} 
+                  suggestions={this.state.data} 
+                  placeholder='Type Pokemon'
+                  />
+                  <TouchableOpacity 
+                  style={styles.buttonPost} 
+                  onPress={this.post}
+                  >
+                    <Text style={styles.buttonLabel}>Post</Text>
+                  </TouchableOpacity>
+                </View>
+                <TouchableHighlight style={[styles.button, styles.buttonBlue]} onPress={() => {
                   this.setModalVisible1(!this.state.modalVisible1)
                 }}>
-                <Text>Cancel</Text>
-              </TouchableHighlight>
+                  <Text style={styles.buttonLabel2}>Back to live feed</Text>
+                </TouchableHighlight>
+              </View>
             </View>
           </View>
         </Modal>
@@ -513,7 +520,6 @@ var Feed = React.createClass({
               }}>
                 <Text>Cancel</Text>
               </TouchableHighlight>
-
             </View>
           </View>
         </Modal>
@@ -614,7 +620,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#2ECC40'
   },
   buttonPost: {
-    backgroundColor: 'orange'
+    backgroundColor: '#FF585B',
+    padding: 5
   },
   buttonLabel: {
     textAlign: 'center',
@@ -626,23 +633,22 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   autocomplete: {
-        alignSelf: 'stretch',
-        height: 50,
-        backgroundColor: '#FFF',
-        borderColor: 'lightblue',
-        borderWidth: 1
-    },
-    containerAuto: {
-        flex: 1,
-        backgroundColor: '#F5FCFF',
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        marginBottom: 10,
-        marginTop: 50,
-
-    }
+    alignSelf: 'stretch',
+    height: 30,
+    width: 300,
+    backgroundColor: '#FFF',
+    borderColor: 'lightblue',
+    borderWidth: 1,
+    marginLeft: 15
+  },
+  containerAuto: {
+    flex: 1,
+    backgroundColor: '#F5FCFF'
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center'
+  }
 });
 
 AppRegistry.registerComponent('Pokegame', () => Start);
