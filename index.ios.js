@@ -358,8 +358,8 @@ var Map = React.createClass({
       {this.props.markers.map((marker, i) => (
         <MapView.Marker
           coordinate={{
-            latitude: marker.location.latitude,
-            longitude: marker.location.longitude 
+            latitude: parseFloat(marker.location.latitude),
+            longitude: parseFloat(marker.location.longitude) 
           }}
           title={marker.pokemon}
           key={i}
@@ -382,7 +382,6 @@ var Feed = React.createClass({
     }
   },
   componentDidMount() {
-    console.log('lol')
     var pokemonList = [];
     fetch('http://localhost:3000/pokemon')
     .then((pokemon) => pokemon.json())
@@ -417,6 +416,8 @@ var Feed = React.createClass({
     }).map(function (pokemon) {
       return pokemon;
     });
+
+
 
     this.setState({
       data: pokemonComplete,
@@ -466,39 +467,49 @@ var Feed = React.createClass({
         onRequestClose={() => {alert("Modal has been closed.")}}
         >
           <Map location={this.props.location} markers={this.props.markers} feed={this.props.feed} />
-          <View style={{
-            flex:1
-          }}>
-            <View style={{width:width}}>
-              <View style={styles.containerAuto}>
-                <Text style={styles.welcome}>
-                Search for a pokemon
-                </Text>
+          <View style={styles.containerAuto}>
+            <Text style={[{position: 'absolute', top: 5, left: 7}, {fontSize: 15}]}>Enter:</Text>
+            <AutoComplete
+              onSelect={this.onTyping}
+              onTyping={this.onTyping} 
+              autoCompleteFontSize={15}
+              autoCompleteTableBorderWidth={1}
+              autoCompleteRowHeight={25}
+              maximumNumberOfAutoCompleteRows={10}
+              style={styles.autocomplete} 
+              suggestions={this.state.data} 
+              placeholder='Pokemon Name'
+              />
+            <View>
+              <TouchableOpacity 
+              style={[styles.buttonPost, {position: 'absolute', top: -30, right: 7}]} 
+              onPress={this.post}
+              >
+                <Text style={styles.buttonLabel}>Post</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
+              {(this.state.pokemonList.indexOf(this.state.pokemon) > -1) ?
+              <View>
                 <View style={{flexDirection: 'row'}}>
-                  <AutoComplete
-                  onSelect={this.onTyping}
-                  onTyping={this.onTyping} 
-                  autoCompleteFontSize={15}
-                  autoCompleteTableBorderWidth={1}
-                  autoCompleteRowHeight={25}
-                  maximumNumberOfAutoCompleteRows={10}
-                  style={styles.autocomplete} 
-                  suggestions={this.state.data} 
-                  placeholder='Type Pokemon'
-                  />
-                  <TouchableOpacity 
-                  style={styles.buttonPost} 
-                  onPress={this.post}
-                  >
-                    <Text style={styles.buttonLabel}>Post</Text>
-                  </TouchableOpacity>
+                  <Image source={{uri: 'http://localhost:3000/emojis/'+this.state.pokemon.toLowerCase()+'.png'}}
+                         style={{width: 225, height: 225, marginTop: 25, marginLeft: 10}} />
+                  <Text>Name: {this.state.pokemon}</Text>
                 </View>
-                <TouchableHighlight style={[styles.button, styles.buttonBlue]} onPress={() => {
-                  this.setModalVisible1(!this.state.modalVisible1)
-                }}>
+                  <TouchableHighlight style={[styles.button, styles.buttonBlue, {marginTop: 15}]} onPress={() => {
+                    this.setModalVisible1(!this.state.modalVisible1)
+                  }}>
+                    <Text style={styles.buttonLabel2}>Back to live feed</Text>
+                  </TouchableHighlight>
+              </View>
+            : <View>
+                <TouchableHighlight style={[styles.button, styles.buttonBlue, {marginTop: 265}]} 
+                                    onPress={() => {this.setModalVisible1(!this.state.modalVisible1)}}
+                >
                   <Text style={styles.buttonLabel2}>Back to live feed</Text>
                 </TouchableHighlight>
               </View>
+              }
             </View>
           </View>
         </Modal>
@@ -608,7 +619,9 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 5,
     marginRight: 5,
-    borderRadius: 5
+    borderRadius: 5,
+    borderColor: 'black',
+    borderWidth: 1
   },
   buttonRed: {
     backgroundColor: '#FF585B',
@@ -620,6 +633,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2ECC40'
   },
   buttonPost: {
+
     backgroundColor: '#FF585B',
     padding: 5
   },
@@ -635,11 +649,11 @@ const styles = StyleSheet.create({
   autocomplete: {
     alignSelf: 'stretch',
     height: 30,
-    width: 300,
+    width: 270,
     backgroundColor: '#FFF',
     borderColor: 'lightblue',
     borderWidth: 1,
-    marginLeft: 15
+    marginLeft: 55
   },
   containerAuto: {
     flex: 1,
