@@ -416,7 +416,8 @@ var Feed = React.createClass({
     });
 
     this.setState({
-        data: pokemonComplete
+      data: pokemonComplete,
+      pokemon: text
     });
   },
 
@@ -472,11 +473,12 @@ var Feed = React.createClass({
                     Search for a pokemon
                     </Text>
                     <AutoComplete
+                      onSelect={this.onTyping}
                       onTyping={this.onTyping} style={styles.autocomplete} suggestions={this.state.data} placeholder='Type Pokemon'
-                      />
+                    />
                   </View>
 
-                <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post.bind(this)}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
+                <TouchableOpacity style={[styles.button, styles.buttonPost]} onPress={this.post}><Text style={styles.buttonLabel}>Post</Text></TouchableOpacity>
 
 
               <TouchableHighlight onPress={() => {
