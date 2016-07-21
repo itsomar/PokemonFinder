@@ -3,7 +3,6 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-import Autocomplete from 'react-native-autocomplete-input';
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -363,79 +362,6 @@ var Map = React.createClass({
   }
 })
 
-//autocompleteContainer
-
-// class AutocompleteExample extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       pokemon: [],
-//       query: ''
-//     };
-//   }
-//
-//   componentDidMount() {
-//     fetch('http://localhost:3000/pokemon').then(res => res.json()).then(json => {
-//       const { results: pokemon } = json;
-//       this.setState({ pokemon });
-//     });
-//   }
-//
-//   _findFilm(query) {
-//     if (query === '') {
-//       return [];
-//     }
-//
-//     const { pokemon } = this.state;
-//     const regex = new RegExp(`${query.trim()}`, 'i');
-//     return pokemon.filter(pokemon => pokemon.title.search(regex) >= 0);
-//   }
-//
-//   _renderFilm(pokemon) {
-//     if (pokemon.length > 0) {
-//       const { name } = pokemon[0];
-//       return (
-//         <View style={styles.info}>
-//           <Text style={styles.titleText}>{name}</Text>
-//         </View>
-//       );
-//     }
-//
-//     return (
-//       <View style={styles.info}>
-//         <Text style={styles.infoText}>Enter Pokemon</Text>
-//       </View>
-//     );
-//   }
-//
-//   render() {
-//     const { query } = this.state;
-//     const pokemon = this._findFilm(query);
-//     const comp = (s, s2) => s.toLowerCase().trim() === s2.toLowerCase().trim();
-//     return (
-//       <View style={styles.container}>
-//         {this._renderFilm(pokemon)}
-//         <Autocomplete
-//           autoCapitalize="none"
-//           autoCorrect={false}
-//           containerStyle={styles.autocompleteContainer}
-//           data={pokemon.length === 1 && comp(query, pokemon[0].name) ? [] : pokemon}
-//           defaultValue={query}
-//           onChangeText={text => this.setState({ query: text })}
-//           placeholder="Enter Star Wars film title"
-//           renderItem={({ name }) => (
-//             <TouchableOpacity onPress={() => this.setState({ query: name })}>
-//               <Text style={styles.itemText}>
-//                 {name}
-//               </Text>
-//             </TouchableOpacity>
-//           )}
-//         />
-//       </View>
-//     );
-//   }
-// }
-
 
 class Feed extends Component {
 
@@ -662,40 +588,6 @@ const styles = StyleSheet.create({
   buttonLabel2: {
     textAlign: 'center',
     fontSize: 16
-  },
-  autocompleteContainer: {
-    flex: 1,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 20
-  },
-  itemText: {
-    fontSize: 15,
-    margin: 2
-  },
-  info: {
-    paddingTop: 60,
-    flex: 4
-  },
-  infoText: {
-    textAlign: 'center'
-  },
-  titleText: {
-    fontSize: 18,
-    fontWeight: '500',
-    marginBottom: 10,
-    marginTop: 10,
-    textAlign: 'center'
-  },
-  directorText: {
-    color: 'grey',
-    fontSize: 12,
-    marginBottom: 10,
-    textAlign: 'center'
-  },
-  openingText: {
-    textAlign: 'center'
   }
 });
 
