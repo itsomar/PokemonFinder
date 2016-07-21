@@ -269,6 +269,10 @@ var Home = React.createClass({
     this.refresh()
     console.log("INITIAL STATE", this.state);
     return {
+      filtered: false,
+      pokemonList: [],
+      data: [],
+      pokemon: "",
       markers: [],
       location: {
         latitude: 0,
@@ -282,6 +286,7 @@ var Home = React.createClass({
   watchID: (null: ?number),
 
   refresh() {
+    var that = this
     fetch('http://localhost:3000/feed')
     .then((feed) => feed.json())
     .then((feedJson) => {
@@ -289,11 +294,73 @@ var Home = React.createClass({
       if (feedJson.success) {
         var reversefeed = feedJson.feed.reverse();
         console.log("FROM MONGO", reversefeed);
-        this.setState({
-          markers: reversefeed
-        })
+        if(this.state.filtered) {
+          this.setState({
+            markers: reversefeed.filter(function(item) {
+              return item.name = that.state.pokemon
+            })
+          })
+        }
+        else {
+          this.setState({
+            markers: reversefeed
+          })
+        }
       }
     }).catch((err) => console.log(err))
+  },
+
+  onTyping(text) {
+    var pokemonComplete = this.state.pokemonList.filter(function (pokemon) {
+      return pokemon.toLowerCase().startsWith(text.toLowerCase())
+    }).map(function (pokemon) {
+      return pokemon;
+    });
+
+    this.setState({
+      data: pokemonComplete,
+      pokemon: text
+    });
+  },
+
+  // filter() {
+  //   if (this.state.pokemonList.indexOf(this.state.pokemon) === -1) {
+  //     return Alert.alert('Please enter a valid pokemon name');
+  //   }
+  //   fetch('http://localhost:3000/feed?filter=' + this.state.pokemon, {
+  //     headers: {
+  //        "Content-Type": "application/json"
+  //     },
+  //     method: 'GET'
+  //   })
+  //   .then((callback) => {
+  //     if(callback.success) {
+  //       console.log("[HELLO]", callback);
+  //       this.props.refresh();
+  //       this.setModalVisible1(!this.state.modalVisible2);
+  //     } else {
+  //       console.log('error');
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+  // },
+
+  filter() {
+    console.log("ENTERED FILTER FUNCTION");
+    if(this.state.pokemon !== "All" || this.state.pokemon !== "") {
+      this.setState({
+        filtered: true
+      })
+      console.log("IN FILTER STATEMENT", this.state);
+    }
+    else {
+      this.setState({
+        filtered: false
+      })
+    }
+    return this.refresh()
   },
 
   componentDidMount: function() {
@@ -322,6 +389,23 @@ var Home = React.createClass({
         }
       })
     });
+    var pokemonList = ["All"];
+    fetch('http://localhost:3000/pokemon')
+    .then((pokemon) => pokemon.json())
+    .then((pokemonJson) => {
+      console.log(pokemonJson);
+      if (pokemonJson.success) {
+        for (var i = 0; i < pokemonJson.pokemon.length; i ++) {
+          var pokemon = pokemonJson.pokemon[i];
+          pokemonList.push(pokemon.name);
+        }
+
+        this.setState({
+          pokemonList: pokemonList
+        });
+      }
+    }).catch((err) => console.log(err));
+
   },
 
   componentWillUnmount: function() {
@@ -333,6 +417,26 @@ var Home = React.createClass({
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
       <View style={{flex: 1}}>
+        <View style={{flexDirection: 'row', marginTop: 22}}>
+          <Text>Filter: </Text>
+        <AutoComplete
+          onSelect={this.onTyping}
+          onTyping={this.onTyping}
+          autoCompleteFontSize={15}
+          autoCompleteTableBorderWidth={1}
+          autoCompleteRowHeight={25}
+          maximumNumberOfAutoCompleteRows={10}
+          style={styles.autocomplete}
+          suggestions={this.state.data}
+          placeholder='Type Pokemon'
+          />
+          <TouchableOpacity
+          style={styles.buttonPost}
+          onPress={this.filter}
+          >
+            <Text style={styles.buttonLabel}>Filter</Text>
+          </TouchableOpacity>
+        </View>
         <Map location={this.state.location} markers={this.state.markers}/>
         <Feed location={this.state.location} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh}/>
       </View>
@@ -359,7 +463,7 @@ var Map = React.createClass({
         <MapView.Marker
           coordinate={{
             latitude: marker.location.latitude,
-            longitude: marker.location.longitude 
+            longitude: marker.location.longitude
           }}
           title={marker.pokemon}
           key={i}
@@ -477,17 +581,17 @@ var Feed = React.createClass({
                 <View style={{flexDirection: 'row'}}>
                   <AutoComplete
                   onSelect={this.onTyping}
-                  onTyping={this.onTyping} 
+                  onTyping={this.onTyping}
                   autoCompleteFontSize={15}
                   autoCompleteTableBorderWidth={1}
                   autoCompleteRowHeight={25}
                   maximumNumberOfAutoCompleteRows={10}
-                  style={styles.autocomplete} 
-                  suggestions={this.state.data} 
+                  style={styles.autocomplete}
+                  suggestions={this.state.data}
                   placeholder='Type Pokemon'
                   />
-                  <TouchableOpacity 
-                  style={styles.buttonPost} 
+                  <TouchableOpacity
+                  style={styles.buttonPost}
                   onPress={this.post}
                   >
                     <Text style={styles.buttonLabel}>Post</Text>
@@ -499,27 +603,6 @@ var Feed = React.createClass({
                   <Text style={styles.buttonLabel2}>Back to live feed</Text>
                 </TouchableHighlight>
               </View>
-            </View>
-          </View>
-        </Modal>
-        <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.modalVisible2}
-          onRequestClose={() => {alert("Modal has been closed.")}}
-        >
-          <Map location={this.props.location} markers={this.props.markers} feed={this.props.feed} />
-          <View style={{
-            flex:1
-          }}>
-            <View>
-              <Text>FILTER!</Text>
-
-              <TouchableHighlight onPress={() => {
-                this.setModalVisible2(!this.state.modalVisible2)
-              }}>
-                <Text>Cancel</Text>
-              </TouchableHighlight>
             </View>
           </View>
         </Modal>
@@ -555,11 +638,6 @@ var Feed = React.createClass({
           this.setModalVisible1(true)
         }}>
           <Text style={styles.buttonLabel}>Post</Text>
-        </TouchableHighlight>
-        <TouchableHighlight style={[styles.button, styles.buttonBlue]} onPress={() => {
-          this.setModalVisible2(true)
-        }}>
-          <Text style={styles.buttonLabel2}>Filter</Text>
         </TouchableHighlight>
       </View>
     )
