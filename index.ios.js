@@ -425,7 +425,7 @@ var Feed = React.createClass({
 
   post() {
     if (this.state.pokemonList.indexOf(this.state.pokemon) === -1) {
-      return Alert.alert('Please enter a valid pokemon name')
+      return Alert.alert('Please enter a valid pokemon name');
     }
     console.log("Current state", this.state);
     fetch('http://localhost:3000/post', {
