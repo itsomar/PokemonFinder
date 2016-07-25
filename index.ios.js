@@ -189,7 +189,7 @@ var Register = React.createClass({
     return {
       username: "",
       password: "",
-      // team: "",
+      team: "",
       message: ""
     }
   },
@@ -203,8 +203,7 @@ var Register = React.createClass({
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password,
-        confirm: this.state.confirm
-        // team: this.state.team
+        team: this.state.team
       })
     })
     .then((response) => response.json())
@@ -242,11 +241,6 @@ var Register = React.createClass({
             style={{height: 40, textAlign: "center", borderColor: 'black', borderWidth: 1}}
             placeholder="Choose a password"
             onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
-          />
-          <TextInput
-            style={{height: 40, textAlign: "center", borderColor: 'black', borderWidth: 1}}
-            placeholder="Confirm password"
-            onChangeText={(text) => this.setState({confirm: text})} value={this.state.confirm} secureTextEntry={true}
           />
         <TouchableOpacity
           onPress={this.submit} style={[styles.button, styles.buttonRed]}>
