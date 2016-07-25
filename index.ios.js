@@ -97,9 +97,10 @@ var Pokegame = React.createClass({
       // Don't really need an else clause, we don't do anything in this case.
     })
     .catch(err => {
-      this.setState({
-        message: JSON.stringify(err)
-      })
+      // this.setState({
+      //   message: JSON.stringify(err)
+      console.log(err)
+      // })
     })
   },
 
