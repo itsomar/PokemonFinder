@@ -242,6 +242,17 @@ var Register = React.createClass({
             placeholder="Choose a password"
             onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
           />
+          <Text style={styles.textMed}>Pick your team</Text>
+          <Picker
+            selectedValue={this.state.team}
+            onValueChange={(text) => this.setState({team: text})}
+            >
+            <Picker.Item label="No team yet" value="Noteam" />
+            <Picker.Item label="Mystic" value="Mystic" />
+            <Picker.Item label="Instinct" value="Instinct" />
+            <Picker.Item label="Valor" value="Valor" />
+          </Picker>
+
         <TouchableOpacity
           onPress={this.submit} style={[styles.button, styles.buttonRed]}>
           <Text style={styles.buttonLabel}>Register</Text>
@@ -256,16 +267,6 @@ var Register = React.createClass({
   }
 });
 
-// <Text style={styles.textMed}>Pick your team</Text>
-//           <Picker
-//             selectedValue={this.state.team}
-//             onValueChange={(text) => this.setState({team: text})}
-//             >
-//             <Picker.Item label="No team yet" value="Noteam" />
-//             <Picker.Item label="Mystic" value="Mystic" />
-//             <Picker.Item label="Instinct" value="Instinct" />
-//             <Picker.Item label="Valor" value="Valor" />
-//           </Picker>
 
 // HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
 // HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
