@@ -97,9 +97,10 @@ var Pokegame = React.createClass({
       // Don't really need an else clause, we don't do anything in this case.
     })
     .catch(err => {
-      this.setState({
-        message: JSON.stringify(err)
-      })
+      // this.setState({
+      //   message: JSON.stringify(err)
+      console.log(err)
+      // })
     })
   },
 
@@ -219,42 +220,53 @@ var Register = React.createClass({
     });
   },
 
+  back() {
+    this.props.navigator.pop();
+  },
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.textBig}>Register</Text>
+        <Text style={[styles.textBig, {color: '#FF585B'}]}>Register</Text>
+        <Text style={{color: 'red'}}>
+          {this.state.message}
+        </Text>
         <View style={{width:width*.7}}>
           <TextInput
             style={{height: 40, textAlign: "center", borderColor: 'black', borderWidth: 1}}
-            placeholder="Enter your username"
+            placeholder="Choose a username"
             onChangeText={(text) => this.setState({username: text})} value={this.state.username}
           />
           <TextInput
             style={{height: 40, textAlign: "center", borderColor: 'black', borderWidth: 1}}
-            placeholder="Enter your password"
+            placeholder="Choose a password"
             onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
           />
           <Text style={styles.textMed}>Pick your team</Text>
           <Picker
             selectedValue={this.state.team}
-            onValueChange={(text) => this.setState({team: text})}>
+            onValueChange={(text) => this.setState({team: text})}
+            >
             <Picker.Item label="No team yet" value="Noteam" />
             <Picker.Item label="Mystic" value="Mystic" />
             <Picker.Item label="Instinct" value="Instinct" />
             <Picker.Item label="Valor" value="Valor" />
           </Picker>
+
         <TouchableOpacity
-          onPress={this.submit} style={[styles.button, styles.buttonGreen]}>
+          onPress={this.submit} style={[styles.button, styles.buttonRed]}>
           <Text style={styles.buttonLabel}>Register</Text>
         </TouchableOpacity>
-        <Text>
-          {this.state.message}
-        </Text>
+        <TouchableOpacity
+          onPress={this.back} style={[styles.button, styles.buttonBlue]}>
+          <Text style={styles.buttonLabel2}>Back to Login</Text>
+        </TouchableOpacity>
       </View>
       </View>
     );
   }
 });
+
 
 // HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
 // HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
@@ -435,6 +447,7 @@ var Home = React.createClass({
     .then((logoutJson) => {
       if (logoutJson.success) {
         // console.log(logoutJson);
+        AsyncStorage.removeItem('user');
         this.props.navigator.pop();
       }
     }).catch((err) => console.log(err));
