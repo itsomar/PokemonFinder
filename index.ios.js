@@ -577,7 +577,7 @@ var Map = React.createClass({
           title={marker.pokemon}
           key={i}
           description={Math.floor(timeAgo.toString()) + ' minute(s) ago'}
-          image={require('./pin.png')}
+          image={require('./pokeball.png')}
         />)
       })}</MapView>
       <TouchableOpacity style={styles.blue} onPress={this.nav}>
@@ -886,7 +886,7 @@ var Post = React.createClass({
       <View
         style={{
           backgroundColor: 'white',
-          borderColor: 'black',
+          borderColor: 'rgba(0,0,0,.1)',
           borderBottomWidth: 1,
           padding: 2,
           paddingLeft: 10,
@@ -951,8 +951,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     paddingTop: 8,
     paddingBottom: 8,
-    borderColor: 'black',
-    borderWidth: 1
   },
   buttonRed: {
     backgroundColor: '#FF585B'
