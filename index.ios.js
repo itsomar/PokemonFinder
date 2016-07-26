@@ -266,8 +266,39 @@ var Register = React.createClass({
 
 var Home = React.createClass({
   getInitialState() {
-    this.refresh()
-    console.log("INITIAL STATE", this.state);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        // console.log("POSITIONYO", position)
+        this.refresh(position.coords.longitude, position.coords.latitude)
+        this.setState({
+          region: {
+            longitude: position.coords.longitude,
+            latitude: position.coords.latitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
+          },
+          location: {
+            longitude: position.coords.longitude,
+            latitude: position.coords.latitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
+          }
+        });
+      },
+      (error) => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000}
+    )
+    this.watchId = navigator.geolocation.watchPosition((position) => {
+      this.setState({
+        location: {
+          longitude: position.coords.longitude,
+          latitude: position.coords.latitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421
+        }
+      })
+    })
+
     return {
       modalVisible: false,
       filtered: false,
@@ -280,8 +311,25 @@ var Home = React.createClass({
         longitude: 0,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421
+      },
+      region: {
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421
       }
     }
+  },
+
+  changeRegion(region) {
+    this.setState({
+      region:{
+        latitude: region.latitude,
+        longitude: region.longitude,
+        latitudeDelta: region.latitudeDelta,
+        longitudeDelta: region.longitudeDelta
+      }
+    })
   },
 
   setModalVisible(visible) {
@@ -290,11 +338,14 @@ var Home = React.createClass({
 
   watchID: (null: ?number),
 
-  refresh() {
+  refresh(lng, lat) {
+    console.log("Calling refresh...");
+    console.log("location: ", lng || this.state.location.longitude, ", ", lat || this.state.location.latitude);
     var that = this
-    fetch('http://localhost:3000/feed')
+    fetch('http://localhost:3000/feed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
     .then((feed) => feed.json())
     .then((feedJson) => {
+      console.log("current feed: ", feedJson);
       console.log(feedJson);
       if (feedJson.success) {
         var reversefeed = feedJson.feed.reverse();
@@ -334,6 +385,7 @@ var Home = React.createClass({
       filtered: false,
       // SET POKEMON TO EMPTY STRING?
     })
+    pokemon = ''
     return this.refresh()
   },
 
@@ -347,32 +399,12 @@ var Home = React.createClass({
     return this.refresh();
   },
 
-  componentDidMount() {
+//will mount everytime its rerendered??
+  componentWillMount() {
+
+    this.refresh()
     setInterval(this.refresh, 6*10*1000);
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          location: {
-            longitude: position.coords.longitude,
-            latitude: position.coords.latitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
-          }
-        });
-      },
-      (error) => alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000}
-    );
-    this.watchId = navigator.geolocation.watchPosition((position) => {
-      this.setState({
-        location: {
-          longitude: position.coords.longitude,
-          latitude: position.coords.latitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
-        }
-      })
-    });
+
     var pokemonList = ["All"];
     fetch('http://localhost:3000/pokemon')
     .then((pokemon) => pokemon.json())
@@ -409,7 +441,7 @@ var Home = React.createClass({
   },
 
   render() {
-    console.log("STATE OF HOME", this.state.markers);
+    // console.log("STATE OF HOME", this.state.markers);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
       <View style={{flex: 1}}>
@@ -421,7 +453,7 @@ var Home = React.createClass({
           >
          <View style={{marginTop: 22}}>
           <View>
-            <TouchableOpacity 
+            <TouchableOpacity
             onPress={this.logout}
             >
               <Text>Logout</Text>
@@ -472,8 +504,8 @@ var Home = React.createClass({
         </View>
         <View style={{backgroundColor: 'white', width: 50, height: 50}}>
         </View>
-        <Map location={this.state.location} markers={this.state.markers}/>
-        <Feed location={this.state.location} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
+        <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
+        <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
       </View>
     )
   }
@@ -482,17 +514,42 @@ var Home = React.createClass({
 
 var Map = React.createClass({
 
+  getInitialState() {
+    return {
+        latitude: this.props.location.latitude,
+        longitude: this.props.location.longitude,
+        latitudeDelta: this.props.location.latitudeDelta,
+        longitudeDelta: this.props.location.longitudeDelta
+    };
+  },
+  componentWillReceiveProps(newProps) {
+    this.setState(newProps.region)
+  },
+
+  onRegionChange(region) {
+    this.props.changeRegion(region)
+  },
+
+  nav() {
+    this.setState({
+        latitude: this.props.location.latitude,
+        longitude: this.props.location.longitude,
+        latitudeDelta: this.props.location.latitudeDelta,
+        longitudeDelta: this.props.location.longitudeDelta
+    })
+  },
+
   render() {
-    // console.log("MARKERS YO", this.props.markers);
+
     return (
-      <MapView 
+      <View style={{flex: 1}}>
+      <MapView
         style={{flex: 1}}
-        region={{
-          latitude: this.props.location.latitude,
-          longitude: this.props.location.longitude,
-          latitudeDelta: this.props.location.latitudeDelta,
-          longitudeDelta: this.props.location.longitudeDelta
-        }}
+        onRegionChange={this.onRegionChange}
+        region={{latitude: this.state.latitude,
+                longitude: this.state.longitude,
+                latitudeDelta: this.state.latitudeDelta,
+                longitudeDelta: this.state.longitudeDelta}}
         showsUserLocation={true}
       >
       {this.props.markers.map(function(marker, i) {
@@ -507,6 +564,10 @@ var Map = React.createClass({
           description={Math.floor(timeAgo.toString()) + ' minute(s) ago'}
         />)
       })}</MapView>
+    <TouchableOpacity style={styles.blue} onPress={this.nav}>
+        <Image source={require('./img/navigation2.png')} style={{width: 35, height: 35}}/>
+      </TouchableOpacity>
+      </View>
     )
   }
 })
@@ -523,11 +584,13 @@ var Feed = React.createClass({
       refreshing: false
     }
   },
-  // _onRefresh() {
-  //   this.setState({refreshing: true});
-  //   this.props.refresh()
-  //   this.setState({refreshing: false});
-  // },
+
+  _onRefresh() {
+    this.setState({refreshing: true});
+    this.props.refresh()
+    this.setState({refreshing: false});
+  },
+
   componentDidMount() {
     var pokeNames = [];
     var pokemonList = [];
@@ -641,7 +704,14 @@ var Feed = React.createClass({
         visible={this.state.modalVisible1}
         onRequestClose={() => {alert("Modal has been closed.")}}
         >
-          <Map location={this.props.location} markers={this.props.markers} feed={this.props.feed} />
+          <MapView
+            style={{flex: 1}}
+            region={{latitude: this.props.location.latitude,
+                  longitude: this.props.location.longitude,
+                  latitudeDelta: this.props.location.latitudeDelta,
+                  longitudeDelta: this.props.location.longitudeDelta}}
+            showsUserLocation={true}
+          />
           <View style={[styles.containerAuto, {borderColor: 'black', borderTopWidth: 1}]}>
             <Text style={[{position: 'absolute', top: 5, left: 7}, {fontSize: 15, marginTop: 5}]}>Enter:</Text>
             <AutoComplete
@@ -753,7 +823,7 @@ var Post = React.createClass({
       this.setState({
         upvoted: (nextProps.vote === 'up') || false,
         downvoted: (nextProps.vote === 'down') || false
-      })  
+      })
   },
   sendVote(id, vote) {
     fetch('http://localhost:3000/post/' + id, {
@@ -920,6 +990,11 @@ const styles = StyleSheet.create({
   welcome: {
     fontSize: 20,
     textAlign: 'center'
+  },
+  blue: {
+    top: 260,
+    left: 18,
+    position: 'absolute',
   },
   filterautocomplete: {
     alignSelf: 'stretch',
