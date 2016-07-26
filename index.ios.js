@@ -66,6 +66,7 @@ var Start = React.createClass({
         }}
         style={{flex: 1}}
         navigationBarHidden={true}
+        interactivePopGestureEnabled={true}
       />
     )
   }
