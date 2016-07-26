@@ -351,7 +351,7 @@ var Home = React.createClass({
   watchID: (null: ?number),
 
   refresh(lng, lat) {
-    console.log("Calling refresh...");
+    console.log("Calling refresh...LONG", this.state.location.longitude, "LAT: ", this.state.location.latitude);
     console.log("location: ", lng || this.state.location.longitude, ", ", lat || this.state.location.latitude);
     var that = this
     fetch('http://localhost:3000/feed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
@@ -544,7 +544,7 @@ var Map = React.createClass({
   },
 
   nav() {
-    this.setState({
+    this.props.changeRegion({
         latitude: this.props.location.latitude,
         longitude: this.props.location.longitude,
         latitudeDelta: this.props.location.latitudeDelta,
