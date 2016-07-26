@@ -317,6 +317,7 @@ var Home = React.createClass({
       pokemonList: [],
       data: [],
       pokemon: "",
+      id: 0,
       markers: [],
       location: {
         latitude: 0,
@@ -362,6 +363,11 @@ var Home = React.createClass({
       if (feedJson.success) {
         var reversefeed = feedJson.feed.reverse();
         // console.log("FROM MONGO", reversefeed);
+        if(this.state.id !== 0) {
+          var array = reversefeed.filter(function(item) {
+            return item._id === that.state.id
+          })
+        }
         if(this.state.filtered === true) {
           var array = reversefeed.filter(function(item) {
             return item.pokemon === that.state.pokemon
@@ -401,6 +407,12 @@ var Home = React.createClass({
     return this.refresh()
   },
 
+  filteredOne(id) {
+    this.setState({
+      id: id
+    })
+  }
+
   filter(pokeList, pokemon) {
     if (pokeList.indexOf(pokemon) === -1) {
       return Alert.alert('Please enter a valid pokemon name');
@@ -410,6 +422,7 @@ var Home = React.createClass({
     })
     return this.refresh();
   },
+
 
 //will mount everytime its rerendered??
   componentWillMount() {
@@ -880,8 +893,7 @@ var Post = React.createClass({
       </TouchableOpacity>
       )
     return (
-      <TouchableOpacity
-
+      <View
         style={{
           backgroundColor: 'white',
           borderColor: 'black',
@@ -891,8 +903,10 @@ var Post = React.createClass({
           paddingRight: 10
         }}>
         <View style={{flexDirection: 'row'}}>
-          <Image source={{uri: 'http://localhost:3000/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'}}
-            style={{width: 40, height: 40}} />
+          <TouchableOpacity onPress={this.props.filter}>
+            <Image source={{uri: 'http://localhost:3000/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'}}
+              style={{width: 40, height: 40}} />
+          </TouchableOpacity>
           <View style={{marginLeft: 10, marginTop: 3}}>
             <Text>{this.props.rowData.pokemon + ' seen ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mi away'}</Text>
             <Text>by {this.props.rowData.user.username + ' ' + Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
@@ -903,7 +917,7 @@ var Post = React.createClass({
             {up}
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     )
   }
 })
