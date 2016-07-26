@@ -577,9 +577,10 @@ var Map = React.createClass({
           title={marker.pokemon}
           key={i}
           description={Math.floor(timeAgo.toString()) + ' minute(s) ago'}
+          image={require('./pin.png')}
         />)
       })}</MapView>
-    <TouchableOpacity style={styles.blue} onPress={this.nav}>
+      <TouchableOpacity style={styles.blue} onPress={this.nav}>
         <Image source={require('./img/navigation2.png')} style={{width: 35, height: 35}}/>
       </TouchableOpacity>
       </View>
