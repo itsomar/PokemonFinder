@@ -66,7 +66,6 @@ var Start = React.createClass({
         }}
         style={{flex: 1}}
         navigationBarHidden={true}
-        interactivePopGestureEnabled={true}
       />
     )
   }
@@ -314,6 +313,10 @@ var Home = React.createClass({
 
     return {
       modalVisible: false,
+      filteredOne: {
+        on: false,
+        id: undefined
+      },
       filtered: false,
       pokemonList: [],
       data: [],
@@ -363,7 +366,17 @@ var Home = React.createClass({
       if (feedJson.success) {
         var reversefeed = feedJson.feed.reverse();
         // console.log("FROM MONGO", reversefeed);
-        if(this.state.filtered === true) {
+        if(this.state.filteredOne.on === true) {
+          console.log('[FILTERED_POKEMON]', this.state.filteredOne);
+          var array = reversefeed.filter(function(item) {
+            console.log("ITEM", item)
+            return item._id === that.state.filteredOne.id
+          })
+          this.setState({
+            markers: array
+          })
+        } else if(this.state.filtered === true) {
+          console.log('[ALLFILTER]', this.state.filtered)
           var array = reversefeed.filter(function(item) {
             return item.pokemon === that.state.pokemon
           })
@@ -396,22 +409,40 @@ var Home = React.createClass({
   all() {
     this.setState({
       filtered: false,
+      filteredOne: ({
+        on: false,
+        id: undefined
+      })
       // SET POKEMON TO EMPTY STRING?
     })
     pokemon = ''
     return this.refresh()
   },
-
-  filter(pokeList, pokemon) {
-    if (pokeList.indexOf(pokemon) === -1) {
+  filter(pokeList, pokemon, placeholder, id) {
+    if (id) {
+      this.setState({
+        filteredOne: {
+          on: true,
+          id: id
+        }
+      })
+    } else if (pokeList.indexOf(pokemon) === -1) {
       return Alert.alert('Please enter a valid pokemon name');
+    } else if (pokeList.indexOf(pokemon) > -1) {
+      this.setState({
+        filtered: true
+      })
     }
-    this.setState({
-      filtered: true
-    })
+    // if (pokeList.indexOf(pokemon) === -1) {
+    //   return Alert.alert('shit');
+    // }
+    // this.setState({
+    //   filtered: true
+    // })
+    // console.log('WHY AM I DEFINED??????', placeholder)
+    // console.log('WHAT ABOUT ME?????????', id)
     return this.refresh();
   },
-
 
 //will mount everytime its rerendered??
   componentWillMount() {
@@ -531,10 +562,10 @@ var Map = React.createClass({
 
   getInitialState() {
     return {
-        latitude: this.props.location.latitude,
-        longitude: this.props.location.longitude,
-        latitudeDelta: this.props.location.latitudeDelta,
-        longitudeDelta: this.props.location.longitudeDelta
+      latitude: this.props.location.latitude,
+      longitude: this.props.location.longitude,
+      latitudeDelta: this.props.location.latitudeDelta,
+      longitudeDelta: this.props.location.longitudeDelta
     };
   },
   componentWillReceiveProps(newProps) {
@@ -577,9 +608,10 @@ var Map = React.createClass({
           title={marker.pokemon}
           key={i}
           description={Math.floor(timeAgo.toString()) + ' minute(s) ago'}
+          image={require('./pokeball.png')}
         />)
       })}</MapView>
-    <TouchableOpacity style={styles.blue} onPress={this.nav}>
+      <TouchableOpacity style={styles.blue} onPress={this.nav}>
         <Image source={require('./img/navigation2.png')} style={{width: 35, height: 35}}/>
       </TouchableOpacity>
       </View>
@@ -804,13 +836,6 @@ var Feed = React.createClass({
             col = '#FF585B';
           }
           rating = <Text style={{marginTop: 4, fontSize: 25, marginRight: 1, color: col}}>{prefix + rowData.rating}</Text>
-          // if (rowData.rating > 0) {
-          //   rating = <Text style={{marginTop: 1, fontSize: 30, marginRight: 1, color: '#669966'}}>{"+" + rowData.rating}</Text>
-          // } else if (rowData.rating < 0) {
-          //   rating = <Text style={{marginTop: 1, fontSize: 30, marginRight: 1, color: '#FF585B'}}>{rowData.rating}</Text>
-          // } else {
-          //   rating = <Text style={{marginTop: 1, fontSize: 30, marginRight: 1, color: 'black'}}>{rowData.rating}</Text>
-          // }
           if (rowData.vote) console.log("You voted", rowData.pokemon, rowData.vote);
           return (
             <Post rowData={rowData} rating={rating} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter}/>
@@ -860,6 +885,10 @@ var Post = React.createClass({
     });
   },
 
+  selectPost() {
+    this.props.filter(this.props.pokemonList, null, null, this.props.rowData._id)
+  },
+
   render() {
     var downCol = "#FF585B";
     var upCol = "#669966";
@@ -885,22 +914,23 @@ var Post = React.createClass({
       <View
         style={{
           backgroundColor: 'white',
-          borderColor: 'black',
+          borderColor: 'rgba(0,0,0,.1)',
           borderBottomWidth: 1,
           padding: 2,
           paddingLeft: 10,
           paddingRight: 10
         }}>
         <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity onPress={this.props.filter}>
-            <Image source={{uri: 'http://localhost:3000/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'}}
+          <TouchableOpacity onPress={this.selectPost}>
+            <View style={{flexDirection: 'row'}}>
+              <Image source={{uri: 'http://localhost:3000/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'}}
               style={{width: 40, height: 40}} />
+              <View style={{marginLeft: 10, marginTop: 3}}>
+                <Text>{this.props.rowData.pokemon + ' seen ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mi away'}</Text>
+                <Text>by {this.props.rowData.user.username + ' ' + Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
+              </View>
+            </View>
           </TouchableOpacity>
-          <View style={{marginLeft: 10, marginTop: 3}}>
-            <Text>{this.props.rowData.pokemon + ' seen ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mi away'}</Text>
-            <Text>by {this.props.rowData.user.username + ' ' + Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
-          </View>
-
           <View style={[{position: 'absolute', right: 5}, {flexDirection: 'row'}]}>
             {this.props.rating}
             {down}
@@ -950,8 +980,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     paddingTop: 8,
     paddingBottom: 8,
-    borderColor: 'black',
-    borderWidth: 1
   },
   buttonRed: {
     backgroundColor: '#FF585B'
