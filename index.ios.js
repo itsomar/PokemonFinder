@@ -161,12 +161,12 @@ var Pokegame = React.createClass({
       <Text>Please sign in</Text>
       <View style={{width:width*.7}}>
         <TextInput
-          style={{height: 30, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+          style={{height: 30, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
           placeholder="Username"
           onChangeText={(username) => this.setState({username})} value={this.state.username}
         />
         <TextInput
-          style={{height: 30, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+          style={{height: 30, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
           placeholder="Password"
           onChangeText={(password) => this.setState({password})} value={this.state.password} secureTextEntry={true}
         />
@@ -466,8 +466,11 @@ var Home = React.createClass({
           visible={this.state.modalVisible}
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
-         <View style={{marginTop: 22}}>
-          <View>
+
+          <View style={[styles.container,{marginTop: 22}]}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{fontSize: 40, marginBottom: 5}}>Poke</Text><Text style={{fontSize: 40, marginBottom: 5, color: '#FF585B'}}>Finder</Text>
+            </View>
             <TouchableOpacity
             onPress={this.logout}
             >
@@ -477,11 +480,11 @@ var Home = React.createClass({
             <TouchableHighlight onPress={() => {
               this.setModalVisible(!this.state.modalVisible)
             }}>
-              <Text>Back</Text>
+              <Text>Cancel</Text>
             </TouchableHighlight>
 
+
           </View>
-         </View>
         </Modal>
         <View style={{flexDirection: 'row', marginTop: 22, position: 'absolute', top: 0, zIndex: 999}}>
           <TouchableHighlight
@@ -713,7 +716,8 @@ var Feed = React.createClass({
   render() {
     // console.log("Feed state upon render", this.state);
     return (
-      <View style={{flex:1, borderTopWidth: 1, borderColor: 'black'}}>
+      <View style={{flex:1, borderTopWidth:1, borderColor: '#d3d3d3'}}>
+
         <Modal
         animationType={"slide"}
         transparent={false}
@@ -823,6 +827,7 @@ var Feed = React.createClass({
         }}>
           <Text style={styles.buttonLabel}>Post</Text>
         </TouchableHighlight>
+
       </View>
     )
   }
@@ -885,7 +890,7 @@ var Post = React.createClass({
     return (
       <View
         style={{
-          backgroundColor: 'white',
+          backgroundColor: '#f6f6f6',
           borderColor: 'rgba(0,0,0,.1)',
           borderBottomWidth: 1,
           padding: 2,
@@ -898,7 +903,7 @@ var Post = React.createClass({
               style={{width: 40, height: 40}} />
           </TouchableOpacity>
           <View style={{marginLeft: 10, marginTop: 3}}>
-            <Text>{this.props.rowData.pokemon + ' seen ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mi away'}</Text>
+            <Text>{this.props.rowData.pokemon + ' seen ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' miles away'}</Text>
             <Text>by {this.props.rowData.user.username + ' ' + Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
           </View>
 
