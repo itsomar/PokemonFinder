@@ -5,6 +5,7 @@
  */
 import React, { Component } from 'react';
 import Triangle from 'react-native-triangle';
+import Swiper from 'react-native-swiper';
 
 import {
   AppRegistry,
@@ -122,8 +123,8 @@ var Pokegame = React.createClass({
           password: this.state.password
       }));
         this.props.navigator.push({
-          component: Home,
-          title: "Home"
+          component: NavNav,
+          title: "NavNav"
         })
       }
       else {
@@ -275,6 +276,45 @@ var Register = React.createClass({
 // HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
 // HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
 // HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
+var TitleText = React.createClass({
+  render() {
+      return (
+        <Text style={{ fontSize: 48, color: 'white' }}>
+          {this.props.label}
+        </Text>
+      )
+    }
+  })
+
+
+var NavNav = React.createClass({
+  viewStyle() {
+    return {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }
+  },
+
+  render() {
+    return (
+    <Swiper
+      loop={false}
+      index={1}
+      showsPagination={false}>
+      <View style={this.viewStyle()}>
+        <TitleText label="Left" />
+      </View>
+      <View style={{flex: 1}}>
+        <Home label="Home" />
+      </View>
+      <View style={this.viewStyle()}>
+        <TitleText label="Right" />
+      </View>
+    </Swiper>
+  )
+  }
+})
 
 var Home = React.createClass({
   getInitialState() {
