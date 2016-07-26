@@ -317,7 +317,6 @@ var Home = React.createClass({
       pokemonList: [],
       data: [],
       pokemon: "",
-      id: 0,
       markers: [],
       location: {
         latitude: 0,
@@ -406,12 +405,6 @@ var Home = React.createClass({
     pokemon = ''
     return this.refresh()
   },
-
-  filteredOne(id) {
-    this.setState({
-      id: id
-    })
-  }
 
   filter(pokeList, pokemon) {
     if (pokeList.indexOf(pokemon) === -1) {
@@ -911,6 +904,7 @@ var Post = React.createClass({
             <Text>{this.props.rowData.pokemon + ' seen ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mi away'}</Text>
             <Text>by {this.props.rowData.user.username + ' ' + Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
           </View>
+
           <View style={[{position: 'absolute', right: 5}, {flexDirection: 'row'}]}>
             {this.props.rating}
             {down}
