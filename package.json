@@ -11,6 +11,7 @@
     "react-native": "0.29.1",
     "react-native-autocomplete": "^0.1.4",
     "react-native-maps": "^0.7.1",
+    "react-native-swiper": "^1.4.7",
     "react-native-triangle": "0.0.6",
     "react-transform-hmr": "^1.0.4"
   }
