@@ -362,11 +362,6 @@ var Home = React.createClass({
       if (feedJson.success) {
         var reversefeed = feedJson.feed.reverse();
         // console.log("FROM MONGO", reversefeed);
-        if(this.state.id !== 0) {
-          var array = reversefeed.filter(function(item) {
-            return item._id === that.state.id
-          })
-        }
         if(this.state.filtered === true) {
           var array = reversefeed.filter(function(item) {
             return item.pokemon === that.state.pokemon
