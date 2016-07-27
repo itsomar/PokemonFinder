@@ -288,11 +288,9 @@ var TitleText = React.createClass({
 var Profile = React.createClass({
   render() {
     return (
-
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', backgroundColor: '#f5fcff', flex: 1}}>
           <Text style={{fontSize: 40, marginBottom: 5}}>Poke</Text><Text style={{fontSize: 40, marginBottom: 5, color: '#FF585B'}}>Finder</Text>
         </View>
-
     )
   }
 })
@@ -599,7 +597,7 @@ var Home = React.createClass({
           index={1}
           showsPagination={false}>
           <View style={{height: height*19/40}}>
-            <TitleText />
+            <Profile />
           </View>
           <View style={{height: height*19/40}}>
             <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
