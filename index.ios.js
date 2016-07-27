@@ -591,7 +591,7 @@ var Home = React.createClass({
             <Text style={styles.buttonLabel}>All</Text>
           </TouchableOpacity>
         </View>
-        <View style={{height: height / 2}}>
+        <View style={{height: height*9/20}}>
           <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
         </View>
         <Swiper
@@ -601,7 +601,7 @@ var Home = React.createClass({
           <View style={this.viewStyle()}>
             <TitleText label="Left" />
           </View>
-          <View style={{flex: 1}}>
+          <View style={{height: height*19/40}}>
             <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
           </View>
           <View style={this.viewStyle()}>
