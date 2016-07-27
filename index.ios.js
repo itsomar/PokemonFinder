@@ -287,11 +287,21 @@ var TitleText = React.createClass({
 
 var Profile = React.createClass({
   render() {
+    var teamImg = null;
     return (
-        <View style={{flexDirection: 'row', backgroundColor: '#f5fcff', flex: 1}}>
-          <Text style={{fontSize: 40, marginBottom: 5}}>Poke</Text><Text style={{fontSize: 40, marginBottom: 5, color: '#FF585B'}}>Finder</Text>
-          <Text> {Home.username} </Text>
+      <View style={{backgroundColor: '#f5fcff', flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{fontSize: 40, marginBottom: 5, backgroundColor: 'rgba(0,0,0,0)'}}>Poke</Text>
+          <Text style={{fontSize: 40, marginBottom: 5, backgroundColor: 'rgba(0,0,0,0)', color: '#FF585B'}}>Finder</Text>
         </View>
+        <Image source={{uri: 'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'}}
+               style={{width: 230, height: 230, alignItems: 'center'}}>
+          <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
+        </Image>
+        <TouchableOpacity onPress={this.props.logout}>
+          <Text>Logout</Text>
+        </TouchableOpacity>
+      </View>
     )
   }
 })
@@ -344,7 +354,8 @@ var Home = React.createClass({
     })
 
     return {
-      modalVisible: false,
+      username: '',
+      team: '',
       filteredOne: {
         on: false,
         id: undefined
@@ -378,10 +389,6 @@ var Home = React.createClass({
         longitudeDelta: region.longitudeDelta || this.state.location.longitudeDelta
       }
     })
-  },
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
   },
 
   watchID: (null: ?number),
@@ -537,44 +544,9 @@ var Home = React.createClass({
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
       <View>
-
-        <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {alert("Modal has been closed.")}}
-          >
-
-          <View style={[styles.container,{marginTop: 22}]}>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{fontSize: 40, marginBottom: 5}}>Poke</Text><Text style={{fontSize: 40, marginBottom: 5, color: '#FF585B'}}>Finder</Text>
-            </View>
-            <TouchableOpacity
-            onPress={this.logout}
-            >
-              <Text>Logout</Text>
-            </TouchableOpacity>
-
-            <TouchableHighlight onPress={() => {
-              this.setModalVisible(!this.state.modalVisible)
-            }}>
-              <Text>Cancel</Text>
-            </TouchableHighlight>
-
-
-          </View>
-        </Modal>
-
         <View style={{backgroundColor: 'white', width: 50, height: 50}}>
         </View>
         <View style={{flexDirection: 'row', marginTop: 22, position: 'absolute', top: 0, zIndex: 999}}>
-          <TouchableHighlight
-            onPress={() => {
-            this.setModalVisible(true)}}
-            style={styles.buttonSettings}
-            >
-              <Text style={styles.buttonLabel}>o</Text>
-          </TouchableHighlight>
           <AutoComplete
             autoCorrect={false}
             onSelect={this.onTyping}
@@ -609,7 +581,7 @@ var Home = React.createClass({
           index={1}
           showsPagination={false}>
           <View style={{height: height*19/40}}>
-            <Profile />
+            <Profile username={this.state.username} team={this.state.team} logout={this.logout}/>
           </View>
           <View style={{height: height*19/40}}>
             <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
