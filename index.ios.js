@@ -290,6 +290,7 @@ var Profile = React.createClass({
     return (
         <View style={{flexDirection: 'row', backgroundColor: '#f5fcff', flex: 1}}>
           <Text style={{fontSize: 40, marginBottom: 5}}>Poke</Text><Text style={{fontSize: 40, marginBottom: 5, color: '#FF585B'}}>Finder</Text>
+          <Text> {Home.username} </Text>
         </View>
     )
   }
@@ -298,6 +299,17 @@ var Profile = React.createClass({
 
 var Home = React.createClass({
   getInitialState() {
+    fetch('http://localhost:3000/user')
+    .then((user) => user.json())
+    .then((userJson) => {
+      console.log(userJson);
+      if (userJson.success) {
+        this.setState({
+          username: userJson.user.username,
+          team: userJson.user.team
+        });
+      }
+    }).catch((err) => console.log(err));
     navigator.geolocation.getCurrentPosition(
       (position) => {
         // console.log("POSITIONYO", position)
