@@ -355,17 +355,17 @@ var Home = React.createClass({
         longitude: 0,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421
-      },
+      }
     }
   },
 
   changeRegion(region) {
     this.setState({
       region:{
-        latitude: region.latitude || this.state.latitude,
-        longitude: region.longitude || this.state.longitude,
-        latitudeDelta: region.latitudeDelta || this.state.latitudeDelta,
-        longitudeDelta: region.longitudeDelta || this.state.longitudeDelta
+        latitude: region.latitude || this.state.location.latitude,
+        longitude: region.longitude || this.state.location.longitude,
+        latitudeDelta: region.latitudeDelta || this.state.location.latitudeDelta,
+        longitudeDelta: region.longitudeDelta || this.state.location.longitudeDelta
       }
     })
   },
@@ -474,10 +474,9 @@ var Home = React.createClass({
     return this.refresh();
   },
 
-
 //will mount everytime its rerendered??
   componentWillMount() {
-    
+
     this.refresh()
     setInterval(this.refresh, 6*10*1000);
 
@@ -595,19 +594,18 @@ var Home = React.createClass({
         <View style={{height: height*9/20}}>
           <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
         </View>
-
         <Swiper
           loop={false}
           index={1}
           showsPagination={false}>
           <View style={{height: height*19/40}}>
-            <Left location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
+            <Left location={this.state.location} refresh={this.refresh} />
           </View>
           <View style={{height: height*19/40}}>
             <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
           </View>
-          <View style={{height: height*19/40}}>
-            <TitleText label="Left" />
+          <View style={this.viewStyle()}>
+            <TitleText label="Right" />
           </View>
         </Swiper>
       </View>
@@ -686,7 +684,6 @@ var Left = React.createClass({
       pokeNames: [],
     }
   },
-
   componentDidMount() {
     var pokeNames = [];
     var pokemonList = [];
@@ -708,7 +705,6 @@ var Left = React.createClass({
       }
     }).catch((err) => console.log(err));
   },
-
   onSelect(pokemon) {
     var pkIndex = -1;
     for (var i = 0; i < this.state.pokemonList.length; i++) {
@@ -719,7 +715,6 @@ var Left = React.createClass({
         break;
       }
     }
-
     if (pkIndex !== -1) {
       var pkmn = this.state.pokemonList[pkIndex];
       // console.log('[POKEMONNAME]', pokemon);
@@ -730,7 +725,6 @@ var Left = React.createClass({
       })
     }
   },
-
   onTyping(text) {
     var pokemonComplete = this.state.pokemonList.filter(function (pokemon) {
       return pokemon.name.toLowerCase().startsWith(text.toLowerCase())
@@ -749,7 +743,6 @@ var Left = React.createClass({
       });
     // }
   },
-
   post() {
     if (this.state.pokeNames.indexOf(this.state.pokemon) === -1) {
       return Alert.alert('Please enter a valid pokemon name');
@@ -783,7 +776,6 @@ var Left = React.createClass({
       console.log(err);
     });
   },
-
   render() {
     return (
     <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
@@ -847,15 +839,6 @@ var Left = React.createClass({
 
 var Feed = React.createClass({
 
-  followPost() {
-    this.props.changeRegion({
-        latitude: this.props.location.latitude,
-        longitude: this.props.location.longitude,
-        latitudeDelta: this.props.location.latitudeDelta,
-        longitudeDelta: this.props.location.longitudeDelta
-    })
-  },
-
   render() {
     // console.log("Feed state upon render", this.state);
      //
@@ -863,7 +846,7 @@ var Feed = React.createClass({
 
 
     return (
-      <View style={{flex:1, borderTopWidth:1, borderColor: '#d3d3d3', backgroundColor: '#f5fcff'}}>
+      <View style={{flex: 1, borderTopWidth:1, borderColor: '#d3d3d3', backgroundColor: '#f5fcff'}}>
         <ListView
         automaticallyAdjustContentInsets={false}
         enableEmptySections={true}
@@ -884,6 +867,7 @@ var Feed = React.createClass({
           console.log("props", this.props);
           return (
             <Post rowData={rowData} rating={rating} region={this.props.region} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter} changeRegion={this.props.changeRegion}/>
+
           )
           }
         } />
@@ -964,7 +948,7 @@ var Post = React.createClass({
           backgroundColor: '#f6f6f6',
           borderColor: 'rgba(0,0,0,.1)',
           borderBottomWidth: 1,
-          padding: 2.1,
+          padding: 2,
           paddingLeft: 10,
           paddingRight: 10
         }}>
@@ -1070,7 +1054,7 @@ const styles = StyleSheet.create({
   autocomplete: {
     alignSelf: 'stretch',
     height: 30,
-    width: width*33/40,
+    width: 270,
     backgroundColor: '#FFF',
     borderColor: 'lightblue',
     borderWidth: 1,
