@@ -355,7 +355,7 @@ var Home = React.createClass({
         longitude: 0,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421
-      }
+      },
     }
   },
 
@@ -474,9 +474,10 @@ var Home = React.createClass({
     return this.refresh();
   },
 
+
 //will mount everytime its rerendered??
   componentWillMount() {
-
+    
     this.refresh()
     setInterval(this.refresh, 6*10*1000);
 
@@ -594,18 +595,19 @@ var Home = React.createClass({
         <View style={{height: height*9/20}}>
           <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
         </View>
+
         <Swiper
           loop={false}
           index={1}
           showsPagination={false}>
-          <View style={this.viewStyle()}>
-            <TitleText label="Left" />
+          <View style={{height: height*19/40}}>
+            <Left location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
           </View>
           <View style={{height: height*19/40}}>
             <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
           </View>
-          <View style={this.viewStyle()}>
-            <TitleText label="Right" />
+          <View style={{height: height*19/40}}>
+            <TitleText label="Left" />
           </View>
         </Swiper>
       </View>
@@ -674,23 +676,15 @@ var Map = React.createClass({
   }
 })
 
-var Feed = React.createClass({
+var Left = React.createClass({
   getInitialState() {
     return {
-      modalVisible1: false,
       pokemon: '',
       pokemonList: [],
       data: [],
       pokemonObj: {},
       pokeNames: [],
-      refreshing: false
     }
-  },
-
-  _onRefresh() {
-    this.setState({refreshing: true});
-    this.props.refresh()
-    this.setState({refreshing: false});
   },
 
   componentDidMount() {
@@ -707,36 +701,12 @@ var Feed = React.createClass({
           pokemonList.push(pokemon);
           pokeNames.push(pokemon.name);
         }
-
         this.setState({
           pokemonList: pokemonList,
           pokeNames: pokeNames
         });
       }
     }).catch((err) => console.log(err));
-  },
-
-  setModalVisible1(visible) {
-    this.setState({modalVisible1: visible});
-  },
-
-  onTyping(text) {
-    var pokemonComplete = this.state.pokemonList.filter(function (pokemon) {
-      return pokemon.name.toLowerCase().startsWith(text.toLowerCase())
-    })
-    // if (this.state.pokeNames.indexOf(text)) {
-    //   var pkmn = this.state.pokemonList[this.state.pokeNames.indexOf(text)]
-    //   this.setState({
-    //     data: pokemonComplete,
-    //     pokemon: text,
-    //     pokemonObj: pkmn
-    //   })
-    // } else {
-      this.setState({
-        data: pokemonComplete,
-        pokemon: text
-      });
-    // }
   },
 
   onSelect(pokemon) {
@@ -761,13 +731,23 @@ var Feed = React.createClass({
     }
   },
 
-  followPost() {
-    this.props.changeRegion({
-        latitude: this.props.location.latitude,
-        longitude: this.props.location.longitude,
-        latitudeDelta: this.props.location.latitudeDelta,
-        longitudeDelta: this.props.location.longitudeDelta
+  onTyping(text) {
+    var pokemonComplete = this.state.pokemonList.filter(function (pokemon) {
+      return pokemon.name.toLowerCase().startsWith(text.toLowerCase())
     })
+    // if (this.state.pokeNames.indexOf(text)) {
+    //   var pkmn = this.state.pokemonList[this.state.pokeNames.indexOf(text)]
+    //   this.setState({
+    //     data: pokemonComplete,
+    //     pokemon: text,
+    //     pokemonObj: pkmn
+    //   })
+    // } else {
+      this.setState({
+        data: pokemonComplete,
+        pokemon: text
+      });
+    // }
   },
 
   post() {
@@ -795,7 +775,6 @@ var Feed = React.createClass({
           pokemon: ''
         });
         this.props.refresh();
-        this.setModalVisible1(!this.state.modalVisible1);
       } else {
         console.log('error');
       }
@@ -806,6 +785,78 @@ var Feed = React.createClass({
   },
 
   render() {
+    return (
+    <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
+      <Text style={[{position: 'absolute', top: 5, left: 7}, {fontSize: 15, marginTop: 5}]}>Enter:</Text>
+      <AutoComplete
+        autoCorrect={false}
+        onSelect={this.onSelect}
+        onTyping={this.onTyping}
+        autoCompleteFontSize={15}
+        autoCompleteTableBorderWidth={1}
+        autoCompleteRowHeight={25}
+        maximumNumberOfAutoCompleteRows={10}
+        autoCompleteTableBackgroundColor='white'
+        style={[styles.autocomplete, {marginTop: 5}]}
+        suggestions={this.state.data.map((p) => { return p.name})}
+        placeholder='Pokemon Name'
+        value={this.state.pokemon}
+      />
+      <View>
+        {(Object.keys(this.state.pokemonObj).length !== 0) ?
+        <View>
+          <View style={{flexDirection: 'row'}}>
+            <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
+                   style={{width: 246, height: 246}} />
+            <View style={{position: 'absolute', top: 90, right: 20}}>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{fontWeight: 'bold'}}>Name: </Text><Text>{this.state.pokemonObj.name}</Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{fontWeight: 'bold'}}>No: </Text><Text>{this.state.pokemonObj.number}</Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{fontWeight: 'bold'}}>Type: </Text><Text>{this.state.pokemonObj.types}</Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{fontWeight: 'bold'}}>Rarity: </Text><Text>{this.state.pokemonObj.rarity}</Text>
+              </View>
+            </View>
+          </View>
+            <TouchableOpacity
+            style={[styles.button, styles.buttonRed]}
+            onPress={this.post}
+            >
+              <Text style={styles.buttonLabel}>Post</Text>
+            </TouchableOpacity>
+        </View>
+      : <View>
+          <TouchableOpacity
+          style={[styles.button, styles.buttonRed, {marginTop: 246}]}
+          onPress={this.post}
+          >
+            <Text style={styles.buttonLabel}>Post</Text>
+          </TouchableOpacity>
+        </View>
+        }
+      </View>
+    </View>
+    )
+  }
+})
+
+var Feed = React.createClass({
+
+  followPost() {
+    this.props.changeRegion({
+        latitude: this.props.location.latitude,
+        longitude: this.props.location.longitude,
+        latitudeDelta: this.props.location.latitudeDelta,
+        longitudeDelta: this.props.location.longitudeDelta
+    })
+  },
+
+  render() {
     // console.log("Feed state upon render", this.state);
      //
     //  changeRegion{this.followPost}
@@ -813,82 +864,6 @@ var Feed = React.createClass({
 
     return (
       <View style={{flex:1, borderTopWidth:1, borderColor: '#d3d3d3', backgroundColor: '#f5fcff'}}>
-
-        <Modal
-        animationType={"slide"}
-        transparent={false}
-        visible={this.state.modalVisible1}
-        onRequestClose={() => {alert("Modal has been closed.")}}
-        >
-          <MapView
-            style={{flex: 1}}
-            region={{latitude: this.props.location.latitude,
-                  longitude: this.props.location.longitude,
-                  latitudeDelta: this.props.location.latitudeDelta,
-                  longitudeDelta: this.props.location.longitudeDelta}}
-            showsUserLocation={true}
-          />
-          <View style={[styles.containerAuto, {borderColor: 'black', borderTopWidth: 1}]}>
-            <Text style={[{position: 'absolute', top: 5, left: 7}, {fontSize: 15, marginTop: 5}]}>Enter:</Text>
-            <AutoComplete
-              autoCorrect={false}
-              onSelect={this.onSelect}
-              onTyping={this.onTyping}
-              autoCompleteFontSize={15}
-              autoCompleteTableBorderWidth={1}
-              autoCompleteRowHeight={25}
-              maximumNumberOfAutoCompleteRows={10}
-              autoCompleteTableBackgroundColor='white'
-              style={[styles.autocomplete, {marginTop: 5}]}
-              suggestions={this.state.data.map((p) => { return p.name})}
-              placeholder='Pokemon Name'
-              />
-            <View>
-              <TouchableOpacity
-              style={[styles.buttonPost, {position: 'absolute', top: -30, right: 7}]}
-              onPress={this.post}
-              >
-                <Text style={styles.buttonLabel}>Post</Text>
-              </TouchableOpacity>
-            </View>
-            <View>
-              {(Object.keys(this.state.pokemonObj).length !== 0) ?
-              <View>
-                <View style={{flexDirection: 'row'}}>
-                  <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
-                         style={{width: 250, height: 250}} />
-                  <View style={{position: 'absolute', top: 90, right: 20}}>
-                    <View style={{flexDirection: 'row'}}>
-                      <Text style={{fontWeight: 'bold'}}>Name: </Text><Text>{this.state.pokemonObj.name}</Text>
-                    </View>
-                    <View style={{flexDirection: 'row'}}>
-                      <Text style={{fontWeight: 'bold'}}>No: </Text><Text>{this.state.pokemonObj.number}</Text>
-                    </View>
-                    <View style={{flexDirection: 'row'}}>
-                      <Text style={{fontWeight: 'bold'}}>Type: </Text><Text>{this.state.pokemonObj.types}</Text>
-                    </View>
-                    <View style={{flexDirection: 'row'}}>
-                      <Text style={{fontWeight: 'bold'}}>Rarity: </Text><Text>{this.state.pokemonObj.rarity}</Text>
-                    </View>
-                  </View>
-                </View>
-                  <TouchableHighlight style={[styles.button, styles.buttonBlue, {marginTop: 11}]} onPress={() => {
-                    this.setModalVisible1(!this.state.modalVisible1)
-                  }}>
-                    <Text style={styles.buttonLabel2}>Back to live feed</Text>
-                  </TouchableHighlight>
-              </View>
-            : <View>
-                <TouchableHighlight style={[styles.button, styles.buttonBlue, {marginTop: 261}]}
-                                    onPress={() => {this.setModalVisible1(!this.state.modalVisible1)}}
-                >
-                  <Text style={styles.buttonLabel2}>Back to live feed</Text>
-                </TouchableHighlight>
-              </View>
-              }
-            </View>
-          </View>
-        </Modal>
         <ListView
         automaticallyAdjustContentInsets={false}
         enableEmptySections={true}
@@ -908,15 +883,9 @@ var Feed = React.createClass({
           if (rowData.vote) console.log("You voted", rowData.pokemon, rowData.vote);
           return (
             <Post rowData={rowData} rating={rating} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter}/>
-
           )
           }
         } />
-        <TouchableHighlight style={[styles.button, styles.buttonRed]} onPress={() => {
-          this.setModalVisible1(true)
-        }}>
-          <Text style={styles.buttonLabel}>Post</Text>
-        </TouchableHighlight>
       </View>
     )
   }
@@ -987,7 +956,7 @@ var Post = React.createClass({
           backgroundColor: '#f6f6f6',
           borderColor: 'rgba(0,0,0,.1)',
           borderBottomWidth: 1,
-          padding: 2,
+          padding: 2.1,
           paddingLeft: 10,
           paddingRight: 10
         }}>
@@ -1093,7 +1062,7 @@ const styles = StyleSheet.create({
   autocomplete: {
     alignSelf: 'stretch',
     height: 30,
-    width: 270,
+    width: width*33/40,
     backgroundColor: '#FFF',
     borderColor: 'lightblue',
     borderWidth: 1,
