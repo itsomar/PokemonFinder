@@ -582,6 +582,7 @@ var Home = React.createClass({
           showsPagination={false}>
           <View style={{height: height*19/40}}>
             <Profile username={this.state.username} team={this.state.team} logout={this.logout}/>
+
           </View>
           <View style={{height: height*19/40}}>
             <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
