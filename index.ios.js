@@ -95,7 +95,6 @@ var Pokegame = React.createClass({
         })
         return this.submit()
       }
-      // Don't really need an else clause, we don't do anything in this case.
     })
     .catch(err => {
       // this.setState({
@@ -134,7 +133,6 @@ var Pokegame = React.createClass({
       }
     })
   },
-//LOGOUT
 
   register() {
     this.props.navigator.push({
@@ -158,15 +156,15 @@ var Pokegame = React.createClass({
       <View style={{flexDirection: 'row'}}>
         <Text style={{fontSize: 40, marginBottom: 5}}>Poke</Text><Text style={{fontSize: 40, marginBottom: 5, color: '#FF585B'}}>Finder</Text>
       </View>
-      <Text>Please sign in</Text>
+      <Text style={{color: '#a9a9a9'}}>Please sign in</Text>
       <View style={{width:width*.7}}>
         <TextInput
-          style={{height: 30, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+          style={{height: 30, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
           placeholder="Username"
           onChangeText={(username) => this.setState({username})} value={this.state.username}
         />
         <TextInput
-          style={{height: 30, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+          style={{height: 30, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
           placeholder="Password"
           onChangeText={(password) => this.setState({password})} value={this.state.password} secureTextEntry={true}
         />
@@ -234,16 +232,16 @@ var Register = React.createClass({
         </Text>
         <View style={{width:width*.7}}>
           <TextInput
-            style={{height: 40, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+            style={{height: 40, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
             placeholder="Choose a username"
             onChangeText={(text) => this.setState({username: text})} value={this.state.username}
           />
           <TextInput
-            style={{height: 40, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+            style={{height: 40, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
             placeholder="Choose a password"
             onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
           />
-          <Text style={styles.textMed}>Pick your team</Text>
+          <Text style={[styles.textMed, {color: '#a9a9a9'}]}>Pick your team</Text>
           <Picker
             selectedValue={this.state.team}
             onValueChange={(text) => this.setState({team: text})}
@@ -286,7 +284,6 @@ var TitleText = React.createClass({
     }
   })
 
-
 // var NavNav = React.createClass({
   // viewStyle() {
   //   return {
@@ -315,6 +312,17 @@ var TitleText = React.createClass({
 //   )
 //   }
 // })
+var Profile = React.createClass({
+  render() {
+    return (
+
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{fontSize: 40, marginBottom: 5}}>Poke</Text><Text style={{fontSize: 40, marginBottom: 5, color: '#FF585B'}}>Finder</Text>
+        </View>
+
+    )
+  }
+})
 
 var Home = React.createClass({
   getInitialState() {
@@ -529,7 +537,13 @@ var Home = React.createClass({
       if (logoutJson.success) {
         // console.log(logoutJson);
         AsyncStorage.removeItem('user');
-        this.props.navigator.pop();
+        console.log("Navigating away");
+        // this.props.navigator.push({
+        //   component: Pokegame,
+        //   title: 'Pokegame'
+        // });
+
+        this.props.navigator.pop()
       }
     }).catch((err) => console.log(err));
   },
@@ -546,8 +560,11 @@ var Home = React.createClass({
           visible={this.state.modalVisible}
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
-         <View style={{marginTop: 22}}>
-          <View>
+
+          <View style={[styles.container,{marginTop: 22}]}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{fontSize: 40, marginBottom: 5}}>Poke</Text><Text style={{fontSize: 40, marginBottom: 5, color: '#FF585B'}}>Finder</Text>
+            </View>
             <TouchableOpacity
             onPress={this.logout}
             >
@@ -557,11 +574,11 @@ var Home = React.createClass({
             <TouchableHighlight onPress={() => {
               this.setModalVisible(!this.state.modalVisible)
             }}>
-              <Text>Back</Text>
+              <Text>Cancel</Text>
             </TouchableHighlight>
 
+
           </View>
-         </View>
         </Modal>
           <View style={{backgroundColor: 'white', width: 50, height: 50}}>
           </View>
@@ -820,7 +837,8 @@ var Feed = React.createClass({
 
 
     return (
-      <View style={{flex:1, borderTopWidth: 1, borderColor: 'black'}}>
+      <View style={{flex:1, borderTopWidth:1, borderColor: '#d3d3d3', backgroundColor: '#f5fcff'}}>
+
         <Modal
         animationType={"slide"}
         transparent={false}
@@ -915,6 +933,7 @@ var Feed = React.createClass({
           if (rowData.vote) console.log("You voted", rowData.pokemon, rowData.vote);
           return (
             <Post rowData={rowData} rating={rating} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter}/>
+
           )
           }
         } />
@@ -990,7 +1009,7 @@ var Post = React.createClass({
     return (
       <View
         style={{
-          backgroundColor: 'white',
+          backgroundColor: '#f6f6f6',
           borderColor: 'rgba(0,0,0,.1)',
           borderBottomWidth: 1,
           padding: 2,
@@ -1003,7 +1022,7 @@ var Post = React.createClass({
               <Image source={{uri: 'http://localhost:3000/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'}}
               style={{width: 40, height: 40}} />
               <View style={{marginLeft: 10, marginTop: 3}}>
-                <Text>{this.props.rowData.pokemon + ' seen ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mi away'}</Text>
+                <Text>{this.props.rowData.pokemon + ' seen ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' miles away'}</Text>
                 <Text>by {this.props.rowData.user.username + ' ' + Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
               </View>
             </View>
