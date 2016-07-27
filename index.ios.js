@@ -599,13 +599,13 @@ var Home = React.createClass({
           index={1}
           showsPagination={false}>
           <View style={{height: height*19/40}}>
-            <Left location={this.state.location} refresh={this.refresh} />
+            <TitleText />
           </View>
           <View style={{height: height*19/40}}>
             <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
           </View>
-          <View style={this.viewStyle()}>
-            <TitleText label="Right" />
+          <View style={{height: height*19/40}}>
+            <Right location={this.state.location} refresh={this.refresh} />
           </View>
         </Swiper>
       </View>
@@ -674,7 +674,7 @@ var Map = React.createClass({
   }
 })
 
-var Left = React.createClass({
+var Right = React.createClass({
   getInitialState() {
     return {
       pokemon: '',
