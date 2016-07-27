@@ -95,7 +95,6 @@ var Pokegame = React.createClass({
         })
         return this.submit()
       }
-      // Don't really need an else clause, we don't do anything in this case.
     })
     .catch(err => {
       // this.setState({
@@ -134,7 +133,6 @@ var Pokegame = React.createClass({
       }
     })
   },
-//LOGOUT
 
   register() {
     this.props.navigator.push({
@@ -158,7 +156,7 @@ var Pokegame = React.createClass({
       <View style={{flexDirection: 'row'}}>
         <Text style={{fontSize: 40, marginBottom: 5}}>Poke</Text><Text style={{fontSize: 40, marginBottom: 5, color: '#FF585B'}}>Finder</Text>
       </View>
-      <Text>Please sign in</Text>
+      <Text style={{color: '#a9a9a9'}}>Please sign in</Text>
       <View style={{width:width*.7}}>
         <TextInput
           style={{height: 30, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
@@ -234,16 +232,16 @@ var Register = React.createClass({
         </Text>
         <View style={{width:width*.7}}>
           <TextInput
-            style={{height: 40, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+            style={{height: 40, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
             placeholder="Choose a username"
             onChangeText={(text) => this.setState({username: text})} value={this.state.username}
           />
           <TextInput
-            style={{height: 40, textAlign: "center", borderColor: 'black', borderWidth: 1}}
+            style={{height: 40, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
             placeholder="Choose a password"
             onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
           />
-          <Text style={styles.textMed}>Pick your team</Text>
+          <Text style={[styles.textMed, {color: '#a9a9a9'}]}>Pick your team</Text>
           <Picker
             selectedValue={this.state.team}
             onValueChange={(text) => this.setState({team: text})}
@@ -303,7 +301,7 @@ var NavNav = React.createClass({
       index={1}
       showsPagination={false}>
       <View style={this.viewStyle()}>
-        <TitleText label="Left" />
+        <Profile label="Left" />
       </View>
       <View style={{flex: 1}}>
         <Home label="Home" />
@@ -313,6 +311,18 @@ var NavNav = React.createClass({
       </View>
     </Swiper>
   )
+  }
+})
+
+var Profile = React.createClass({
+  render() {
+    return (
+
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{fontSize: 40, marginBottom: 5}}>Poke</Text><Text style={{fontSize: 40, marginBottom: 5, color: '#FF585B'}}>Finder</Text>
+        </View>
+
+    )
   }
 })
 
@@ -521,7 +531,13 @@ var Home = React.createClass({
       if (logoutJson.success) {
         // console.log(logoutJson);
         AsyncStorage.removeItem('user');
-        this.props.navigator.pop();
+        console.log("Navigating away");
+        // this.props.navigator.push({
+        //   component: Pokegame,
+        //   title: 'Pokegame'
+        // });
+
+        this.props.navigator.pop()
       }
     }).catch((err) => console.log(err));
   },
@@ -787,7 +803,7 @@ var Feed = React.createClass({
   render() {
     // console.log("Feed state upon render", this.state);
     return (
-      <View style={{flex:1, borderTopWidth:1, borderColor: '#d3d3d3'}}>
+      <View style={{flex:1, borderTopWidth:1, borderColor: '#d3d3d3', backgroundColor: '#f5fcff'}}>
 
         <Modal
         animationType={"slide"}
@@ -883,6 +899,7 @@ var Feed = React.createClass({
           if (rowData.vote) console.log("You voted", rowData.pokemon, rowData.vote);
           return (
             <Post rowData={rowData} rating={rating} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter}/>
+
           )
           }
         } />
@@ -891,7 +908,6 @@ var Feed = React.createClass({
         }}>
           <Text style={styles.buttonLabel}>Post</Text>
         </TouchableHighlight>
-
       </View>
     )
   }
