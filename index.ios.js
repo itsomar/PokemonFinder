@@ -284,34 +284,7 @@ var TitleText = React.createClass({
     }
   })
 
-// var NavNav = React.createClass({
-  // viewStyle() {
-  //   return {
-  //     flex: 1,
-  //     justifyContent: 'center',
-  //     alignItems: 'center',
-  //   }
-  // },
-//
-//   render() {
-//     return (
-//     <Swiper
-//       loop={false}
-//       index={1}
-//       showsPagination={false}>
-//       <View style={this.viewStyle()}>
-//         <TitleText label="Left" />
-//       </View>
-//       <View style={{flex: 1}}>
-//         <Home label="Home" />
-//       </View>
-//       <View style={this.viewStyle()}>
-//         <TitleText label="Right" />
-//       </View>
-//     </Swiper>
-//   )
-//   }
-// })
+
 var Profile = React.createClass({
   render() {
     return (
@@ -323,6 +296,7 @@ var Profile = React.createClass({
     )
   }
 })
+
 
 var Home = React.createClass({
   getInitialState() {
@@ -580,59 +554,60 @@ var Home = React.createClass({
 
           </View>
         </Modal>
-          <View style={{backgroundColor: 'white', width: 50, height: 50}}>
+
+        <View style={{backgroundColor: 'white', width: 50, height: 50}}>
+        </View>
+        <View style={{flexDirection: 'row', marginTop: 22, position: 'absolute', top: 0, zIndex: 999}}>
+          <TouchableHighlight
+            onPress={() => {
+            this.setModalVisible(true)}}
+            style={styles.buttonSettings}
+            >
+              <Text style={styles.buttonLabel}>o</Text>
+          </TouchableHighlight>
+          <AutoComplete
+            autoCorrect={false}
+            onSelect={this.onTyping}
+            onTyping={this.onTyping}
+            autoCompleteFontSize={15}
+            autoCompleteTableBorderWidth={1}
+            autoCompleteRowHeight={25}
+            autoCompleteTableBackgroundColor='white'
+            maximumNumberOfAutoCompleteRows={10}
+            style={styles.filterautocomplete}
+            suggestions={this.state.data}
+            placeholder='Type Pokemon'
+          />
+          <TouchableOpacity
+            style={styles.buttonPost}
+            onPress={this.filter.bind(this, this.state.pokemonList, this.state.pokemon)}
+            >
+            <Text style={styles.buttonLabel}>Filter</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonAll}
+            onPress={this.all}
+            >
+            <Text style={styles.buttonLabel}>All</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{height: height*9/20}}>
+          <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
+        </View>
+        <Swiper
+          loop={false}
+          index={1}
+          showsPagination={false}>
+          <View style={this.viewStyle()}>
+            <TitleText label="Left" />
           </View>
-          <View style={{flexDirection: 'row', marginTop: 22, position: 'absolute', top: 0, zIndex: 999}}>
-            <TouchableHighlight
-              onPress={() => {
-              this.setModalVisible(true)}}
-              style={styles.buttonSettings}
-              >
-                <Text style={styles.buttonLabel}>o</Text>
-            </TouchableHighlight>
-            <AutoComplete
-              autoCorrect={false}
-              onSelect={this.onTyping}
-              onTyping={this.onTyping}
-              autoCompleteFontSize={15}
-              autoCompleteTableBorderWidth={1}
-              autoCompleteRowHeight={25}
-              autoCompleteTableBackgroundColor='white'
-              maximumNumberOfAutoCompleteRows={10}
-              style={styles.filterautocomplete}
-              suggestions={this.state.data}
-              placeholder='Type Pokemon'
-            />
-            <TouchableOpacity
-              style={styles.buttonPost}
-              onPress={this.filter.bind(this, this.state.pokemonList, this.state.pokemon)}
-              >
-              <Text style={styles.buttonLabel}>Filter</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonAll}
-              onPress={this.all}
-              >
-              <Text style={styles.buttonLabel}>All</Text>
-            </TouchableOpacity>
+          <View style={{height: height*19/40}}>
+            <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
           </View>
-          <View style={{height: height*9/20}}>
-            <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
+          <View style={this.viewStyle()}>
+            <TitleText label="Right" />
           </View>
-          <Swiper
-            loop={false}
-            index={1}
-            showsPagination={false}>
-            <View style={this.viewStyle()}>
-              <TitleText label="Left" />
-            </View>
-            <View style={{height: height*19/40}}>
-              <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
-            </View>
-            <View style={this.viewStyle()}>
-              <TitleText label="Right" />
-            </View>
-          </Swiper>
+        </Swiper>
       </View>
     )
   }
