@@ -388,10 +388,10 @@ var Home = React.createClass({
   changeRegion(region) {
     this.setState({
       region:{
-        latitude: region.latitude,
-        longitude: region.longitude,
-        latitudeDelta: region.latitudeDelta,
-        longitudeDelta: region.longitudeDelta
+        latitude: region.latitude || this.state.latitude,
+        longitude: region.longitude || this.state.longitude,
+        latitudeDelta: region.latitudeDelta || this.state.latitudeDelta,
+        longitudeDelta: region.longitudeDelta || this.state.longitudeDelta
       }
     })
   },
@@ -616,7 +616,7 @@ var Home = React.createClass({
               <Text style={styles.buttonLabel}>All</Text>
             </TouchableOpacity>
           </View>
-          <View style={{height: height / 2}}>
+          <View style={{height: height*9/20}}>
             <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
           </View>
           <Swiper
@@ -626,7 +626,7 @@ var Home = React.createClass({
             <View style={this.viewStyle()}>
               <TitleText label="Left" />
             </View>
-            <View style={{flex: 1}}>
+            <View style={{height: height*19/40}}>
               <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
             </View>
             <View style={this.viewStyle()}>
@@ -786,15 +786,6 @@ var Feed = React.createClass({
     }
   },
 
-  followPost() {
-    this.props.changeRegion({
-        latitude: this.props.location.latitude,
-        longitude: this.props.location.longitude,
-        latitudeDelta: this.props.location.latitudeDelta,
-        longitudeDelta: this.props.location.longitudeDelta
-    })
-  },
-
   post() {
     if (this.state.pokeNames.indexOf(this.state.pokemon) === -1) {
       return Alert.alert('Please enter a valid pokemon name');
@@ -837,7 +828,7 @@ var Feed = React.createClass({
 
 
     return (
-      <View style={{flex:1, borderTopWidth:1, borderColor: '#d3d3d3', backgroundColor: '#f5fcff'}}>
+      <View style={{flex: 1, borderTopWidth:1, borderColor: '#d3d3d3', backgroundColor: '#f5fcff'}}>
 
         <Modal
         animationType={"slide"}
@@ -931,8 +922,9 @@ var Feed = React.createClass({
           }
           rating = <Text style={{marginTop: 4, fontSize: 25, marginRight: 1, color: col}}>{prefix + rowData.rating}</Text>
           if (rowData.vote) console.log("You voted", rowData.pokemon, rowData.vote);
+          console.log("props", this.props);
           return (
-            <Post rowData={rowData} rating={rating} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter}/>
+            <Post rowData={rowData} rating={rating} region={this.props.region} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter} changeRegion={this.props.changeRegion}/>
 
           )
           }
@@ -981,8 +973,15 @@ var Post = React.createClass({
   },
 
   selectPost() {
+    // console.log("HEY ROW DATA", this.props.rowData.location)
+    console.log("[POST props]", this.props);
     this.props.filter(this.props.pokemonList, null, null, this.props.rowData._id);
-    this.props.changeRegion()
+    this.props.changeRegion(
+      { latitude: this.props.rowData.location.latitude,
+        longitude: this.props.rowData.location.longitude,
+        latitudeDelta: this.props.region.latitudeDelta,
+        longitudeDelta: this.props.region.longitudeDelta,
+    })
   },
 
   render() {
