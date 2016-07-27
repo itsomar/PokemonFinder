@@ -362,10 +362,10 @@ var Home = React.createClass({
   changeRegion(region) {
     this.setState({
       region:{
-        latitude: region.latitude,
-        longitude: region.longitude,
-        latitudeDelta: region.latitudeDelta,
-        longitudeDelta: region.longitudeDelta
+        latitude: region.latitude || this.state.latitude,
+        longitude: region.longitude || this.state.longitude,
+        latitudeDelta: region.latitudeDelta || this.state.latitudeDelta,
+        longitudeDelta: region.longitudeDelta || this.state.longitudeDelta
       }
     })
   },
@@ -881,8 +881,9 @@ var Feed = React.createClass({
           }
           rating = <Text style={{marginTop: 4, fontSize: 25, marginRight: 1, color: col}}>{prefix + rowData.rating}</Text>
           if (rowData.vote) console.log("You voted", rowData.pokemon, rowData.vote);
+          console.log("props", this.props);
           return (
-            <Post rowData={rowData} rating={rating} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter}/>
+            <Post rowData={rowData} rating={rating} region={this.props.region} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter} changeRegion={this.props.changeRegion}/>
           )
           }
         } />
@@ -925,8 +926,15 @@ var Post = React.createClass({
   },
 
   selectPost() {
+    // console.log("HEY ROW DATA", this.props.rowData.location)
+    console.log("[POST props]", this.props);
     this.props.filter(this.props.pokemonList, null, null, this.props.rowData._id);
-    this.props.changeRegion()
+    this.props.changeRegion(
+      { latitude: this.props.rowData.location.latitude,
+        longitude: this.props.rowData.location.longitude,
+        latitudeDelta: this.props.region.latitudeDelta,
+        longitudeDelta: this.props.region.longitudeDelta,
+    })
   },
 
   render() {
