@@ -547,6 +547,12 @@ var Home = React.createClass({
         <View style={{backgroundColor: 'white', width: 50, height: 50}}>
         </View>
         <View style={{flexDirection: 'row', marginTop: 22, position: 'absolute', top: 0, zIndex: 999}}>
+          <TouchableOpacity
+            style={styles.buttonAll}
+            onPress={this.all}
+            >
+            <Text style={styles.buttonLabel}>All</Text>
+          </TouchableOpacity>
           <AutoComplete
             autoCorrect={false}
             onSelect={this.onTyping}
@@ -565,12 +571,6 @@ var Home = React.createClass({
             onPress={this.filter.bind(this, this.state.pokemonList, this.state.pokemon)}
             >
             <Text style={styles.buttonLabel}>Filter</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonAll}
-            onPress={this.all}
-            >
-            <Text style={styles.buttonLabel}>All</Text>
           </TouchableOpacity>
         </View>
         <View style={{height: height*9/20}}>
@@ -1010,8 +1010,6 @@ const styles = StyleSheet.create({
   },
   buttonAll: {
     backgroundColor: '#FF585B',
-    borderColor: 'white',
-    borderLeftWidth: 1,
     paddingTop: 5,
     paddingBottom: 5,
     paddingLeft: 10,
@@ -1036,7 +1034,7 @@ const styles = StyleSheet.create({
   autocomplete: {
     alignSelf: 'stretch',
     height: 30,
-    width: 270,
+    width: width*33/40,
     backgroundColor: '#FFF',
     borderColor: 'lightblue',
     borderWidth: 1,
@@ -1058,7 +1056,7 @@ const styles = StyleSheet.create({
   filterautocomplete: {
     alignSelf: 'stretch',
     height: 30,
-    width: 260,
+    width: width*199/256,
     backgroundColor: '#FFF',
     borderColor: 'lightblue',
     borderWidth: 1
