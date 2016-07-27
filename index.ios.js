@@ -24,7 +24,7 @@ import {
   Image,
   Modal,
   TouchableHighlight,
-  RefreshControl
+  RefreshControl,
 } from 'react-native';
 
 var reactNative = require('react-native');
@@ -123,8 +123,8 @@ var Pokegame = React.createClass({
           password: this.state.password
       }));
         this.props.navigator.push({
-          component: NavNav,
-          title: "NavNav"
+          component: Home,
+          title: "Home"
         })
       }
       else {
@@ -287,34 +287,34 @@ var TitleText = React.createClass({
   })
 
 
-var NavNav = React.createClass({
-  viewStyle() {
-    return {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    }
-  },
-
-  render() {
-    return (
-    <Swiper
-      loop={false}
-      index={1}
-      showsPagination={false}>
-      <View style={this.viewStyle()}>
-        <TitleText label="Left" />
-      </View>
-      <View style={{flex: 1}}>
-        <Home label="Home" />
-      </View>
-      <View style={this.viewStyle()}>
-        <TitleText label="Right" />
-      </View>
-    </Swiper>
-  )
-  }
-})
+// var NavNav = React.createClass({
+  // viewStyle() {
+  //   return {
+  //     flex: 1,
+  //     justifyContent: 'center',
+  //     alignItems: 'center',
+  //   }
+  // },
+//
+//   render() {
+//     return (
+//     <Swiper
+//       loop={false}
+//       index={1}
+//       showsPagination={false}>
+//       <View style={this.viewStyle()}>
+//         <TitleText label="Left" />
+//       </View>
+//       <View style={{flex: 1}}>
+//         <Home label="Home" />
+//       </View>
+//       <View style={this.viewStyle()}>
+//         <TitleText label="Right" />
+//       </View>
+//     </Swiper>
+//   )
+//   }
+// })
 
 var Home = React.createClass({
   getInitialState() {
@@ -393,6 +393,14 @@ var Home = React.createClass({
   },
 
   watchID: (null: ?number),
+
+  viewStyle() {
+    return {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }
+  },
 
   refresh(lng, lat) {
     console.log("Calling refresh...LONG", this.state.location.longitude, "LAT: ", this.state.location.latitude);
@@ -530,7 +538,8 @@ var Home = React.createClass({
     // console.log("STATE OF HOME", this.state.markers);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
-      <View style={{flex: 1}}>
+      <View>
+
         <Modal
           animationType={"slide"}
           transparent={false}
@@ -554,49 +563,63 @@ var Home = React.createClass({
           </View>
          </View>
         </Modal>
-        <View style={{flexDirection: 'row', marginTop: 22, position: 'absolute', top: 0, zIndex: 999}}>
-          <TouchableHighlight
-            onPress={() => {
-            this.setModalVisible(true)}}
-            style={styles.buttonSettings}
-            >
-              <Text style={styles.buttonLabel}>o</Text>
-          </TouchableHighlight>
-          <AutoComplete
-            autoCorrect={false}
-            onSelect={this.onTyping}
-            onTyping={this.onTyping}
-            autoCompleteFontSize={15}
-            autoCompleteTableBorderWidth={1}
-            autoCompleteRowHeight={25}
-            autoCompleteTableBackgroundColor='white'
-            maximumNumberOfAutoCompleteRows={10}
-            style={styles.filterautocomplete}
-            suggestions={this.state.data}
-            placeholder='Type Pokemon'
-          />
-          <TouchableOpacity
-          style={styles.buttonPost}
-          onPress={this.filter.bind(this, this.state.pokemonList, this.state.pokemon)}
-          >
-            <Text style={styles.buttonLabel}>Filter</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-          style={styles.buttonAll}
-          onPress={this.all}
-          >
-            <Text style={styles.buttonLabel}>All</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{backgroundColor: 'white', width: 50, height: 50}}>
-        </View>
-        <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
-        <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
+          <View style={{backgroundColor: 'white', width: 50, height: 50}}>
+          </View>
+          <View style={{flexDirection: 'row', marginTop: 22, position: 'absolute', top: 0, zIndex: 999}}>
+            <TouchableHighlight
+              onPress={() => {
+              this.setModalVisible(true)}}
+              style={styles.buttonSettings}
+              >
+                <Text style={styles.buttonLabel}>o</Text>
+            </TouchableHighlight>
+            <AutoComplete
+              autoCorrect={false}
+              onSelect={this.onTyping}
+              onTyping={this.onTyping}
+              autoCompleteFontSize={15}
+              autoCompleteTableBorderWidth={1}
+              autoCompleteRowHeight={25}
+              autoCompleteTableBackgroundColor='white'
+              maximumNumberOfAutoCompleteRows={10}
+              style={styles.filterautocomplete}
+              suggestions={this.state.data}
+              placeholder='Type Pokemon'
+            />
+            <TouchableOpacity
+              style={styles.buttonPost}
+              onPress={this.filter.bind(this, this.state.pokemonList, this.state.pokemon)}
+              >
+              <Text style={styles.buttonLabel}>Filter</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonAll}
+              onPress={this.all}
+              >
+              <Text style={styles.buttonLabel}>All</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{height: height / 2}}>
+            <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
+          </View>
+          <Swiper
+            loop={false}
+            index={1}
+            showsPagination={false}>
+            <View style={this.viewStyle()}>
+              <TitleText label="Left" />
+            </View>
+            <View style={{flex: 1}}>
+              <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
+            </View>
+            <View style={this.viewStyle()}>
+              <TitleText label="Right" />
+            </View>
+          </Swiper>
       </View>
     )
   }
 })
-
 
 var Map = React.createClass({
 
@@ -746,6 +769,15 @@ var Feed = React.createClass({
     }
   },
 
+  followPost() {
+    this.props.changeRegion({
+        latitude: this.props.location.latitude,
+        longitude: this.props.location.longitude,
+        latitudeDelta: this.props.location.latitudeDelta,
+        longitudeDelta: this.props.location.longitudeDelta
+    })
+  },
+
   post() {
     if (this.state.pokeNames.indexOf(this.state.pokemon) === -1) {
       return Alert.alert('Please enter a valid pokemon name');
@@ -783,6 +815,10 @@ var Feed = React.createClass({
 
   render() {
     // console.log("Feed state upon render", this.state);
+     //
+    //  changeRegion{this.followPost}
+
+
     return (
       <View style={{flex:1, borderTopWidth: 1, borderColor: 'black'}}>
         <Modal
@@ -926,7 +962,8 @@ var Post = React.createClass({
   },
 
   selectPost() {
-    this.props.filter(this.props.pokemonList, null, null, this.props.rowData._id)
+    this.props.filter(this.props.pokemonList, null, null, this.props.rowData._id);
+    this.props.changeRegion()
   },
 
   render() {
