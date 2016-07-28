@@ -830,25 +830,26 @@ var GymPost = React.createClass({
   },
 
   render() {
+    var widthUnit = width / 414;
+    var heightUnit = 55;
     return (
       <View
         style={{
           backgroundColor: '#f6f6f6',
-          borderColor: 'rgba(0,0,0,.1)',
+          borderColor: '#d3d3d3',
           borderBottomWidth: 1,
-          padding: 2,
-          paddingLeft: 10,
-          paddingRight: 10
+          height: heightUnit,
+          paddingLeft: 10 * widthUnit
         }}>
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity onPress={this.selectPost}>
             <View style={{flexDirection: 'row'}}>
               <Image source={require('./pokegymnav.png')}
-              style={{width: 40, height: 40}} />
+              style={{width: 50*widthUnit, height: 50*height/736, marginTop: 5}} />
               <View style={{marginLeft: 10, marginTop: 3}}>
-                <Text>{'Gym request posted ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' miles away'}</Text>
-                <Text>by {this.props.rowData.user.username + ' ' + Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
-                <Text>Message: {this.props.rowData.message}</Text>
+                <Text style={{fontWeight: '600', fontSize: 15}}>{'Gym request ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mile(s) away'}</Text>
+                <Text style={{fontWeight: '600', fontSize: 13}}>{Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago'} </Text>
+                <Text style={{fontSize: 11, color: 'grey'}}>{this.props.rowData.user.username}: "{this.props.rowData.message}"</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -876,7 +877,7 @@ var GymFeed = React.createClass({
 
   render() {
     return (
-      <View>
+      <View style={{backgroundColor: '#f5fcff'}}>
         <Modal
           animationType={"slide"}
           transparent={false}
@@ -887,10 +888,10 @@ var GymFeed = React.createClass({
           <View style={{height: height*132/320}}>
             <GymRight location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible} modalVisible={this.state.modalVisible}/>
 
-            <TouchableHighlight onPress={() => {
+            <TouchableHighlight style={[styles.button, styles.buttonBlue]} onPress={() => {
               this.setModalVisible(!this.state.modalVisible)
             }}>
-              <Text>Cancel</Text>
+              <Text style={styles.buttonLabel2}>Cancel</Text>
             </TouchableHighlight>
 
           </View>
@@ -938,7 +939,7 @@ var Feed = React.createClass({
 
   render() {
     return (
-      <View>
+      <View style={{backgroundColor: '#f5fcff'}}>
       <Modal
         animationType={"slide"}
         transparent={false}
@@ -949,10 +950,10 @@ var Feed = React.createClass({
         <View style={{height: height*132/320}}>
           <Right location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible} modalVisible={this.state.modalVisible}/>
 
-          <TouchableHighlight onPress={() => {
+          <TouchableHighlight style={[styles.button, styles.buttonBlue]} onPress={() => {
             this.setModalVisible(!this.state.modalVisible)
           }}>
-            <Text>Cancel</Text>
+            <Text style={styles.buttonLabel2}>Cancel</Text>
           </TouchableHighlight>
 
         </View>
@@ -1097,9 +1098,9 @@ var Right = React.createClass({
     return (
     <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
       <View style={{flexDirection: 'row'}}>
+        <TextInput autoFocus={true} style={{position: 'absolute', left: 0, top: 0, height: 10, width: 10}} />
         <AutoComplete
           autoCorrect={false}
-          autoFocus={true}
           onSelect={this.onSelect}
           onTyping={this.onTyping}
           autoCompleteFontSize={15*height/736}
@@ -1249,7 +1250,7 @@ var Post = React.createClass({
         <TouchableOpacity style={{flexDirection: 'row'}} onPress={this.selectPost}>
           <Image source={{uri: 'http://localhost:3000/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'}} style={{width: 50*widthUnit, height: 50*height/736, marginTop: 5}} />
           <View style={{marginLeft: 10*widthUnit, marginTop: 3*height/736}}>
-            <Text style={{fontWeight: '600', fontSize: 15}}>{this.props.rowData.pokemon + ' ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' miles away'}</Text>
+            <Text style={{fontWeight: '600', fontSize: 15}}>{this.props.rowData.pokemon + ' ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mi away'}</Text>
             <Text style={{fontWeight: '600', fontSize: 13}}>{Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '}</Text>
             <Text style={{fontSize: 11, color: 'grey'}}>seen by {this.props.rowData.user.username}</Text>
           </View>
