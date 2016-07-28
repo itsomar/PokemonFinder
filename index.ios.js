@@ -294,10 +294,10 @@ var TitleText = React.createClass({
     render() {
       var teamImg = null;
       if (this.props.team) {
-        teamImg = (<Image source={{uri: 'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'}}
-               style={{width: 193, height: 193, alignItems: 'center'}}>
-          <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
-        </Image>)
+        teamImg = (
+          <Image source={{uri: 'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'}} style={{width: 193, height: 193, alignItems: 'center'}}>
+            <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
+          </Image>)
       }
       return (
         <View style={{backgroundColor: '#f5fcff', flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
@@ -597,68 +597,41 @@ var Home = React.createClass({
             <Text style={styles.buttonLabel}>Filter</Text>
           </TouchableOpacity>
         </View>
-        <View style={{height: height*9/20}}>
+        <View style={{height: height*145/320}}>
           <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
         </View>
-        <View style={{height: height*155/320}}>
-          <TabBarIOS
-            unselectedTintColor="yellow"
-            translucent={false}
-            tintColor="white"
-            barTintColor="black">
-            <TabBarIOS.Item
-              icon={require('./pokeballnav.png')}
-              renderAsOriginal
-              selected={this.state.selectedTab === 'redTab'}
-              title="Pokemon"
-              onPress={() => {
-                this.setState({
-                  selectedTab: 'redTab',
-                  notifCount: this.state.notifCount + 1,
-                });
-              }}>
-              <Swiper
-                loop={false}
-                index={1}
-                showsPagination={false}>
-                <View style={{height: height*19/40}}>
-                  <Profile username={this.state.username} team={this.state.team} logout={this.logout}/>
-                </View>
-                <View style={{height: height*19/40}}>
-                  <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
-                </View>
-                <View style={{height: height*19/40}}>
-                  <Right location={this.state.location} refresh={this.refresh} />
-                </View>
-              </Swiper>
-            </TabBarIOS.Item>
-            <TabBarIOS.Item
-              renderAsOriginal
-              icon={require('./pokegymnav.png')}
-              title="Gyms"
-              selected={this.state.selectedTab === 'greenTab'}
-              onPress={() => {
-                this.setState({
-                  selectedTab: 'greenTab',
-                  presses: this.state.presses + 1
-                });
-              }}>
-              <Swiper
-                loop={false}
-                index={1}
-                showsPagination={false}>
-                <View style={{height: height*19/40}}>
-                  <Profile username={this.state.username} team={this.state.team} logout={this.logout}/>
-                </View>
-                <View style={{height: height*19/40}}>
-                  <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
-                </View>
-                <View style={{height: height*19/40}}>
-                  <Right location={this.state.location} refresh={this.refresh} />
-                </View>
-              </Swiper>
-            </TabBarIOS.Item>
-          </TabBarIOS>
+        <View style={{height: height*132/320}}>
+          <Swiper
+            loop={false}
+            index={1}
+            showsPagination={false}>
+            <View style={{height: height*132/320}}>
+              <Profile username={this.state.username} team={this.state.team} logout={this.logout}/>
+            </View>
+            <View style={{height: height*132/320}}>
+              <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
+            </View>
+            <View style={{height: height*132/320}}>
+              <Right location={this.state.location} refresh={this.refresh} />
+            </View>
+          </Swiper>
+        </View>
+        <View style={{width: width, height: height*50/736, backgroundColor: 'black', flexDirection: 'row'}}>
+          <TouchableOpacity style={{flex: 1}}>
+            <Text style={{color: 'white'}}>H</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{flex: 1}}>
+            <Text style={{color: 'white'}}>H</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{flex: 1}}>
+            <Text style={{color: 'white'}}>H</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{flex: 1}}>
+            <Text style={{color: 'white'}}>H</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{flex: 1}}>
+            <Text style={{color: 'white'}}>H</Text>
+          </TouchableOpacity>
         </View>
       </View>
     )
