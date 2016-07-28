@@ -600,7 +600,7 @@ var Home = React.createClass({
         <View style={{height: height*9/20}}>
           <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
         </View>
-        <View style={{height: height*38/80}}>
+        <View style={{height: height*155/320}}>
           <TabBarIOS
             unselectedTintColor="yellow"
             translucent={false}
@@ -621,13 +621,13 @@ var Home = React.createClass({
                 loop={false}
                 index={1}
                 showsPagination={false}>
-                <View>
+                <View style={{height: height*19/40}}>
                   <Profile username={this.state.username} team={this.state.team} logout={this.logout}/>
                 </View>
                 <View style={{height: height*19/40}}>
                   <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
                 </View>
-                <View>
+                <View style={{height: height*19/40}}>
                   <Right location={this.state.location} refresh={this.refresh} />
                 </View>
               </Swiper>
@@ -647,13 +647,13 @@ var Home = React.createClass({
                 loop={false}
                 index={1}
                 showsPagination={false}>
-                <View>
+                <View style={{height: height*19/40}}>
                   <Profile username={this.state.username} team={this.state.team} logout={this.logout}/>
                 </View>
-                <View style={{height: height*128/320}}>
+                <View style={{height: height*19/40}}>
                   <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
                 </View>
-                <View>
+                <View style={{height: height*19/40}}>
                   <Right location={this.state.location} refresh={this.refresh} />
                 </View>
               </Swiper>
@@ -851,6 +851,7 @@ var Right = React.createClass({
         <View>
           <View style={{flexDirection: 'row'}}>
             <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
+
                    style={{width: 196*width/414, height: 196*height/736}} />
             <View style={{position: 'absolute', top: 90*height/736, right: 20*width/414}}>
               <View style={{flexDirection: 'row'}}>
@@ -868,7 +869,7 @@ var Right = React.createClass({
             </View>
           </View>
             <TouchableOpacity
-            style={[styles.button, styles.buttonRed]}
+            style={[styles.button, styles.buttonRed, {marginTop: 7}]}
             onPress={this.post}
             >
               <Text style={styles.buttonLabel}>Post</Text>
@@ -876,7 +877,7 @@ var Right = React.createClass({
         </View>
       : <View>
           <TouchableOpacity
-          style={[styles.button, styles.buttonRed, {marginTop: 196}]}
+          style={[styles.button, styles.buttonRed, {marginTop: 203}]}
           onPress={this.post}
           >
             <Text style={styles.buttonLabel}>Post</Text>
@@ -899,6 +900,8 @@ var Feed = React.createClass({
 
     return (
       <View style={{flex: 1, borderTopWidth:1, borderColor: '#d3d3d3', backgroundColor: '#f5fcff'}}>
+        <Image source={{uri: 'http://localhost:3000/images/funny.png'}}
+              style={{width: width, height: height*19/40}}>
         <ListView
         automaticallyAdjustContentInsets={false}
         enableEmptySections={true}
@@ -923,6 +926,7 @@ var Feed = React.createClass({
           )
           }
         } />
+        </Image>
       </View>
     )
   }
