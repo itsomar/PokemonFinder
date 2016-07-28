@@ -646,12 +646,6 @@ var Home = React.createClass({
             <View style={{height: height*132/320}}>
               <Right location={this.state.location} refresh={this.refresh} />
             </View>
-            <View style={{height: height*132/320}}>
-              <Right location={this.state.location} refresh={this.refresh} />
-            </View>
-            <View style={{height: height*132/320}}>
-              <Right location={this.state.location} refresh={this.refresh} />
-            </View>
           </Swiper>     
         </View>
         <View style={{width: width, height: height*50/736, backgroundColor: 'black', flexDirection: 'row'}}>
@@ -662,13 +656,7 @@ var Home = React.createClass({
             <Text style={{color: 'white'}}>Pfeed</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 2)}>
-            <Text style={{color: 'white'}}>Ppost</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 3)}>
             <Text style={{color: 'white'}}>Gfeed</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 4)}>
-            <Text style={{color: 'white'}}>Gpost</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -831,6 +819,7 @@ var Right = React.createClass({
           pokemon: ''
         });
         this.props.refresh();
+        this.props.setModalVisible(!this.props.modalVisible)
       } else {
         console.log('error');
       }
@@ -845,6 +834,7 @@ var Right = React.createClass({
       <View style={{flexDirection: 'row'}}>
         <AutoComplete
           autoCorrect={false}
+          autoFocus={true}
           onSelect={this.onSelect}
           onTyping={this.onTyping}
           autoCompleteFontSize={15*height/736}
@@ -896,9 +886,43 @@ var Right = React.createClass({
 })
 
 var Feed = React.createClass({
+  getInitialState() {
+    return {
+      modalVisible: false
+    }
+  },
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  },
+
+  modal() {
+    this.setModalVisible(true);
+  },
+
   render() {
     return (
-      <Image source={{uri: 'http://localhost:3000/images/funny.png'}} style={{width: width, height: height * 19/40}}>
+      <View>
+      <Modal
+        animationType={"slide"}
+        transparent={false}
+        visible={this.state.modalVisible}
+        onRequestClose={() => {alert("Modal has been closed.")}}
+        >
+       <View style={{marginTop: 22}}>
+        <View style={{height: height*132/320}}>
+          <Right location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible} modalVisible={this.state.modalVisible}/>
+
+          <TouchableHighlight onPress={() => {
+            this.setModalVisible(!this.state.modalVisible)
+          }}>
+            <Text>Cancel</Text>
+          </TouchableHighlight>
+
+        </View>
+       </View>
+      </Modal>
+      <Image source={{uri: 'http://localhost:3000/images/funny.png'}} style={{width: width, height: height * 551/1280}}>
         <ListView
           automaticallyAdjustContentInsets={true}
           enableEmptySections={true}
@@ -919,6 +943,11 @@ var Feed = React.createClass({
             }
           } />
       </Image>
+
+        <TouchableHighlight onPress={this.modal} style={[styles.button, styles.buttonBlue]}>
+          <Text style={styles.buttonLabel2}>Post</Text>
+        </TouchableHighlight>
+      </View>
     )
   }
 });
