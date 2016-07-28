@@ -22,8 +22,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		49D755AA1D407610007BDDD0 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49D755991D4075D1007BDDD0 /* libAirMaps.a */; };
-		49D755AB1D407612007BDDD0 /* libRCTAutoComplete.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49D755A91D407608007BDDD0 /* libRCTAutoComplete.a */; };
+		5DCE397B1D46961500EE4D1D /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCE39411D468FA700EE4D1D /* libAirMaps.a */; };
+		5DCE397C1D46961800EE4D1D /* libRCTAutoComplete.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCE395A1D46959200EE4D1D /* libRCTAutoComplete.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -91,19 +91,33 @@
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
 		};
-		49D755981D4075D1007BDDD0 /* PBXContainerItemProxy */ = {
+		5DCE39401D468FA700EE4D1D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 49D755941D4075D1007BDDD0 /* AirMaps.xcodeproj */;
+			containerPortal = 5DCE393C1D468FA700EE4D1D /* AirMaps.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
 			remoteInfo = AirMaps;
 		};
-		49D755A81D407608007BDDD0 /* PBXContainerItemProxy */ = {
+		5DCE39461D468FBA00EE4D1D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 49D755A41D407608007BDDD0 /* RCTAutoComplete.xcodeproj */;
+			containerPortal = 5DCE39421D468FBA00EE4D1D /* RCTAutoComplete.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTAutoComplete;
+		};
+		5DCE39591D46959200EE4D1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E5F6EC99844E421CBBB8C718 /* RCTAutoComplete.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTAutoComplete;
+		};
+		5DFF748E1D46A0B300187240 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B988640F8469453289F5C101 /* AirMaps.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
+			remoteInfo = AirMaps;
 		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -141,10 +155,12 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Pokegame/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Pokegame/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		49D755941D4075D1007BDDD0 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
-		49D755A41D407608007BDDD0 /* RCTAutoComplete.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAutoComplete.xcodeproj; path = "../node_modules/react-native-autocomplete/RCTAutoComplete.xcodeproj"; sourceTree = "<group>"; };
+		5DCE393C1D468FA700EE4D1D /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
+		5DCE39421D468FBA00EE4D1D /* RCTAutoComplete.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAutoComplete.xcodeproj; path = "../node_modules/react-native-autocomplete/RCTAutoComplete.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		B988640F8469453289F5C101 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
+		E5F6EC99844E421CBBB8C718 /* RCTAutoComplete.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTAutoComplete.xcodeproj; path = "../node_modules/react-native-autocomplete/RCTAutoComplete.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,8 +176,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49D755AB1D407612007BDDD0 /* libRCTAutoComplete.a in Frameworks */,
-				49D755AA1D407610007BDDD0 /* libAirMaps.a in Frameworks */,
+				5DCE397C1D46961800EE4D1D /* libRCTAutoComplete.a in Frameworks */,
+				5DCE397B1D46961500EE4D1D /* libAirMaps.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -273,18 +289,34 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		49D755951D4075D1007BDDD0 /* Products */ = {
+		5DCE393D1D468FA700EE4D1D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				49D755991D4075D1007BDDD0 /* libAirMaps.a */,
+				5DCE39411D468FA700EE4D1D /* libAirMaps.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		49D755A51D407608007BDDD0 /* Products */ = {
+		5DCE39431D468FBA00EE4D1D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				49D755A91D407608007BDDD0 /* libRCTAutoComplete.a */,
+				5DCE39471D468FBA00EE4D1D /* libRCTAutoComplete.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5DCE39541D46959200EE4D1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5DCE395A1D46959200EE4D1D /* libRCTAutoComplete.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5DFF748B1D46A0B200187240 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5DFF748F1D46A0B300187240 /* libAirMaps.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -310,6 +342,8 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				E5F6EC99844E421CBBB8C718 /* RCTAutoComplete.xcodeproj */,
+				B988640F8469453289F5C101 /* AirMaps.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -325,8 +359,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				49D755A41D407608007BDDD0 /* RCTAutoComplete.xcodeproj */,
-				49D755941D4075D1007BDDD0 /* AirMaps.xcodeproj */,
+				5DCE39421D468FBA00EE4D1D /* RCTAutoComplete.xcodeproj */,
+				5DCE393C1D468FA700EE4D1D /* AirMaps.xcodeproj */,
 				13B07FAE1A68108700A75B9A /* Pokegame */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* PokegameTests */,
@@ -390,7 +424,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -415,16 +449,24 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 49D755951D4075D1007BDDD0 /* Products */;
-					ProjectRef = 49D755941D4075D1007BDDD0 /* AirMaps.xcodeproj */;
+					ProductGroup = 5DFF748B1D46A0B200187240 /* Products */;
+					ProjectRef = B988640F8469453289F5C101 /* AirMaps.xcodeproj */;
+				},
+				{
+					ProductGroup = 5DCE393D1D468FA700EE4D1D /* Products */;
+					ProjectRef = 5DCE393C1D468FA700EE4D1D /* AirMaps.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
 				{
-					ProductGroup = 49D755A51D407608007BDDD0 /* Products */;
-					ProjectRef = 49D755A41D407608007BDDD0 /* RCTAutoComplete.xcodeproj */;
+					ProductGroup = 5DCE39541D46959200EE4D1D /* Products */;
+					ProjectRef = E5F6EC99844E421CBBB8C718 /* RCTAutoComplete.xcodeproj */;
+				},
+				{
+					ProductGroup = 5DCE39431D468FBA00EE4D1D /* Products */;
+					ProjectRef = 5DCE39421D468FBA00EE4D1D /* RCTAutoComplete.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -528,18 +570,32 @@
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		49D755991D4075D1007BDDD0 /* libAirMaps.a */ = {
+		5DCE39411D468FA700EE4D1D /* libAirMaps.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libAirMaps.a;
-			remoteRef = 49D755981D4075D1007BDDD0 /* PBXContainerItemProxy */;
+			remoteRef = 5DCE39401D468FA700EE4D1D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		49D755A91D407608007BDDD0 /* libRCTAutoComplete.a */ = {
+		5DCE39471D468FBA00EE4D1D /* libRCTAutoComplete.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRCTAutoComplete.a;
-			remoteRef = 49D755A81D407608007BDDD0 /* PBXContainerItemProxy */;
+			remoteRef = 5DCE39461D468FBA00EE4D1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5DCE395A1D46959200EE4D1D /* libRCTAutoComplete.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTAutoComplete.a;
+			remoteRef = 5DCE39591D46959200EE4D1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5DFF748F1D46A0B300187240 /* libAirMaps.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAirMaps.a;
+			remoteRef = 5DFF748E1D46A0B300187240 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
@@ -646,6 +702,12 @@
 				INFOPLIST_FILE = PokegameTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pokegame.app/Pokegame";
 			};
@@ -659,6 +721,12 @@
 				INFOPLIST_FILE = PokegameTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Pokegame.app/Pokegame";
 			};
@@ -675,6 +743,8 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-autocomplete/**",
+					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 				);
 				INFOPLIST_FILE = Pokegame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -683,6 +753,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Pokegame;
 				PROVISIONING_PROFILE = "";
 			};
@@ -698,6 +769,8 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-autocomplete/**",
+					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 				);
 				INFOPLIST_FILE = Pokegame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -706,6 +779,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Pokegame;
 				PROVISIONING_PROFILE = "";
 			};
@@ -731,6 +805,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -749,6 +824,8 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-autocomplete/**",
+					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -789,6 +866,8 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-autocomplete/**",
+					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
