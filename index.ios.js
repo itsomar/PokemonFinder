@@ -194,7 +194,13 @@ var Register = React.createClass({
       username: "",
       password: "",
       team: "",
-      message: ""
+      message: "",
+      iblur: "",
+      mblur: "",
+      vblur: "",
+      instinctsize: 100,
+      mysticsize: 100,
+      valorsize: 100,
     }
   },
 
@@ -228,6 +234,42 @@ var Register = React.createClass({
     this.props.navigator.pop();
   },
 
+  enlargeInstinct(){
+    this.setState({
+      instinctsize: 130,
+      mysticsize: 80,
+      valorsize: 80,
+      team: "Instinct",
+      iblur: "",
+      mblur: "Blur",
+      vblur: "Blur"
+    })
+  },
+
+  enlargeMystic(){
+    this.setState({
+      mysticsize: 125,
+      instinctsize: 80,
+      valorsize: 80,
+      team: "Mystic",
+      iblur: "Blur",
+      mblur: "",
+      vblur: "Blur"
+    })
+  },
+
+  enlargeValor(){
+    this.setState({
+      valorsize: 125,
+      instinctsize: 80,
+      mysticsize: 80,
+      team: "Valor",
+      iblur: "Blur",
+      mblur: "Blur",
+      vblur: ""
+    })
+  },
+
   render() {
     return (
       <View style={styles.container}>
@@ -246,16 +288,31 @@ var Register = React.createClass({
             placeholder="Choose a password"
             onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
           />
+
           <Text style={[styles.textMed, {color: '#a9a9a9'}]}>Pick your team</Text>
-          <Picker
-            selectedValue={this.state.team}
-            onValueChange={(text) => this.setState({team: text})}
-            >
-            <Picker.Item label="No team yet" value="Noteam" />
-            <Picker.Item label="Mystic" value="Mystic" />
-            <Picker.Item label="Instinct" value="Instinct" />
-            <Picker.Item label="Valor" value="Valor" />
-          </Picker>
+
+        <TouchableOpacity
+        onPress={this.enlargeInstinct}>
+        <Image source={{uri: 'http://localhost:3000/images/instinct' + this.state.iblur + '.png'}} style={{alignSelf: "center", width: width*this.state.instinctsize/414, height: height*this.state.instinctsize/736, marginBottom: 20}}/>
+        </TouchableOpacity>
+
+        <View style={{
+        flexWrap: 'wrap', 
+        alignSelf: "center",
+        flexDirection:'row',
+        marginBottom: 50
+        }}>
+        <TouchableOpacity
+        onPress={this.enlargeMystic}>
+        <Image source={{uri: 'http://localhost:3000/images/mystic' + this.state.mblur + '.png'}} style={{marginRight: width*35/414, width: width*(this.state.mysticsize-5)/414, height: height*(this.state.mysticsize-5)/736}}/>
+         </TouchableOpacity>
+
+        <TouchableOpacity
+        onPress={this.enlargeValor}>
+        <Image source={{uri: 'http://localhost:3000/images/valor' + this.state.vblur + '.png'}} style={{marginLeft: width*35/414, width: width*this.state.valorsize/414, height: height*this.state.valorsize/736}}/>
+         </TouchableOpacity>
+
+        </View>
 
         <TouchableOpacity
           onPress={this.submit} style={[styles.button, styles.buttonRed]}>
@@ -830,25 +887,26 @@ var GymPost = React.createClass({
   },
 
   render() {
+    var widthUnit = width / 414;
+    var heightUnit = 55;
     return (
       <View
         style={{
           backgroundColor: '#f6f6f6',
-          borderColor: 'rgba(0,0,0,.1)',
+          borderColor: '#d3d3d3',
           borderBottomWidth: 1,
-          padding: 2,
-          paddingLeft: 10,
-          paddingRight: 10
+          height: heightUnit,
+          paddingLeft: 10 * widthUnit
         }}>
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity onPress={this.selectPost}>
             <View style={{flexDirection: 'row'}}>
               <Image source={require('./pokegymnav.png')}
-              style={{width: 40, height: 40}} />
+              style={{width: 50*widthUnit, height: 50*height/736, marginTop: 5}} />
               <View style={{marginLeft: 10, marginTop: 3}}>
-                <Text>{'Gym request posted ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' miles away'}</Text>
-                <Text>by {this.props.rowData.user.username + ' ' + Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
-                <Text>Message: {this.props.rowData.message}</Text>
+                <Text style={{fontWeight: '600', fontSize: 15}}>{'Gym request ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mile(s) away'}</Text>
+                <Text style={{fontWeight: '600', fontSize: 13}}>{Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago'} </Text>
+                <Text style={{fontSize: 11, color: 'grey'}}>{this.props.rowData.user.username}: "{this.props.rowData.message}"</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -876,7 +934,7 @@ var GymFeed = React.createClass({
 
   render() {
     return (
-      <View>
+      <View style={{backgroundColor: '#f5fcff'}}>
         <Modal
           animationType={"slide"}
           transparent={false}
@@ -887,10 +945,10 @@ var GymFeed = React.createClass({
           <View style={{height: height*132/320}}>
             <GymRight location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible} modalVisible={this.state.modalVisible}/>
 
-            <TouchableHighlight onPress={() => {
+            <TouchableHighlight style={[styles.button, styles.buttonBlue]} onPress={() => {
               this.setModalVisible(!this.state.modalVisible)
             }}>
-              <Text>Cancel</Text>
+              <Text style={styles.buttonLabel2}>Cancel</Text>
             </TouchableHighlight>
 
           </View>
@@ -938,7 +996,7 @@ var Feed = React.createClass({
 
   render() {
     return (
-      <View>
+      <View style={{backgroundColor: '#f5fcff'}}>
       <Modal
         animationType={"slide"}
         transparent={false}
@@ -949,10 +1007,10 @@ var Feed = React.createClass({
         <View style={{height: height*132/320}}>
           <Right location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible} modalVisible={this.state.modalVisible}/>
 
-          <TouchableHighlight onPress={() => {
+          <TouchableHighlight style={[styles.button, styles.buttonBlue]} onPress={() => {
             this.setModalVisible(!this.state.modalVisible)
           }}>
-            <Text>Cancel</Text>
+            <Text style={styles.buttonLabel2}>Cancel</Text>
           </TouchableHighlight>
 
         </View>
@@ -1097,9 +1155,9 @@ var Right = React.createClass({
     return (
     <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
       <View style={{flexDirection: 'row'}}>
+        <TextInput autoFocus={true} style={{position: 'absolute', left: 0, top: 0, height: 10, width: 10}} />
         <AutoComplete
           autoCorrect={false}
-          autoFocus={true}
           onSelect={this.onSelect}
           onTyping={this.onTyping}
           autoCompleteFontSize={15*height/736}
@@ -1249,7 +1307,7 @@ var Post = React.createClass({
         <TouchableOpacity style={{flexDirection: 'row'}} onPress={this.selectPost}>
           <Image source={{uri: 'http://localhost:3000/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'}} style={{width: 50*widthUnit, height: 50*height/736, marginTop: 5}} />
           <View style={{marginLeft: 10*widthUnit, marginTop: 3*height/736}}>
-            <Text style={{fontWeight: '600', fontSize: 15}}>{this.props.rowData.pokemon + ' ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' miles away'}</Text>
+            <Text style={{fontWeight: '600', fontSize: 15}}>{this.props.rowData.pokemon + ' ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mi away'}</Text>
             <Text style={{fontWeight: '600', fontSize: 13}}>{Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '}</Text>
             <Text style={{fontSize: 11, color: 'grey'}}>seen by {this.props.rowData.user.username}</Text>
           </View>
