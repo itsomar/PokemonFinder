@@ -371,6 +371,7 @@ var Home = React.createClass({
       data: [],
       pokemon: "",
       markers: [],
+      gymmarkers: [],
       location: {
         latitude: 0,
         longitude: 0,
@@ -411,6 +412,22 @@ var Home = React.createClass({
     console.log("Calling refresh...LONG", this.state.location.longitude, "LAT: ", this.state.location.latitude);
     console.log("location: ", lng || this.state.location.longitude, ", ", lat || this.state.location.latitude);
     var that = this
+    fetch('http://localhost:3000/gymfeed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
+    .then((feed) => feed.json())
+    .then((feedJson) => {
+      console.log("IN CURRENT GYMFEED ", feedJson);
+      console.log(feedJson);
+      if (feedJson.success) {
+        var reversefeed = feedJson.feed.reverse();
+        // console.log("FROM MONGO", reversefeed);
+          // console.log("ENTERING ELSE ALL", reversefeed);
+          this.setState({
+            gymmarkers: reversefeed
+          })
+        }
+      }).catch((err) => console.log(err))
+
+
     fetch('http://localhost:3000/feed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
     .then((feed) => feed.json())
     .then((feedJson) => {
@@ -615,7 +632,7 @@ var Home = React.createClass({
             onPress={this.filter.bind(this, this.state.pokemonList, this.state.pokemon)}
             >
             <Text style={{
-              height: 20*height/736, 
+              height: 20*height/736,
               width: 54*width/414,
               color: "white",
               textAlign: "center",
@@ -624,7 +641,7 @@ var Home = React.createClass({
           </TouchableOpacity>
         </View>
         <View style={{height: height*125/320}}>
-          <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
+          <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} gymmarkers={this.state.gymmarkers}/>
         </View>
         <View style={{height: height*153/320}}>
           <Swiper
@@ -641,18 +658,12 @@ var Home = React.createClass({
               <Profile username={this.state.username} team={this.state.team} logout={this.logout}/>
             </View>
             <View style={{height: height*132/320}}>
-              <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={[this.state.markers]} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
+              <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
             </View>
             <View style={{height: height*132/320}}>
-              <Right location={this.state.location} refresh={this.refresh} />
+              <GymFeed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} gymmarkers={this.state.gymmarkers} feed={ds.cloneWithRows(this.state.gymmarkers)} refresh={this.refresh} filter={this.filter}/>
             </View>
-            <View style={{height: height*132/320}}>
-              <Right location={this.state.location} refresh={this.refresh} />
-            </View>
-            <View style={{height: height*132/320}}>
-              <Right location={this.state.location} refresh={this.refresh} />
-            </View>
-          </Swiper>     
+          </Swiper>
         </View>
         <View style={{width: width, height: height*50/736, backgroundColor: 'black', flexDirection: 'row'}}>
           <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 0)}>
@@ -662,13 +673,7 @@ var Home = React.createClass({
             <Text style={{color: 'white'}}>Pfeed</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 2)}>
-            <Text style={{color: 'white'}}>Ppost</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 3)}>
             <Text style={{color: 'white'}}>Gfeed</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 4)}>
-            <Text style={{color: 'white'}}>Gpost</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -705,6 +710,36 @@ var Map = React.createClass({
 
   render() {
 
+    var pokeballs = this.props.markers.map(function(marker, i) {
+      var timeAgo = ((Date.now() - new Date(marker.time).getTime()) / 60000)
+      return (<MapView.Marker
+        coordinate={{
+          latitude: parseFloat(marker.location.latitude),
+          longitude: parseFloat(marker.location.longitude)
+        }}
+        title={marker.pokemon}
+        key={'pokemon-' + i}
+        description={Math.floor(timeAgo.toString()) + ' minute(s) ago'}
+        image={require('./pokeball.png')}
+      />)
+    })
+
+    var gyms = this.props.gymmarkers.map(function(gymmarker, i) {
+      var timeAgo = ((Date.now() - new Date(gymmarker.time).getTime()) / 60000)
+      return (<MapView.Marker
+        coordinate={{
+          latitude: parseFloat(gymmarker.location.latitude),
+          longitude: parseFloat(gymmarker.location.longitude)
+        }}
+        title={"Gym Request"}
+        key={'gym-' + i}
+        description={gymmarker.message}
+        image={require('./pokeball.png')}
+      />)
+    })
+
+    var all = pokeballs.concat(gyms)
+
     return (
       <View style={{flex: 1}}>
       <MapView
@@ -716,19 +751,7 @@ var Map = React.createClass({
                 longitudeDelta: this.state.longitudeDelta}}
         showsUserLocation={true}
       >
-      {this.props.markers.map(function(marker, i) {
-        var timeAgo = ((Date.now() - new Date(marker.time).getTime()) / 60000)
-        return (<MapView.Marker
-          coordinate={{
-            latitude: parseFloat(marker.location.latitude),
-            longitude: parseFloat(marker.location.longitude)
-          }}
-          title={marker.pokemon}
-          key={i}
-          description={Math.floor(timeAgo.toString()) + ' minute(s) ago'}
-          image={require('./pokeball.png')}
-        />)
-      })}</MapView>
+      {all}</MapView>
       <TouchableOpacity style={styles.blue} onPress={this.nav}>
         <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
       </TouchableOpacity>
@@ -736,6 +759,236 @@ var Map = React.createClass({
     )
   }
 })
+
+var GymRight = React.createClass({
+  getInitialState() {
+    return {
+      message: ""
+    }
+  },
+
+  post() {
+    console.log("IN POST GYM")
+    fetch('http://localhost:3000/gympost', {
+      headers: {
+         "Content-Type": "application/json"
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        message: this.state.message,
+        longitude: this.props.location.longitude,
+        latitude: this.props.location.latitude
+      })
+    })
+    .then((post) => post.json())
+    .then((postJson) => {
+      if(postJson) {
+        console.log("[HELLO GYMMMMMMM]", postJson);
+        this.props.refresh();
+        this.props.setModalVisible(!this.props.modalVisible)
+      } else {
+        console.log('error');
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  },
+  render() {
+    return (
+    <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
+      <View>
+         <TextInput
+           style={{height: 30, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
+           placeholder="Optional Text"
+           maxLength={10}
+           onChangeText={(message) => this.setState({message})} value={this.state.message}
+         />
+          <TouchableOpacity
+          style={[styles.button, styles.buttonRed, {marginTop: 202}]}
+          onPress={this.post}
+          >
+            <Text style={styles.buttonLabel}>Post Gym</Text>
+          </TouchableOpacity>
+      </View>
+    </View>
+    )
+  }
+})
+
+var GymPost = React.createClass({
+  selectPost() {
+    // console.log("HEY ROW DATA", this.props.rowData.location)
+    console.log("[POST props]", this.props);
+    this.props.filter(this.props.pokemonList, null, null, this.props.rowData._id);
+    this.props.changeRegion(
+      { latitude: this.props.rowData.location.latitude,
+        longitude: this.props.rowData.location.longitude,
+        latitudeDelta: this.props.region.latitudeDelta,
+        longitudeDelta: this.props.region.longitudeDelta,
+    })
+  },
+
+  render() {
+    return (
+      <View
+        style={{
+          backgroundColor: '#f6f6f6',
+          borderColor: 'rgba(0,0,0,.1)',
+          borderBottomWidth: 1,
+          padding: 2,
+          paddingLeft: 10,
+          paddingRight: 10
+        }}>
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity onPress={this.selectPost}>
+            <View style={{flexDirection: 'row'}}>
+              <Image source={require('./pokegymnav.png')}
+              style={{width: 40, height: 40}} />
+              <View style={{marginLeft: 10, marginTop: 3}}>
+                <Text>{'Gym request posted ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' miles away'}</Text>
+                <Text>by {this.props.rowData.user.username + ' ' + Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
+                <Text>Message: {this.props.rowData.message}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+  }
+})
+
+var GymFeed = React.createClass({
+
+  getInitialState() {
+    return {
+      modalVisible: false
+    }
+  },
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  },
+
+  modal() {
+    this.setModalVisible(true);
+  },
+
+  render() {
+    return (
+      <View>
+        <Modal
+          animationType={"slide"}
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {alert("Modal has been closed.")}}
+          >
+         <View style={{marginTop: 22}}>
+          <View style={{height: height*132/320}}>
+            <GymRight location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible} modalVisible={this.state.modalVisible}/>
+
+            <TouchableHighlight onPress={() => {
+              this.setModalVisible(!this.state.modalVisible)
+            }}>
+              <Text>Cancel</Text>
+            </TouchableHighlight>
+
+          </View>
+         </View>
+        </Modal>
+
+        <Image source={require('./pokegym.png')}
+              style={{width: width, height: height * 551/1280}}>
+        <ListView
+        automaticallyAdjustContentInsets={false}
+        enableEmptySections={true}
+        dataSource={this.props.feed}
+        renderRow={(rowData) => {
+          var col = 'black';
+          var prefix = '';
+          return (
+            <GymPost rowData={rowData} region={this.props.region} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter} changeRegion={this.props.changeRegion}/>
+          )
+          }
+        } />
+        </Image>
+        <TouchableHighlight onPress={this.modal} style={[styles.button, styles.buttonBlue]}>
+          <Text style={styles.buttonLabel2}>Post</Text>
+        </TouchableHighlight>
+      </View>
+    )
+  }
+});
+
+
+var Feed = React.createClass({
+  getInitialState() {
+    return {
+      modalVisible: false
+    }
+  },
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  },
+
+  modal() {
+    this.setModalVisible(true);
+  },
+
+  render() {
+    return (
+      <View>
+      <Modal
+        animationType={"slide"}
+        transparent={false}
+        visible={this.state.modalVisible}
+        onRequestClose={() => {alert("Modal has been closed.")}}
+        >
+       <View style={{marginTop: 22}}>
+        <View style={{height: height*132/320}}>
+          <Right location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible} modalVisible={this.state.modalVisible}/>
+
+          <TouchableHighlight onPress={() => {
+            this.setModalVisible(!this.state.modalVisible)
+          }}>
+            <Text>Cancel</Text>
+          </TouchableHighlight>
+
+        </View>
+       </View>
+      </Modal>
+      <Image source={{uri: 'http://localhost:3000/images/funny.png'}} style={{width: width, height: height * 551/1280}}>
+        <ListView
+          automaticallyAdjustContentInsets={true}
+          enableEmptySections={true}
+          dataSource={this.props.feed}
+          renderRow={(rowData) => {
+            return (
+              <Post rowData={rowData}
+                rating={rowData.rating}
+                region={this.props.region}
+                location={this.props.location}
+                refresh={this.props.refresh}
+                vote={rowData.vote}
+                pokemonList={this.props.pokemonList}
+                filter={this.props.filter}
+                changeRegion={this.props.changeRegion}
+              />
+              )
+            }
+          } />
+      </Image>
+
+        <TouchableHighlight onPress={this.modal} style={[styles.button, styles.buttonBlue]}>
+          <Text style={styles.buttonLabel2}>Post</Text>
+        </TouchableHighlight>
+      </View>
+    )
+  }
+});
+
+
 
 var Right = React.createClass({
   getInitialState() {
@@ -831,6 +1084,7 @@ var Right = React.createClass({
           pokemon: ''
         });
         this.props.refresh();
+        this.props.setModalVisible(!this.props.modalVisible)
       } else {
         console.log('error');
       }
@@ -845,6 +1099,7 @@ var Right = React.createClass({
       <View style={{flexDirection: 'row'}}>
         <AutoComplete
           autoCorrect={false}
+          autoFocus={true}
           onSelect={this.onSelect}
           onTyping={this.onTyping}
           autoCompleteFontSize={15*height/736}
@@ -895,33 +1150,6 @@ var Right = React.createClass({
   }
 })
 
-var Feed = React.createClass({
-  render() {
-    return (
-      <Image source={{uri: 'http://localhost:3000/images/funny.png'}} style={{width: width, height: height * 19/40}}>
-        <ListView
-          automaticallyAdjustContentInsets={true}
-          enableEmptySections={true}
-          dataSource={this.props.feed}
-          renderRow={(rowData) => {
-            return (
-              <Post rowData={rowData}
-                rating={rowData.rating}
-                region={this.props.region}
-                location={this.props.location}
-                refresh={this.props.refresh}
-                vote={rowData.vote}
-                pokemonList={this.props.pokemonList}
-                filter={this.props.filter}
-                changeRegion={this.props.changeRegion}
-              />
-              )
-            }
-          } />
-      </Image>
-    )
-  }
-});
 
 var Post = React.createClass({
   getInitialState() {
@@ -1007,7 +1235,7 @@ var Post = React.createClass({
       )
 
     // Everything lmao
-    
+
     return (
       <View
         style={{
