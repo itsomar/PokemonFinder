@@ -657,10 +657,10 @@ var Home = React.createClass({
             <Text style={{color: 'white'}}>Pfeed</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 2)}>
-            <Text style={{color: 'white'}}>Gfeed</Text>
+            <Text style={{color: 'white'}}>Ppost</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 3)}>
-            <Text style={{color: 'white'}}>Ppost</Text>
+            <Text style={{color: 'white'}}>Gfeed</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 4)}>
             <Text style={{color: 'white'}}>Gpost</Text>
@@ -837,21 +837,28 @@ var Right = React.createClass({
   render() {
     return (
     <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
-      <Text style={[{position: 'absolute', top: height*5/736, left: width*7/414}, {fontSize: 15*height/736, marginTop: height*5/736}]}>Enter:</Text>
-      <AutoComplete
-        autoCorrect={false}
-        onSelect={this.onSelect}
-        onTyping={this.onTyping}
-        autoCompleteFontSize={15*height/736}
-        autoCompleteTableBorderWidth={1}
-        autoCompleteRowHeight={height*25/736}
-        maximumNumberOfAutoCompleteRows={10}
-        autoCompleteTableBackgroundColor='white'
-        style={[styles.autocomplete, {marginTop: 5*height/736}]}
-        suggestions={this.state.data.map((p) => { return p.name})}
-        placeholder='Pokemon Name'
-        value={this.state.pokemon}
-      />
+      <View style={{flexDirection: 'row'}}>
+        <AutoComplete
+          autoCorrect={false}
+          onSelect={this.onSelect}
+          onTyping={this.onTyping}
+          autoCompleteFontSize={15*height/736}
+          autoCompleteTableBorderWidth={1}
+          autoCompleteRowHeight={height*25/736}
+          maximumNumberOfAutoCompleteRows={10}
+          autoCompleteTableBackgroundColor='white'
+          style={styles.autocomplete}
+          suggestions={this.state.data.map((p) => { return p.name})}
+          placeholder='Which Pokemon did you find?'
+          value={this.state.pokemon}
+        />
+        <TouchableOpacity
+        style={[styles.button, styles.buttonRed, {height: 30*height/736, width: width/7, justifyContent: 'center'}]}
+        onPress={this.post}
+        >
+          <Text style={styles.buttonLabel}>Enter</Text>
+        </TouchableOpacity>
+      </View>
       <View>
         {(Object.keys(this.state.pokemonObj).length !== 0) ?
         <View>
@@ -874,20 +881,8 @@ var Right = React.createClass({
               </View>
             </View>
           </View>
-            <TouchableOpacity
-            style={[styles.button, styles.buttonRed, {marginTop: 7}]}
-            onPress={this.post}
-            >
-              <Text style={styles.buttonLabel}>Post</Text>
-            </TouchableOpacity>
         </View>
       : <View>
-          <TouchableOpacity
-          style={[styles.button, styles.buttonRed, {marginTop: 203}]}
-          onPress={this.post}
-          >
-            <Text style={styles.buttonLabel}>Post</Text>
-          </TouchableOpacity>
         </View>
         }
       </View>
@@ -928,7 +923,6 @@ var Feed = React.createClass({
           console.log("props", this.props);
           return (
             <Post rowData={rowData} rating={rating} region={this.props.region} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter} changeRegion={this.props.changeRegion}/>
-
           )
           }
         } />
@@ -994,13 +988,13 @@ var Post = React.createClass({
     }
 
     var down = (
-      <TouchableOpacity onPress={this.sendVote.bind(this, this.props.rowData._id, 'down')} style={{marginTop: 5*height/736, marginBottom: 5*height/736, padding: 7, borderRadius: 5, backgroundColor: downCol}}>
+      <TouchableOpacity onPress={this.sendVote.bind(this, this.props.rowData._id, 'down')} style={{height: height/16, padding: 7, backgroundColor: downCol}}>
         <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'down'}/>
       </TouchableOpacity>
       )
 
     var up = (
-      <TouchableOpacity onPress={this.sendVote.bind(this, this.props.rowData._id, 'up')} style={{marginTop: 5*height/736, marginBottom: 5*height/736, padding: 7, borderRadius: 5, backgroundColor: upCol}}>
+      <TouchableOpacity onPress={this.sendVote.bind(this, this.props.rowData._id, 'up')} style={{height: height/16, padding: 7, backgroundColor: upCol}}>
         <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'up'}/>
       </TouchableOpacity>
       )
@@ -1010,9 +1004,8 @@ var Post = React.createClass({
           backgroundColor: '#f6f6f6',
           borderColor: 'rgba(0,0,0,.1)',
           borderBottomWidth: 1*width/414,
-          padding: 2,
           paddingLeft: 10*width/414,
-          paddingRight: 10*width/414
+          height: height/16
         }}>
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity onPress={this.selectPost}>
@@ -1025,7 +1018,7 @@ var Post = React.createClass({
               </View>
             </View>
           </TouchableOpacity>
-          <View style={[{position: 'absolute', right: 5*width/414}, {flexDirection: 'row'}]}>
+          <View style={[{position: 'absolute', right: 0}, {flexDirection: 'row'}]}>
             {this.props.rating}
             {down}
             {up}
@@ -1212,11 +1205,8 @@ const styles = StyleSheet.create({
   autocomplete: {
     alignSelf: 'stretch',
     height: 30*height/736,
-    width: width*33/40,
+    width: width*6/7,
     backgroundColor: '#FFF',
-    borderColor: 'lightblue',
-    borderWidth: 1,
-    marginLeft: 55*width/414
   },
   containerAuto: {
     flex: 1,
