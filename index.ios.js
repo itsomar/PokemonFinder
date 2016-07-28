@@ -296,7 +296,7 @@ var TitleText = React.createClass({
       if (this.props.team) {
         teamImg = (<Image source={{uri: 'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'}}
                style={{width: 193, height: 193, alignItems: 'center'}}>
-          <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
+          <Text style={{backgroundColor: 'rgba(0,0,0,0)', marginTop: 5}}>{this.props.username} | {this.props.team}</Text>
         </Image>)
       }
       return (
@@ -600,7 +600,7 @@ var Home = React.createClass({
         <View style={{height: height*9/20}}>
           <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
         </View>
-        <View style={{height: height*38/80}}>
+        <View style={{height: height*155/320}}>
           <TabBarIOS
             unselectedTintColor="yellow"
             translucent={false}
@@ -852,7 +852,7 @@ var Right = React.createClass({
           <View style={{flexDirection: 'row'}}>
             <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
                    style={{width: 196, height: 196}} />
-            <View style={{position: 'absolute', top: 90, right: 20}}>
+            <View style={{position: 'absolute', top: 70, right: 20}}>
               <View style={{flexDirection: 'row'}}>
                 <Text style={{fontWeight: 'bold'}}>Name: </Text><Text>{this.state.pokemonObj.name}</Text>
               </View>
@@ -868,7 +868,7 @@ var Right = React.createClass({
             </View>
           </View>
             <TouchableOpacity
-            style={[styles.button, styles.buttonRed]}
+            style={[styles.button, styles.buttonRed, {marginTop: 7}]}
             onPress={this.post}
             >
               <Text style={styles.buttonLabel}>Post</Text>
@@ -876,7 +876,7 @@ var Right = React.createClass({
         </View>
       : <View>
           <TouchableOpacity
-          style={[styles.button, styles.buttonRed, {marginTop: 196}]}
+          style={[styles.button, styles.buttonRed, {marginTop: 203}]}
           onPress={this.post}
           >
             <Text style={styles.buttonLabel}>Post</Text>
@@ -899,6 +899,8 @@ var Feed = React.createClass({
 
     return (
       <View style={{flex: 1, borderTopWidth:1, borderColor: '#d3d3d3', backgroundColor: '#f5fcff'}}>
+        <Image source={{uri: 'http://localhost:3000/images/funny.png'}}
+              style={{width: width, height: height*19/40}}>
         <ListView
         automaticallyAdjustContentInsets={false}
         enableEmptySections={true}
@@ -923,6 +925,7 @@ var Feed = React.createClass({
           )
           }
         } />
+        </Image>
       </View>
     )
   }
