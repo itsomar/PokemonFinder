@@ -35,6 +35,9 @@ var AutoComplete = require('react-native-autocomplete');
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
 
+console.log("height: " + height);
+console.log("width: " + width);
+
 function deg2rad(deg) {
   return deg * (Math.PI/180)
 }
@@ -565,9 +568,9 @@ var Home = React.createClass({
 
     return (
       <View>
-        <View style={{backgroundColor: 'white', width: 50, height: 50}}>
+        <View style={{backgroundColor: '#F5FCFF', width: width, height: height * 50/736}}>
         </View>
-        <View style={{flexDirection: 'row', marginTop: 22, position: 'absolute', top: 0, zIndex: 999}}>
+        <View style={{flexDirection: 'row', marginTop: height*22/736, position: 'absolute', top: 0, zIndex: 999}}>
           <TouchableOpacity
             style={styles.buttonAll}
             onPress={this.all}
@@ -716,7 +719,7 @@ var Map = React.createClass({
         />)
       })}</MapView>
       <TouchableOpacity style={styles.blue} onPress={this.nav}>
-        <Image source={require('./img/navigation2.png')} style={{width: 35, height: 35}}/>
+        <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
       </TouchableOpacity>
       </View>
     )
@@ -828,14 +831,14 @@ var Right = React.createClass({
   render() {
     return (
     <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
-      <Text style={[{position: 'absolute', top: 5, left: 7}, {fontSize: 15, marginTop: 5}]}>Enter:</Text>
+      <Text style={[{position: 'absolute', top: height*5/736, left: width*7/414}, {fontSize: 15, marginTop: height*5/736}]}>Enter:</Text>
       <AutoComplete
         autoCorrect={false}
         onSelect={this.onSelect}
         onTyping={this.onTyping}
         autoCompleteFontSize={15}
         autoCompleteTableBorderWidth={1}
-        autoCompleteRowHeight={25}
+        autoCompleteRowHeight={height*25/736}
         maximumNumberOfAutoCompleteRows={10}
         autoCompleteTableBackgroundColor='white'
         style={[styles.autocomplete, {marginTop: 5}]}
