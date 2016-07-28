@@ -273,12 +273,6 @@ var Register = React.createClass({
 
 
 // HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
-// HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
-// HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
-// HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
-// HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
-// HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
-// HOME/MAP/FEED// HOME/MAP/FEED// HOME/MAP/FEED
 var TitleText = React.createClass({
   render() {
       return (
@@ -612,16 +606,27 @@ var Home = React.createClass({
             placeholder='Search for a specific Pokemon'
           />
           <TouchableOpacity
-            style={styles.buttonPost}
+            style={{
+              justifyContent: "center",
+              backgroundColor: "#FF585B",
+              paddingTop: 5*height/736,
+              paddingBottom: 5*height/736,
+            }}
             onPress={this.filter.bind(this, this.state.pokemonList, this.state.pokemon)}
             >
-            <Text style={styles.buttonLabel}>Filter</Text>
+            <Text style={{
+              height: 20*height/736, 
+              width: 54*width/414,
+              color: "white",
+              textAlign: "center",
+              marginRight: 1*height/736}}>
+            Filter</Text>
           </TouchableOpacity>
         </View>
-        <View style={{height: height*145/320}}>
+        <View style={{height: height*125/320}}>
           <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers}/>
         </View>
-        <View style={{height: height*132/320}}>
+        <View style={{height: height*153/320}}>
           <Swiper
             loop={false}
             index={1}
@@ -636,7 +641,7 @@ var Home = React.createClass({
               <Profile username={this.state.username} team={this.state.team} logout={this.logout}/>
             </View>
             <View style={{height: height*132/320}}>
-              <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
+              <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={[this.state.markers]} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
             </View>
             <View style={{height: height*132/320}}>
               <Right location={this.state.location} refresh={this.refresh} />
@@ -864,7 +869,6 @@ var Right = React.createClass({
         <View>
           <View style={{flexDirection: 'row'}}>
             <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
-
                    style={{width: 196*width/414, height: 196*height/736}} />
             <View style={{position: 'absolute', top: 90*height/736, right: 20*width/414}}>
               <View style={{flexDirection: 'row'}}>
@@ -892,42 +896,29 @@ var Right = React.createClass({
 })
 
 var Feed = React.createClass({
-
   render() {
-    // console.log("Feed state upon render", this.state);
-     //
-    //  changeRegion{this.followPost}
-
-
     return (
-      <View style={{flex: 1, borderTopWidth:1, borderColor: '#d3d3d3', backgroundColor: '#f5fcff'}}>
-        <Image source={{uri: 'http://localhost:3000/images/funny.png'}}
-              style={{width: width, height: height*19/40}}>
+      <Image source={{uri: 'http://localhost:3000/images/funny.png'}} style={{width: width, height: height * 19/40}}>
         <ListView
-        automaticallyAdjustContentInsets={false}
-        enableEmptySections={true}
-        dataSource={this.props.feed}
-        renderRow={(rowData) => {
-          var rating = null;
-          var col = 'black';
-          var prefix = '';
-          if (rowData.rating > 0) {
-            col = "#669966";
-            prefix = "+";
-          }
-          else if (rowData.rating < 0) {
-            col = '#FF585B';
-          }
-          rating = <Text style={{marginTop: 4*height/736, fontSize: 25*height/736, marginRight: 1, color: col}}>{prefix + rowData.rating}</Text>
-          if (rowData.vote) console.log("You voted", rowData.pokemon, rowData.vote);
-          console.log("props", this.props);
-          return (
-            <Post rowData={rowData} rating={rating} region={this.props.region} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter} changeRegion={this.props.changeRegion}/>
-          )
-          }
-        } />
-        </Image>
-      </View>
+          automaticallyAdjustContentInsets={true}
+          enableEmptySections={true}
+          dataSource={this.props.feed}
+          renderRow={(rowData) => {
+            return (
+              <Post rowData={rowData}
+                rating={rowData.rating}
+                region={this.props.region}
+                location={this.props.location}
+                refresh={this.props.refresh}
+                vote={rowData.vote}
+                pokemonList={this.props.pokemonList}
+                filter={this.props.filter}
+                changeRegion={this.props.changeRegion}
+              />
+              )
+            }
+          } />
+      </Image>
     )
   }
 });
@@ -978,6 +969,20 @@ var Post = React.createClass({
   },
 
   render() {
+    // Rating
+    var rating = null;
+    var col = 'black';
+    var prefix = '';
+    if (this.props.rating > 0) {
+      col = "#669966";
+      prefix = "+";
+    }
+    else if (this.props.rating < 0) {
+      col = '#FF585B';
+    }
+    rating = <Text style={{fontSize: 20*height/736, marginRight: 3, color: col, marginTop: 15}}>{prefix + this.props.rating}</Text>
+
+    // Voting
     var downCol = "#FF585B";
     var upCol = "#669966";
     if (this.state.upvoted) {
@@ -986,43 +991,45 @@ var Post = React.createClass({
     if (this.state.downvoted) {
       downCol = "#ccc";
     }
+    var widthUnit = width / 414;
+    var heightUnit = 55;
 
     var down = (
-      <TouchableOpacity onPress={this.sendVote.bind(this, this.props.rowData._id, 'down')} style={{height: height/16, padding: 7, backgroundColor: downCol}}>
+      <TouchableOpacity onPress={this.sendVote.bind(this, this.props.rowData._id, 'down')} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: downCol}}>
         <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'down'}/>
       </TouchableOpacity>
       )
 
     var up = (
-      <TouchableOpacity onPress={this.sendVote.bind(this, this.props.rowData._id, 'up')} style={{height: height/16, padding: 7, backgroundColor: upCol}}>
+      <TouchableOpacity onPress={this.sendVote.bind(this, this.props.rowData._id, 'up')} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: upCol}}>
         <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'up'}/>
       </TouchableOpacity>
       )
+
+    // Everything lmao
+    
     return (
       <View
         style={{
           backgroundColor: '#f6f6f6',
-          borderColor: 'rgba(0,0,0,.1)',
-          borderBottomWidth: 1*width/414,
-          paddingLeft: 10*width/414,
-          height: height/16
+          borderBottomWidth: 1,
+          borderColor: '#d3d3d3',
+          paddingLeft: 10 * widthUnit,
+          height: heightUnit,
+          flexDirection: 'row'
         }}>
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity onPress={this.selectPost}>
-            <View style={{flexDirection: 'row'}}>
-              <Image source={{uri: 'http://localhost:3000/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'}}
-              style={{width: 40*width/414, height: 40*height/736}} />
-              <View style={{marginLeft: 10*width/414, marginTop: 3*height/736}}>
-                <Text>{this.props.rowData.pokemon + ' seen ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' miles away'}</Text>
-                <Text>by {this.props.rowData.user.username + ' ' + Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-          <View style={[{position: 'absolute', right: 0}, {flexDirection: 'row'}]}>
-            {this.props.rating}
-            {down}
-            {up}
+        <TouchableOpacity style={{flexDirection: 'row'}} onPress={this.selectPost}>
+          <Image source={{uri: 'http://localhost:3000/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'}} style={{width: 50*widthUnit, height: 50*height/736, marginTop: 5}} />
+          <View style={{marginLeft: 10*widthUnit, marginTop: 3*height/736}}>
+            <Text style={{fontWeight: '600', fontSize: 15}}>{this.props.rowData.pokemon + ' ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' miles away'}</Text>
+            <Text style={{fontWeight: '600', fontSize: 13}}>{Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '}</Text>
+            <Text style={{fontSize: 11, color: 'grey'}}>seen by {this.props.rowData.user.username}</Text>
           </View>
+        </TouchableOpacity>
+        <View style={{position: 'absolute', right: 0, top: 0, backgroundColor: "rgba(0,0,0,0)", flexDirection: 'row'}}>
+          {rating}
+          {down}
+          {up}
         </View>
       </View>
     )
@@ -1177,7 +1184,7 @@ const styles = StyleSheet.create({
   },
   buttonPost: {
     backgroundColor: '#FF585B',
-    padding: 5
+    height: 24*height/736
   },
   buttonAll: {
     backgroundColor: '#FF585B',
@@ -1217,8 +1224,8 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   blue: {
-    top: 260*height/736,
-    left: 18*width/414,
+    top: 250*height/736,
+    left: 8*width/414,
     position: 'absolute',
   },
   tabContent: {
