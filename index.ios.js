@@ -302,8 +302,8 @@ var TitleText = React.createClass({
       return (
         <View style={{backgroundColor: '#f5fcff', flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{fontSize: 40, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Poke</Text>
-            <Text style={{fontSize: 40, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)', color: '#FF585B'}}>Finder</Text>
+            <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Poke</Text>
+            <Text style={{fontSize: 40 *height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)', color: '#FF585B'}}>Finder</Text>
           </View>
           {teamImg}
           <TouchableOpacity onPress={this.props.logout}>
@@ -609,7 +609,7 @@ var Home = React.createClass({
             maximumNumberOfAutoCompleteRows={10}
             style={styles.filterautocomplete}
             suggestions={this.state.data}
-            placeholder='Type Pokemon'
+            placeholder='Search for a specific Pokemon'
           />
           <TouchableOpacity
             style={styles.buttonPost}
