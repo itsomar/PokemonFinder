@@ -195,10 +195,7 @@ var Register = React.createClass({
       password: "",
       team: "",
       message: "",
-      iblur: "",
-      mblur: "",
-      vblur: "",
-      instinctsize: 100,
+      instinctsize: 110,
       mysticsize: 100,
       valorsize: 100,
     }
@@ -236,37 +233,31 @@ var Register = React.createClass({
 
   enlargeInstinct(){
     this.setState({
-      instinctsize: 130,
+      instinctsize: 140,
       mysticsize: 80,
       valorsize: 80,
       team: "Instinct",
-      iblur: "",
-      mblur: "Blur",
-      vblur: "Blur"
+
     })
   },
 
   enlargeMystic(){
     this.setState({
       mysticsize: 125,
-      instinctsize: 80,
+      instinctsize: 90,
       valorsize: 80,
       team: "Mystic",
-      iblur: "Blur",
-      mblur: "",
-      vblur: "Blur"
+
     })
   },
 
   enlargeValor(){
     this.setState({
       valorsize: 125,
-      instinctsize: 80,
+      instinctsize: 90,
       mysticsize: 80,
       team: "Valor",
-      iblur: "Blur",
-      mblur: "Blur",
-      vblur: ""
+
     })
   },
 
@@ -293,7 +284,7 @@ var Register = React.createClass({
 
         <TouchableOpacity
         onPress={this.enlargeInstinct}>
-        <Image source={{uri: 'http://localhost:3000/images/instinct' + this.state.iblur + '.png'}} style={{alignSelf: "center", width: width*this.state.instinctsize/414, height: height*this.state.instinctsize/736, marginBottom: 20}}/>
+        <Image source={{uri: 'http://localhost:3000/images/instinct.png'}} style={{alignSelf: "center", width: width*this.state.instinctsize/414, height: height*this.state.instinctsize/736, marginBottom: 20}}/>
         </TouchableOpacity>
 
         <View style={{
@@ -304,12 +295,12 @@ var Register = React.createClass({
         }}>
         <TouchableOpacity
         onPress={this.enlargeMystic}>
-        <Image source={{uri: 'http://localhost:3000/images/mystic' + this.state.mblur + '.png'}} style={{marginRight: width*35/414, width: width*(this.state.mysticsize-5)/414, height: height*(this.state.mysticsize-5)/736}}/>
+        <Image source={{uri: 'http://localhost:3000/images/mystic.png'}} style={{marginRight: width*35/414, width: width*(this.state.mysticsize-5)/414, height: height*(this.state.mysticsize-5)/736}}/>
          </TouchableOpacity>
 
         <TouchableOpacity
         onPress={this.enlargeValor}>
-        <Image source={{uri: 'http://localhost:3000/images/valor' + this.state.vblur + '.png'}} style={{marginLeft: width*35/414, width: width*this.state.valorsize/414, height: height*this.state.valorsize/736}}/>
+        <Image source={{uri: 'http://localhost:3000/images/valor.png'}} style={{marginLeft: width*35/414, width: width*this.state.valorsize/414, height: height*this.state.valorsize/736}}/>
          </TouchableOpacity>
 
         </View>
