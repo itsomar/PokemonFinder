@@ -503,6 +503,10 @@ var Home = React.createClass({
     return this.refresh();
   },
 
+  componentDidMount() {
+
+  },
+
 //will mount everytime its rerendered??
   componentWillMount() {
 
@@ -560,12 +564,29 @@ var Home = React.createClass({
     }).catch((err) => console.log(err));
   },
 
+  scrollBy(n) {
+    var scrollOffset = n - this.getSwiperIndex();
+    if (this.scroll && scrollOffset !== 0) {
+      console.log("[ETHAN DEBUG] now scrolling ", scrollOffset)
+      this.scroll(scrollOffset);
+    }
+    if (typeof this.scroll === "undefined") {
+      console.log("[ETHAN WARN]: scroll() is undefined at this point");
+    }
+  },
+
+  getSwiperIndex() {
+    if (typeof this.swiper !== 'undefined') {
+      return this.swiper.state.index;
+    }
+    return 0;
+  },
+
   render() {
     // console.log("STATE OF HOME", this.state.markers);
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
               // selectedIcon={require('./img/navigation2.png')}
-
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
       <View>
         <View style={{backgroundColor: '#F5FCFF', width: width, height: height * 50/736}}>
@@ -604,7 +625,13 @@ var Home = React.createClass({
           <Swiper
             loop={false}
             index={1}
-            showsPagination={false}>
+            showsPagination={false}
+            ref={function(swiper) {
+              if (swiper !== null) {
+                this.swiper = swiper;
+                this.scroll = swiper.scrollBy;
+              }
+            }.bind(this)}>
             <View style={{height: height*132/320}}>
               <Profile username={this.state.username} team={this.state.team} logout={this.logout}/>
             </View>
@@ -614,23 +641,29 @@ var Home = React.createClass({
             <View style={{height: height*132/320}}>
               <Right location={this.state.location} refresh={this.refresh} />
             </View>
-          </Swiper>
+            <View style={{height: height*132/320}}>
+              <Right location={this.state.location} refresh={this.refresh} />
+            </View>
+            <View style={{height: height*132/320}}>
+              <Right location={this.state.location} refresh={this.refresh} />
+            </View>
+          </Swiper>     
         </View>
         <View style={{width: width, height: height*50/736, backgroundColor: 'black', flexDirection: 'row'}}>
-          <TouchableOpacity style={{flex: 1}}>
-            <Text style={{color: 'white'}}>H</Text>
+          <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 0)}>
+            <Text style={{color: 'white'}}>profile</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1}}>
-            <Text style={{color: 'white'}}>H</Text>
+          <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 1)}>
+            <Text style={{color: 'white'}}>Pfeed</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1}}>
-            <Text style={{color: 'white'}}>H</Text>
+          <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 2)}>
+            <Text style={{color: 'white'}}>Gfeed</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1}}>
-            <Text style={{color: 'white'}}>H</Text>
+          <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 3)}>
+            <Text style={{color: 'white'}}>Ppost</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1}}>
-            <Text style={{color: 'white'}}>H</Text>
+          <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 4)}>
+            <Text style={{color: 'white'}}>Gpost</Text>
           </TouchableOpacity>
         </View>
       </View>
