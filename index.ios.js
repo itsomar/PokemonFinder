@@ -640,10 +640,10 @@ var Home = React.createClass({
             Filter</Text>
           </TouchableOpacity>
         </View>
-        <View style={{height: height*145/320}}>
+        <View style={{height: height*125/320}}>
           <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} gymmarkers={this.state.gymmarkers}/>
         </View>
-        <View style={{height: height*132/320}}>
+        <View style={{height: height*153/320}}>
           <Swiper
             loop={false}
             index={1}
@@ -661,13 +661,7 @@ var Home = React.createClass({
               <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
             </View>
             <View style={{height: height*132/320}}>
-              <Right location={this.state.location} refresh={this.refresh} />
-            </View>
-            <View style={{height: height*132/320}}>
               <GymFeed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} gymmarkers={this.state.gymmarkers} feed={ds.cloneWithRows(this.state.gymmarkers)} refresh={this.refresh} filter={this.filter}/>
-            </View>
-            <View style={{height: height*132/320}}>
-              <GymRight location={this.state.location} refresh={this.refresh}/>
             </View>
           </Swiper>
         </View>
@@ -679,13 +673,7 @@ var Home = React.createClass({
             <Text style={{color: 'white'}}>Pfeed</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 2)}>
-            <Text style={{color: 'white'}}>Ppost</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 3)}>
             <Text style={{color: 'white'}}>Gfeed</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1}} onPress={this.scrollBy.bind(null, 4)}>
-            <Text style={{color: 'white'}}>Gpost</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -797,6 +785,7 @@ var GymRight = React.createClass({
       if(postJson) {
         console.log("[HELLO GYMMMMMMM]", postJson);
         this.props.refresh();
+        this.props.setModalVisible(!this.props.modalVisible)
       } else {
         console.log('error');
       }
@@ -871,11 +860,45 @@ var GymPost = React.createClass({
 
 var GymFeed = React.createClass({
 
+  getInitialState() {
+    return {
+      modalVisible: false
+    }
+  },
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  },
+
+  modal() {
+    this.setModalVisible(true);
+  },
+
   render() {
     return (
-      <View style={{flex: 1, borderTopWidth:1, borderColor: '#d3d3d3', backgroundColor: '#f5fcff'}}>
+      <View>
+        <Modal
+          animationType={"slide"}
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {alert("Modal has been closed.")}}
+          >
+         <View style={{marginTop: 22}}>
+          <View style={{height: height*132/320}}>
+            <GymRight location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible} modalVisible={this.state.modalVisible}/>
+
+            <TouchableHighlight onPress={() => {
+              this.setModalVisible(!this.state.modalVisible)
+            }}>
+              <Text>Cancel</Text>
+            </TouchableHighlight>
+
+          </View>
+         </View>
+        </Modal>
+
         <Image source={require('./pokegym.png')}
-              style={{width: width, height: height*19/40}}>
+              style={{width: width, height: height * 551/1280}}>
         <ListView
         automaticallyAdjustContentInsets={false}
         enableEmptySections={true}
@@ -889,47 +912,82 @@ var GymFeed = React.createClass({
           }
         } />
         </Image>
+        <TouchableHighlight onPress={this.modal} style={[styles.button, styles.buttonBlue]}>
+          <Text style={styles.buttonLabel2}>Post</Text>
+        </TouchableHighlight>
       </View>
     )
   }
 });
+
 
 var Feed = React.createClass({
+  getInitialState() {
+    return {
+      modalVisible: false
+    }
+  },
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  },
+
+  modal() {
+    this.setModalVisible(true);
+  },
 
   render() {
-
     return (
-      <View style={{flex: 1, borderTopWidth:1, borderColor: '#d3d3d3', backgroundColor: '#f5fcff'}}>
-        <Image source={{uri: 'http://localhost:3000/images/funny.png'}}
-              style={{width: width, height: height*19/40}}>
+      <View>
+      <Modal
+        animationType={"slide"}
+        transparent={false}
+        visible={this.state.modalVisible}
+        onRequestClose={() => {alert("Modal has been closed.")}}
+        >
+       <View style={{marginTop: 22}}>
+        <View style={{height: height*132/320}}>
+          <Right location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible} modalVisible={this.state.modalVisible}/>
+
+          <TouchableHighlight onPress={() => {
+            this.setModalVisible(!this.state.modalVisible)
+          }}>
+            <Text>Cancel</Text>
+          </TouchableHighlight>
+
+        </View>
+       </View>
+      </Modal>
+      <Image source={{uri: 'http://localhost:3000/images/funny.png'}} style={{width: width, height: height * 551/1280}}>
         <ListView
-        automaticallyAdjustContentInsets={false}
-        enableEmptySections={true}
-        dataSource={this.props.feed}
-        renderRow={(rowData) => {
-          var rating = null;
-          var col = 'black';
-          var prefix = '';
-          if (rowData.rating > 0) {
-            col = "#669966";
-            prefix = "+";
-          }
-          else if (rowData.rating < 0) {
-            col = '#FF585B';
-          }
-          rating = <Text style={{fontSize: 25*height/736, marginRight: 1, color: col}}>{prefix + rowData.rating}</Text>
-          if (rowData.vote) console.log("You voted", rowData.pokemon, rowData.vote);
-          console.log("props", this.props);
-          return (
-            <Post rowData={rowData} rating={rating} region={this.props.region} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter} changeRegion={this.props.changeRegion}/>
-          )
-          }
-        } />
+          automaticallyAdjustContentInsets={true}
+          enableEmptySections={true}
+          dataSource={this.props.feed}
+          renderRow={(rowData) => {
+            return (
+              <Post rowData={rowData}
+                rating={rowData.rating}
+                region={this.props.region}
+                location={this.props.location}
+                refresh={this.props.refresh}
+                vote={rowData.vote}
+                pokemonList={this.props.pokemonList}
+                filter={this.props.filter}
+                changeRegion={this.props.changeRegion}
+              />
+              )
+            }
+          } />
       </Image>
+
+        <TouchableHighlight onPress={this.modal} style={[styles.button, styles.buttonBlue]}>
+          <Text style={styles.buttonLabel2}>Post</Text>
+        </TouchableHighlight>
       </View>
     )
   }
 });
+
 
 
 var Right = React.createClass({
@@ -1026,6 +1084,7 @@ var Right = React.createClass({
           pokemon: ''
         });
         this.props.refresh();
+        this.props.setModalVisible(!this.props.modalVisible)
       } else {
         console.log('error');
       }
@@ -1040,6 +1099,7 @@ var Right = React.createClass({
       <View style={{flexDirection: 'row'}}>
         <AutoComplete
           autoCorrect={false}
+          autoFocus={true}
           onSelect={this.onSelect}
           onTyping={this.onTyping}
           autoCompleteFontSize={15*height/736}
@@ -1089,6 +1149,7 @@ var Right = React.createClass({
     )
   }
 })
+
 
 var Post = React.createClass({
   getInitialState() {
