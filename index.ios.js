@@ -366,6 +366,7 @@ var Home = React.createClass({
         on: false,
         id: undefined
       },
+      chosen: null,
       filtered: false,
       pokemonList: [],
       data: [],
@@ -438,12 +439,15 @@ var Home = React.createClass({
         // console.log("FROM MONGO", reversefeed);
         if(this.state.filteredOne.on === true) {
           console.log('[FILTERED_POKEMON]', this.state.filteredOne);
-          var array = reversefeed.filter(function(item) {
+          var chosen = reversefeed.filter(function(item) {
             console.log("ITEM", item)
             return item._id === that.state.filteredOne.id
           })
+          console.log("CHOSENBRO", chosen);
+          console.log("MARKERSBRO", reversefeed);
           this.setState({
-            markers: array
+            markers: reversefeed,
+            chosen: chosen
           })
         } else if(this.state.filtered === true) {
           console.log('[ALLFILTER]', this.state.filtered)
@@ -482,7 +486,8 @@ var Home = React.createClass({
       filteredOne: ({
         on: false,
         id: undefined
-      })
+      }),
+      chosen: null
       // SET POKEMON TO EMPTY STRING?
     })
     pokemon = ''
@@ -596,7 +601,7 @@ var Home = React.createClass({
   render() {
     // console.log("STATE OF HOME", this.state.markers);
 
-              // selectedIcon={require('./img/navigation2.png')}
+
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
       <View>
@@ -641,7 +646,7 @@ var Home = React.createClass({
           </TouchableOpacity>
         </View>
         <View style={{height: height*125/320}}>
-          <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} gymmarkers={this.state.gymmarkers}/>
+          <Map location={this.state.location} idpoke={this.state.filteredOne.id} region={this.state.region} changeRegion={this.changeRegion} chosen={this.state.chosen} markers={this.state.markers} gymmarkers={this.state.gymmarkers}/>
         </View>
         <View style={{height: height*153/320}}>
           <Swiper
@@ -710,7 +715,9 @@ var Map = React.createClass({
 
   render() {
 
+    console.log("CHOSENBRO INSIDE MAP", this.props.chosen);
     var pokeballs = this.props.markers.map(function(marker, i) {
+
       var timeAgo = ((Date.now() - new Date(marker.time).getTime()) / 60000)
       return (<MapView.Marker
         coordinate={{
@@ -740,6 +747,22 @@ var Map = React.createClass({
 
     var all = pokeballs.concat(gyms)
 
+    if(this.props.chosen) {
+      var chosen = this.props.chosen.map(function(marker, i) {
+            var timeAgo = ((Date.now() - new Date(marker.time).getTime()) / 60000)
+            return (<MapView.Marker
+              coordinate={{
+                latitude: parseFloat(marker.location.latitude),
+                longitude: parseFloat(marker.location.longitude)
+              }}
+              title={marker.pokemon}
+              key={'pokemon-chosen' + i}
+              description={Math.floor(timeAgo.toString()) + ' minute(s) ago'}
+              image={require('./pokeball.png')}
+            />)
+          })
+      var all = chosen
+    }
     return (
       <View style={{flex: 1}}>
       <MapView
@@ -820,7 +843,6 @@ var GymPost = React.createClass({
   selectPost() {
     // console.log("HEY ROW DATA", this.props.rowData.location)
     console.log("[POST props]", this.props);
-    this.props.filter(this.props.pokemonList, null, null, this.props.rowData._id);
     this.props.changeRegion(
       { latitude: this.props.rowData.location.latitude,
         longitude: this.props.rowData.location.longitude,
