@@ -194,7 +194,10 @@ var Register = React.createClass({
       username: "",
       password: "",
       team: "",
-      message: ""
+      message: "",
+      instinctsize: 100,
+      mysticsize: 100,
+      valorsize: 100,
     }
   },
 
@@ -228,6 +231,33 @@ var Register = React.createClass({
     this.props.navigator.pop();
   },
 
+  enlargeInstinct(){
+    this.setState({
+      instinctsize: 130,
+      mysticsize: 80,
+      valorsize: 80,
+      team: "Instinct"
+    })
+  },
+
+  enlargeMystic(){
+    this.setState({
+      mysticsize: 125,
+      instinctsize: 80,
+      valorsize: 80,
+      team: "Mystic"
+    })
+  },
+
+  enlargeValor(){
+    this.setState({
+      valorsize: 125,
+      instinctsize: 80,
+      mysticsize: 80,
+      team: "Valor"
+    })
+  },
+
   render() {
     return (
       <View style={styles.container}>
@@ -246,16 +276,31 @@ var Register = React.createClass({
             placeholder="Choose a password"
             onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
           />
+
           <Text style={[styles.textMed, {color: '#a9a9a9'}]}>Pick your team</Text>
-          <Picker
-            selectedValue={this.state.team}
-            onValueChange={(text) => this.setState({team: text})}
-            >
-            <Picker.Item label="No team yet" value="Noteam" />
-            <Picker.Item label="Mystic" value="Mystic" />
-            <Picker.Item label="Instinct" value="Instinct" />
-            <Picker.Item label="Valor" value="Valor" />
-          </Picker>
+
+        <TouchableOpacity
+        onPress={this.enlargeInstinct}>
+        <Image source={require('./instinct.png')} style={{alignSelf: "center", width: width*this.state.instinctsize/414, height: height*this.state.instinctsize/736, marginBottom: 20}}/>
+        </TouchableOpacity>
+
+        <View style={{
+        flexWrap: 'wrap', 
+        alignSelf: "center",
+        flexDirection:'row',
+        marginBottom: 50
+        }}>
+        <TouchableOpacity
+        onPress={this.enlargeMystic}>
+        <Image source={require('./mystic.png')} style={{marginRight: width*35/414, width: width*(this.state.mysticsize-5)/414, height: height*(this.state.mysticsize-5)/736}}/>
+         </TouchableOpacity>
+
+        <TouchableOpacity
+        onPress={this.enlargeValor}>
+        <Image source={require('./valor.png')} style={{marginLeft: width*35/414, width: width*this.state.valorsize/414, height: height*this.state.valorsize/736}}/>
+         </TouchableOpacity>
+
+        </View>
 
         <TouchableOpacity
           onPress={this.submit} style={[styles.button, styles.buttonRed]}>
