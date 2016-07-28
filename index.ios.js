@@ -158,12 +158,12 @@ var Pokegame = React.createClass({
       backgroundColor: '#F5FCFF',
     }}>
       <View style={{flexDirection: 'row'}}>
-        <Text style={{fontSize: 40, marginBottom: 5}}>Poke</Text><Text style={{fontSize: 40, marginBottom: 5, color: '#FF585B'}}>Finder</Text>
+        <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736}}>Poke</Text><Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: '#FF585B'}}>Finder</Text>
       </View>
       <Text style={{color: '#a9a9a9'}}>Please sign in</Text>
       <View style={{width:width*.7}}>
         <TextInput
-          style={{height: 30, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
+          style={{height: 30*height/736, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
           placeholder="Username"
           onChangeText={(username) => this.setState({username})} value={this.state.username}
         />
@@ -237,7 +237,7 @@ var Register = React.createClass({
         </Text>
         <View style={{width:width*.7}}>
           <TextInput
-            style={{height: 40, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
+            style={{height: 40*height/736, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
             placeholder="Choose a username"
             onChangeText={(text) => this.setState({username: text})} value={this.state.username}
           />
@@ -282,7 +282,7 @@ var Register = React.createClass({
 var TitleText = React.createClass({
   render() {
       return (
-        <Text style={{ fontSize: 48, color: 'white' }}>
+        <Text style={{ fontSize: 48*height/736, color: 'white' }}>
           {this.props.label}
         </Text>
       )
@@ -294,16 +294,16 @@ var TitleText = React.createClass({
     render() {
       var teamImg = null;
       if (this.props.team) {
-        teamImg = (
-          <Image source={{uri: 'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'}} style={{width: 193, height: 193, alignItems: 'center'}}>
-            <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
-          </Image>)
+        teamImg = (<Image source={{uri: 'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'}}
+               style={{width: 193*width/414, height: 193*height/736, alignItems: 'center'}}>
+          <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
+        </Image>)
       }
       return (
         <View style={{backgroundColor: '#f5fcff', flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{fontSize: 40, marginBottom: 5, backgroundColor: 'rgba(0,0,0,0)'}}>Poke</Text>
-            <Text style={{fontSize: 40, marginBottom: 5, backgroundColor: 'rgba(0,0,0,0)', color: '#FF585B'}}>Finder</Text>
+            <Text style={{fontSize: 40, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Poke</Text>
+            <Text style={{fontSize: 40, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)', color: '#FF585B'}}>Finder</Text>
           </View>
           {teamImg}
           <TouchableOpacity onPress={this.props.logout}>
@@ -581,9 +581,9 @@ var Home = React.createClass({
             autoCorrect={false}
             onSelect={this.onTyping}
             onTyping={this.onTyping}
-            autoCompleteFontSize={15}
+            autoCompleteFontSize={15*height/736}
             autoCompleteTableBorderWidth={1}
-            autoCompleteRowHeight={25}
+            autoCompleteRowHeight={25*height/736}
             autoCompleteTableBackgroundColor='white'
             maximumNumberOfAutoCompleteRows={10}
             style={styles.filterautocomplete}
@@ -804,17 +804,17 @@ var Right = React.createClass({
   render() {
     return (
     <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
-      <Text style={[{position: 'absolute', top: height*5/736, left: width*7/414}, {fontSize: 15, marginTop: height*5/736}]}>Enter:</Text>
+      <Text style={[{position: 'absolute', top: height*5/736, left: width*7/414}, {fontSize: 15*height/736, marginTop: height*5/736}]}>Enter:</Text>
       <AutoComplete
         autoCorrect={false}
         onSelect={this.onSelect}
         onTyping={this.onTyping}
-        autoCompleteFontSize={15}
+        autoCompleteFontSize={15*height/736}
         autoCompleteTableBorderWidth={1}
         autoCompleteRowHeight={height*25/736}
         maximumNumberOfAutoCompleteRows={10}
         autoCompleteTableBackgroundColor='white'
-        style={[styles.autocomplete, {marginTop: 5}]}
+        style={[styles.autocomplete, {marginTop: 5*height/736}]}
         suggestions={this.state.data.map((p) => { return p.name})}
         placeholder='Pokemon Name'
         value={this.state.pokemon}
@@ -824,8 +824,9 @@ var Right = React.createClass({
         <View>
           <View style={{flexDirection: 'row'}}>
             <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
-                   style={{width: 196, height: 196}} />
-            <View style={{position: 'absolute', top: 70, right: 20}}>
+
+                   style={{width: 196*width/414, height: 196*height/736}} />
+            <View style={{position: 'absolute', top: 90*height/736, right: 20*width/414}}>
               <View style={{flexDirection: 'row'}}>
                 <Text style={{fontWeight: 'bold'}}>Name: </Text><Text>{this.state.pokemonObj.name}</Text>
               </View>
@@ -889,7 +890,7 @@ var Feed = React.createClass({
           else if (rowData.rating < 0) {
             col = '#FF585B';
           }
-          rating = <Text style={{marginTop: 4, fontSize: 25, marginRight: 1, color: col}}>{prefix + rowData.rating}</Text>
+          rating = <Text style={{marginTop: 4*height/736, fontSize: 25*height/736, marginRight: 1, color: col}}>{prefix + rowData.rating}</Text>
           if (rowData.vote) console.log("You voted", rowData.pokemon, rowData.vote);
           console.log("props", this.props);
           return (
@@ -960,14 +961,14 @@ var Post = React.createClass({
     }
 
     var down = (
-      <TouchableOpacity onPress={this.sendVote.bind(this, this.props.rowData._id, 'down')} style={{marginTop: 5, marginBottom: 5, padding: 7, borderRadius: 5, backgroundColor: downCol}}>
-        <Triangle width={15} height={15} color={'white'} direction={'down'}/>
+      <TouchableOpacity onPress={this.sendVote.bind(this, this.props.rowData._id, 'down')} style={{marginTop: 5*height/736, marginBottom: 5*height/736, padding: 7, borderRadius: 5, backgroundColor: downCol}}>
+        <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'down'}/>
       </TouchableOpacity>
       )
 
     var up = (
-      <TouchableOpacity onPress={this.sendVote.bind(this, this.props.rowData._id, 'up')} style={{marginTop: 5, marginBottom: 5, padding: 7, borderRadius: 5, backgroundColor: upCol}}>
-        <Triangle width={15} height={15} color={'white'} direction={'up'}/>
+      <TouchableOpacity onPress={this.sendVote.bind(this, this.props.rowData._id, 'up')} style={{marginTop: 5*height/736, marginBottom: 5*height/736, padding: 7, borderRadius: 5, backgroundColor: upCol}}>
+        <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'up'}/>
       </TouchableOpacity>
       )
     return (
@@ -975,23 +976,23 @@ var Post = React.createClass({
         style={{
           backgroundColor: '#f6f6f6',
           borderColor: 'rgba(0,0,0,.1)',
-          borderBottomWidth: 1,
+          borderBottomWidth: 1*width/414,
           padding: 2,
-          paddingLeft: 10,
-          paddingRight: 10
+          paddingLeft: 10*width/414,
+          paddingRight: 10*width/414
         }}>
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity onPress={this.selectPost}>
             <View style={{flexDirection: 'row'}}>
               <Image source={{uri: 'http://localhost:3000/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'}}
-              style={{width: 40, height: 40}} />
-              <View style={{marginLeft: 10, marginTop: 3}}>
+              style={{width: 40*width/414, height: 40*height/736}} />
+              <View style={{marginLeft: 10*width/414, marginTop: 3*height/736}}>
                 <Text>{this.props.rowData.pokemon + ' seen ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' miles away'}</Text>
                 <Text>by {this.props.rowData.user.username + ' ' + Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '} </Text>
               </View>
             </View>
           </TouchableOpacity>
-          <View style={[{position: 'absolute', right: 5}, {flexDirection: 'row'}]}>
+          <View style={[{position: 'absolute', right: 5*width/414}, {flexDirection: 'row'}]}>
             {this.props.rating}
             {down}
             {up}
@@ -1115,29 +1116,29 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 20*height/736,
     textAlign: 'center',
     margin: 10,
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
+    marginBottom: 5*height/736,
   },
   textBig: {
-    fontSize: 36,
+    fontSize: 36*height/736,
     textAlign: 'center',
     margin: 10,
   },
   textMed: {
-    fontSize: 20,
+    fontSize: 20*height/736,
     textAlign: 'center',
     margin: 10,
   },
   button: {
     alignSelf: 'stretch',
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingTop: 8*height/736,
+    paddingBottom: 8*height/736,
   },
   buttonRed: {
     backgroundColor: '#FF585B'
@@ -1154,47 +1155,47 @@ const styles = StyleSheet.create({
   },
   buttonAll: {
     backgroundColor: '#FF585B',
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10
+    paddingTop: 5*height/736,
+    paddingBottom: 5*height/736,
+    paddingLeft: 10*width/414,
+    paddingRight: 10*width/414
   },
   buttonSettings: {
     backgroundColor: '#FF585B',
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10
+    paddingTop: 5*height/736,
+    paddingBottom: 5*height/736,
+    paddingLeft: 10*width/414,
+    paddingRight: 10*width/414
   },
   buttonLabel: {
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 16*height/736,
     color: 'white'
   },
   buttonLabel2: {
     textAlign: 'center',
-    fontSize: 16
+    fontSize: 16*height/736
   },
   autocomplete: {
     alignSelf: 'stretch',
-    height: 30,
+    height: 30*height/736,
     width: width*33/40,
     backgroundColor: '#FFF',
     borderColor: 'lightblue',
     borderWidth: 1,
-    marginLeft: 55
+    marginLeft: 55*width/414
   },
   containerAuto: {
     flex: 1,
     backgroundColor: '#F5FCFF'
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 20*height/736,
     textAlign: 'center'
   },
   blue: {
-    top: 260,
-    left: 18,
+    top: 260*height/736,
+    left: 18*width/414,
     position: 'absolute',
   },
   tabContent: {
@@ -1207,7 +1208,7 @@ const styles = StyleSheet.create({
   },
   filterautocomplete: {
     alignSelf: 'stretch',
-    height: 30,
+    height: 30*height/736,
     width: width*199/256,
     backgroundColor: '#FFF',
     borderColor: 'lightblue',
