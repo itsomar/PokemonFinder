@@ -606,10 +606,21 @@ var Home = React.createClass({
             placeholder='Search for a specific Pokemon'
           />
           <TouchableOpacity
-            style={styles.buttonPost}
+            style={{
+              justifyContent: "center",
+              backgroundColor: "#FF585B",
+              paddingTop: 5*height/736,
+              paddingBottom: 5*height/736,
+            }}
             onPress={this.filter.bind(this, this.state.pokemonList, this.state.pokemon)}
             >
-            <Text style={styles.buttonLabel}>Filter</Text>
+            <Text style={{
+              height: 20*height/736, 
+              width: 54*width/414,
+              color: "white",
+              textAlign: "center",
+              marginRight: 1*height/736}}>
+            Filter</Text>
           </TouchableOpacity>
         </View>
         <View style={{height: height*125/320}}>
@@ -1173,7 +1184,7 @@ const styles = StyleSheet.create({
   },
   buttonPost: {
     backgroundColor: '#FF585B',
-    padding: 5
+    height: 24*height/736
   },
   buttonAll: {
     backgroundColor: '#FF585B',
