@@ -296,7 +296,7 @@ var TitleText = React.createClass({
       if (this.props.team) {
         teamImg = (<Image source={{uri: 'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'}}
                style={{width: 193, height: 193, alignItems: 'center'}}>
-          <Text style={{backgroundColor: 'rgba(0,0,0,0)', marginTop: 5}}>{this.props.username} | {this.props.team}</Text>
+          <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
         </Image>)
       }
       return (
@@ -621,13 +621,13 @@ var Home = React.createClass({
                 loop={false}
                 index={1}
                 showsPagination={false}>
-                <View>
+                <View style={{height: height*19/40}}>
                   <Profile username={this.state.username} team={this.state.team} logout={this.logout}/>
                 </View>
                 <View style={{height: height*19/40}}>
                   <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
                 </View>
-                <View>
+                <View style={{height: height*19/40}}>
                   <Right location={this.state.location} refresh={this.refresh} />
                 </View>
               </Swiper>
@@ -647,13 +647,13 @@ var Home = React.createClass({
                 loop={false}
                 index={1}
                 showsPagination={false}>
-                <View>
+                <View style={{height: height*19/40}}>
                   <Profile username={this.state.username} team={this.state.team} logout={this.logout}/>
                 </View>
-                <View style={{height: height*128/320}}>
+                <View style={{height: height*19/40}}>
                   <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} filter={this.filter}/>
                 </View>
-                <View>
+                <View style={{height: height*19/40}}>
                   <Right location={this.state.location} refresh={this.refresh} />
                 </View>
               </Swiper>
