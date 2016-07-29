@@ -158,6 +158,7 @@ var Pokegame = React.createClass({
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
     }}>
+      <Image style={{alignItems: 'center', marginBottom: 30, height: 220, width: 250}} source={require('./pikachu.png')}/>
       <View style={{flexDirection: 'row'}}>
         <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736}}>Poke</Text><Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: '#FF585B'}}>Finder</Text>
       </View>
@@ -258,7 +259,6 @@ var Register = React.createClass({
       instinctsize: 90,
       mysticsize: 80,
       team: "Valor",
-
     })
   },
 
@@ -282,7 +282,7 @@ var Register = React.createClass({
           />
 
           <Text style={[styles.textMed, {color: '#a9a9a9'}]}>Pick your team</Text>
-
+        <View style={{height: 270}}>
         <TouchableOpacity
         onPress={this.enlargeInstinct}>
         <Image source={{uri: 'http://localhost:3000/images/instinct.png'}} style={{alignSelf: "center", width: width*this.state.instinctsize/414, height: height*this.state.instinctsize/736, marginBottom: 20}}/>
@@ -303,7 +303,7 @@ var Register = React.createClass({
         onPress={this.enlargeValor}>
         <Image source={{uri: 'http://localhost:3000/images/valor.png'}} style={{marginLeft: width*35/414, width: width*this.state.valorsize/414, height: height*this.state.valorsize/736}}/>
          </TouchableOpacity>
-
+        </View>
         </View>
 
         <TouchableOpacity
@@ -406,9 +406,6 @@ var Home = React.createClass({
     })
 
     return {
-      profile: false,
-      pfeed: false,
-      gfeed: false,
       selectedTab: 'redTab',
       notifCount: 0,
       presses: 0,
@@ -539,7 +536,7 @@ var Home = React.createClass({
     pokemon = ''
     return this.refresh()
   },
-  
+
   filter(pokeList, pokemon, placeholder, id) {
     if (id) {
       this.setState({
@@ -648,19 +645,26 @@ var Home = React.createClass({
     return 0;
   },
 
-  scroll() {
-    this.scrollBy.bind(null, i)
-  },
-
   render() {
-    // // console.log("STATE OF HOME", this.state.markers);
 
+    // console.log("STATE OF HOME", this.state.markers);
+    var index = this.getSwiperIndex();
+
+    var col1 = 'grey';
+    var col2 = 'grey';
+    var col3 = 'grey';
+    if (index === 0) {
+      col1 = 'black'
+    } else if (index === 1) {
+      col2 = 'black'
+    } else {
+      col3 = 'black'
+    }
+              // selectedIcon={require('./img/navigation2.png')}
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
       <View>
-        <View style={{backgroundColor: '#F5FCFF', width: width, height: height * 50/736}}>
-        </View>
-        <View style={{flexDirection: 'row', marginTop: height*22/736, position: 'absolute', top: 0, zIndex: 999}}>
+        <View style={{flexDirection: 'row', position: 'absolute', top: 0, zIndex: 999}}>
           <TouchableOpacity
             style={styles.buttonAll}
             onPress={this.all}
@@ -723,18 +727,18 @@ var Home = React.createClass({
             </View>
           </Swiper>
         </View>
-        <View style={{width: width, height: height*50/736, backgroundColor: 'black', flexDirection: 'row'}}>
-          <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5}} onPress={this.scrollBy.bind(null, 0)}>
+        <View style={{width: width, height: height*50/736, flexDirection: 'row'}}>
+          <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5, backgroundColor: col1}} onPress={this.scrollBy.bind(null, 0)}>
             <Image source={require('./profile.png')}
               style={{width: 20, height: 20}} />
             <Text style={{color: 'white'}}>Profile</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5}} onPress={this.scrollBy.bind(null, 1)}>
+          <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5, backgroundColor: col2}} onPress={this.scrollBy.bind(null, 1)}>
             <Image source={require('./pokeballnav.png')}
               style={{width: 20, height: 20}} />
             <Text style={{color: 'white'}}>Pokemon Feed</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5}} onPress={this.scrollBy.bind(null, 2)}>
+          <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5, backgroundColor: col3}} onPress={this.scrollBy.bind(null, 2)}>
             <Image source={require('./pokegym.png')}
               style={{width: 20, height: 20}} />
             <Text style={{color: 'white'}}>Gym Feed</Text>
@@ -1582,9 +1586,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     height: 30*height/736,
     width: width*199/256,
-    backgroundColor: '#FFF',
-    borderColor: 'lightblue',
-    borderWidth: 1
+    backgroundColor: '#FFF'
   }
 });
 
