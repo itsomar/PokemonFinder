@@ -387,8 +387,8 @@ var Home = React.createClass({
           location: {
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
-            latitudeDelta: 0.00922,
-            longitudeDelta: 0.00421
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
           }
         });
       },
@@ -431,8 +431,8 @@ var Home = React.createClass({
       location: {
         latitude: 0,
         longitude: 0,
-        latitudeDelta: 0.00922,
-        longitudeDelta: 0.00421
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421
       },
       region: {
         latitude: 0,
@@ -862,7 +862,7 @@ var Map = React.createClass({
         console.log('HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO', postJson)
         this.props.refresh();
         this.setModalVisible(!this.state.modalVisible)
-        this.setModalVisible2(!this.state.modalVisible2);
+        // this.setModalVisible2(!this.state.modalVisible2);
         this.setState({
           pokemonObj: {},
           pokemon: ''
@@ -1327,6 +1327,7 @@ var Feed = React.createClass({
           renderRow={(rowData) => {
             return (
               <Post rowData={rowData}
+                markers={this.props.markers}
                 rating={rowData.rating}
                 region={this.props.region}
                 location={this.props.location}
@@ -1351,10 +1352,11 @@ var Post = React.createClass({
     return ({
       upvoted: (this.props.vote === 'up') || false,
       downvoted: (this.props.vote === 'down') || false,
-      selected: false
+      selected: 0
     })
   },
   componentWillReceiveProps(nextProps) {
+        console.log("SELECTED STATE REFRESH", this.state.selected)
       this.setState({
         upvoted: (nextProps.vote === 'up') || false,
         downvoted: (nextProps.vote === 'down') || false
@@ -1382,9 +1384,10 @@ var Post = React.createClass({
 
   selectPost() {
     // console.log("HEY ROW DATA", this.props.rowData.location)
-    console.log("[POST props]", this.props);
+    console.log("SELECTED STATE", this.state.selected)
+    console.log("CURRENT ROW ID", this.props.rowData._id)
+
     if(!this.state.selected) {
-      this.props.filter(this.props.pokemonList, null, null, this.props.rowData._id);
       this.props.changeRegion(
         { latitude: this.props.rowData.location.latitude,
           longitude: this.props.rowData.location.longitude,
@@ -1392,10 +1395,10 @@ var Post = React.createClass({
           longitudeDelta: this.props.region.longitudeDelta,
       })
       this.setState({
-        selected: true
+        selected: this.props.rowData._id
       })
     }
-    else if (this.state.selected) {
+    else if (this.state.selected === this.props.rowData._id) {
       this.props.changeRegion(
         { latitude: this.props.location.latitude,
           longitude: this.props.location.longitude,
@@ -1404,7 +1407,12 @@ var Post = React.createClass({
       })
       this.props.refresh()
       this.setState({
-        selected: false
+        selected: 0
+      })
+    }
+    else if (this.state.selected !== this.props.rowData._id) {
+      this.setState({
+        selected: this.props.rowData._id
       })
     }
   },
@@ -1456,7 +1464,12 @@ var Post = React.createClass({
     var white = null
     var mcolor = '#f6f6f6'
     var scolor = 'grey'
-      if(this.state.selected) {
+    // console.log("ROWDATA BEOFRE RENDER", this.props.feed.dataBlob.s1)
+    console.log("markers BEOFRE renderyoooo", this.props.markers)
+    console.log("SELCTED state IN render", this.state.selected);
+
+    for(var i = 0; i < this.props.markers.length; i++) {
+      if(this.state.selected === this.props.markers[i]._id) {
         var mcolor = '#5C5C5C'
         var scolor = 'white'
         var nav = (
@@ -1465,6 +1478,14 @@ var Post = React.createClass({
           </TouchableOpacity>
         )
       }
+      else if (this.state.selected !== this.props.markers[i]._id) {
+        var nav = null
+        var white = null
+        var mcolor = '#f6f6f6'
+        var scolor = 'grey'
+      }
+    }
+
 
     // Everything lmao
 
