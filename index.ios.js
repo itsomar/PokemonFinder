@@ -952,7 +952,7 @@ var Map = React.createClass({
           visible={this.state.modalVisible}
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
-          <View style={{height: height*132/320}}>
+          <View style={{height: height*215/320}}>
             <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
               <View style={{flexDirection: 'row', position: 'absolute', top: 0, zIndex: 999}}>
                 <AutoComplete
@@ -978,25 +978,21 @@ var Map = React.createClass({
               </View>
               <View>
                 {(Object.keys(this.state.pokemonObj).length !== 0) ?
-                <View>
-                  <View style={{flexDirection: 'row'}}>
-                    <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
-                           style={{width: 196*width/414, height: 196*height/736}} />
-                    <View style={{position: 'absolute', top: 90*height/736, right: 20*width/414}}>
-                      <View style={{flexDirection: 'row'}}>
-                        <Text style={{fontWeight: 'bold'}}>Name: </Text><Text>{this.state.pokemonObj.name}</Text>
-                      </View>
-                      <View style={{flexDirection: 'row'}}>
-                        <Text style={{fontWeight: 'bold'}}>No: </Text><Text>{this.state.pokemonObj.number}</Text>
-                      </View>
-                      <View style={{flexDirection: 'row'}}>
-                        <Text style={{fontWeight: 'bold'}}>Type: </Text><Text>{this.state.pokemonObj.types}</Text>
-                      </View>
-                      <View style={{flexDirection: 'row'}}>
-                        <Text style={{fontWeight: 'bold'}}>Rarity: </Text><Text>{this.state.pokemonObj.rarity}</Text>
-                      </View>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
+                           style={{width: 300*width/414, height: 300*height/736, marginTop: 10}} />
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontWeight: 'bold', fontSize: 20}}>Name: </Text><Text style={{fontSize: 20}}>{this.state.pokemonObj.name}</Text>
                     </View>
-                  </View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontWeight: 'bold', fontSize: 20}}>No: </Text><Text style={{fontSize: 20}}>{this.state.pokemonObj.number}</Text>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontWeight: 'bold', fontSize: 20}}>Type: </Text><Text style={{fontSize: 20}}>{this.state.pokemonObj.types}</Text>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontWeight: 'bold', fontSize: 20}}>Rarity: </Text><Text style={{fontSize: 20}}>{this.state.pokemonObj.rarity}</Text>
+                    </View>
                 </View>
               : <View>
                 </View>
@@ -1020,8 +1016,8 @@ var Map = React.createClass({
           visible={this.state.modalVisible2}
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
-         <View style={{marginTop: 22}}>
-          <View style={{height: height*132/320}}>
+
+          <View style={{height: height*215/320}}>
             <GymPostModal location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible2} modalVisible={this.state.modalVisible2}/>
 
             <TouchableHighlight style={[styles.button, styles.buttonBlue]} onPress={() => {
@@ -1031,7 +1027,7 @@ var Map = React.createClass({
             </TouchableHighlight>
 
           </View>
-         </View>
+
         </Modal>
       )
 
@@ -1139,21 +1135,23 @@ var GymPostModal = React.createClass({
   },
   render() {
     return (
-    <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
-      <View>
+    <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1, flexDirection: 'row'}]}>
+
          <TextInput
-           style={{height: 30, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
+           style={[styles.autocomplete, {textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}]}
            placeholder="Optional Text"
            maxLength={45}
            onChangeText={(message) => this.setState({message})} value={this.state.message}
          />
           <TouchableOpacity
-          style={[styles.button, styles.buttonRed, {marginTop: 202}]}
+          style={[styles.button, styles.buttonRed, {height: 30*height/736, width: 53, justifyContent: 'center', alignItems: 'center'}]}
           onPress={this.post}
           >
-            <Text style={styles.buttonLabel}>Post Gym</Text>
+            <Text style={styles.buttonLabel}>Send</Text>
           </TouchableOpacity>
-      </View>
+          <Image source={require('./001.png')}
+              style={{width: 50, height: 50*height/736, marginTop: 5}} />
+
     </View>
     )
   }
