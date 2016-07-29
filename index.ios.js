@@ -661,9 +661,7 @@ var Home = React.createClass({
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
       <View>
-        <View style={{backgroundColor: 'grey', width: width, height: height * 50/736}}>
-        </View>
-        <View style={{flexDirection: 'row', marginTop: height*22/736, position: 'absolute', top: 0, zIndex: 999}}>
+        <View style={{flexDirection: 'row', position: 'absolute', top: 0, zIndex: 999}}>
           <TouchableOpacity
             style={styles.buttonAll}
             onPress={this.all}
@@ -701,7 +699,7 @@ var Home = React.createClass({
             Filter</Text>
           </TouchableOpacity>
         </View>
-        <View style={{height: height*120/320}}>
+        <View style={{height: height*141/320}}>
           <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} gymmarkers={this.state.gymmarkers} refresh={this.refresh} pokemonList={this.state.pokemonList} pokeNames={this.state.pokeNames} filter={this.filter}/>
         </View>
         <View style={{height: height*158/320}}>
