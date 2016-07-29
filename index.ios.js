@@ -305,9 +305,6 @@ var Profile = React.createClass({
         <TouchableOpacity onPress={this.props.logout}>
           <Text>Logout</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>Settings</Text>
-        </TouchableOpacity>
       </View>
     )
   }
@@ -662,14 +659,52 @@ var Home = React.createClass({
       var modal = null
     }
 
+    if(!this.state.filtered) {
+      var filterbutton = (
+        <TouchableOpacity
+          style={{
+            justifyContent: "center",
+            backgroundColor: "#FF585B",
+            paddingTop: 5*height/736,
+            paddingBottom: 5*height/736,
+          }}
+          onPress={this.filter.bind(this, this.state.pokeNames, this.state.pokemon, null, null)}
+        >
+          <Text style={{
+            height: 20*height/736,
+            width: 54*width/414,
+            color: "white",
+            textAlign: "center",
+            marginRight: 1*height/736}}>
+          Filter</Text>
+        </TouchableOpacity>
+      )
+    }
+    else {
+      var filterbutton = (
+        <TouchableOpacity
+          style={{
+            justifyContent: "center",
+            backgroundColor: "#FF585B",
+            paddingTop: 5*height/736,
+            paddingBottom: 5*height/736,
+          }}
+          onPress={this.all}
+        >
+          <Text style={{
+            height: 20*height/736,
+            width: 54*width/414,
+            color: "white",
+            textAlign: "center",
+            marginRight: 1*height/736}}>
+          All</Text>
+        </TouchableOpacity>
+      )
+    }
 
-    return (
-      <View>
-        {modal}
+    if(index === 1) {
+      var searchbar = (
         <View style={{flexDirection: 'row', position: 'absolute', top: 0, zIndex: 999}}>
-          <TouchableOpacity style={styles.buttonAll} onPress={this.all}>
-            <Text style={styles.buttonLabel}>All</Text>
-          </TouchableOpacity>
           <AutoComplete
             autoCorrect={false}
             onSelect={this.onTyping}
@@ -684,24 +719,17 @@ var Home = React.createClass({
             placeholder='Search for a specific Pokémon'
             value={this.state.pokemon}
           />
-          <TouchableOpacity
-            style={{
-              justifyContent: "center",
-              backgroundColor: "#FF585B",
-              paddingTop: 5*height/736,
-              paddingBottom: 5*height/736,
-            }}
-            onPress={this.filter.bind(this, this.state.pokeNames, this.state.pokemon, null, null)}
-          >
-            <Text style={{
-              height: 20*height/736,
-              width: 54*width/414,
-              color: "white",
-              textAlign: "center",
-              marginRight: 1*height/736}}>
-            Filter</Text>
-          </TouchableOpacity>
+        {filterbutton}
         </View>
+      )
+    } else {
+      searchbar = null
+    }
+
+    return (
+      <View>
+        {modal}
+        {searchbar}
         <View style={{height: height*141/320}}>
           <Map location={this.state.location} index={this.getSwiperIndex()} idpoke={this.state.filteredOne.id} region={this.state.region} changeRegion={this.changeRegion} chosen={this.state.chosen} markers={this.state.markers} gymmarkers={this.state.gymmarkers} refresh={this.refresh} pokemonList={this.state.pokemonList} pokeNames={this.state.pokeNames} filter={this.filter}/>
         </View>
@@ -1698,8 +1726,8 @@ const styles = StyleSheet.create({
   },
   filterautocomplete: {
     alignSelf: 'stretch',
-    height: 30*height/736,
-    width: width*199/256,
+    height: 35*height/736,
+    width: width*223/256,
     backgroundColor: '#FFF'
   }
 });
