@@ -332,6 +332,22 @@ var TitleText = React.createClass({
     }
   })
 
+  var SettingsModal = React.createClass({
+
+    setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  },
+
+  render() {
+    return (
+    <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
+      <View>
+         <Text>Hello </Text>
+      </View>
+    </View>
+    )
+  }
+})
 
   var Profile = React.createClass({
     render() {
@@ -349,9 +365,21 @@ var TitleText = React.createClass({
           </View>
           <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
           {teamImg}
+
+           <View style={{
+            flexWrap: 'wrap', 
+            alignSelf: "center",
+            flexDirection:'row',
+            }}>
           <TouchableOpacity onPress={this.props.logout}>
-            <Text>Logout</Text>
+            <Text style={{marginRight: 10}}>Logout</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+              this.setModalVisible(!this.state.modalVisible)
+            }}>
+            <Text style={{marginLeft: 10}}>Settings</Text>
+          </TouchableOpacity>
+        </View>
         </View>
       )
     }
