@@ -281,7 +281,6 @@ var Register = React.createClass({
 });
 
 
-// PROFILE VIEW
 var Profile = React.createClass({
   render() {
     var teamImg = null;
@@ -298,6 +297,7 @@ var Profile = React.createClass({
         </View>
         <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
         {teamImg}
+
         <TouchableOpacity onPress={this.props.logout}>
           <Text>Logout</Text>
         </TouchableOpacity>
@@ -328,6 +328,7 @@ var Home = React.createClass({
       pokemon: "",
       markers: [],
       gymmarkers: [],
+      teamfeed: [],
       modalVisible: true,
       location: {
         latitude: 0,
@@ -409,19 +410,45 @@ var Home = React.createClass({
     if (!lng) lng = this.state.location.longitude;
     if (!lat) lat = this.state.location.latitude;
 
-
-
-    fetch('http://localhost:3000/gymfeed?longitude=' + lng + "&latitude=" + lat)
+    var that = this
+    fetch('http://localhost:3000/gymfeed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
     .then((feed) => feed.json())
     .then((feedJson) => {
-      // console.log("Gym feed: ", feedJson)
+      console.log("IN CURRENT GYMFEED ", feedJson);
+      console.log(feedJson);
       if (feedJson.success) {
-        this.setState({
-          gymmarkers: feedJson.feed.reverse()
+        var reversefeed = feedJson.feed.reverse();
+        var teamfeed = feedJson.feed.reverse().filter(function(item) {
+          return item.team === that.state.team
         })
-      }
-    })
-    .catch(console.log)
+
+        // console.log("FROM MONGO", reversefeed);
+          // console.log("ENTERING ELSE ALL", reversefeed);
+          this.setState({
+            gymmarkers: reversefeed,
+            teamfeed: teamfeed
+          })
+        }
+      }).catch((err) => console.log(err))
+    // fetch('http://localhost:3000/gymfeed?longitude=' + lng + "&latitude=" + lat)
+    // .then((feed) => feed.json())
+    // .then((feedJson) => {
+    //   // console.log("Gym feed: ", feedJson)
+    //   if (feedJson.success) {
+    //     console.log("TEAM FEED BITCH111", teamfeed)
+    //     var mapfeed = feedJson.feed.reverse()
+    //     // console.log("MAP FEED BITCH111", mapfeed)
+    //     // var teamfeed = mapfeed.filter(function(item) {
+    //     //   return item.team === this.state.team
+    //     // })
+    //     // console.log("TEAM FEED BITCH", teamfeed)
+    //     this.setState({
+    //       gymmarkers: mapfeed
+    //     })
+    //     console.log("STATE BITCH MAIN", this.state.gymmarkers, "STATE BITCH FEEDDD", this.state.teamfeed )
+    //   }
+    // })
+    // .catch(console.log)
 
     fetch('http://localhost:3000/feed?longitude=' + lng + "&latitude=" + lat)
     .then((feed) => feed.json())
@@ -693,7 +720,7 @@ var Home = React.createClass({
               <Feed popup={this.popup} location={this.state.location} chosen={this.state.chosen} idpoke={this.state.filteredOne.id} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} pokeNames={this.state.pokeNames} filter={this.filter}/>
             </View>
             <View style={{height: height*158/320}}>
-              <GymFeed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} gymmarkers={this.state.gymmarkers} feed={ds.cloneWithRows(this.state.gymmarkers)} refresh={this.refresh} filter={this.filter}/>
+              <GymFeed location={this.state.location} team={this.state.team} region={this.state.region} changeRegion={this.changeRegion} gymmarkers={this.state.gymmarkers} feed={ds.cloneWithRows(this.state.teamfeed)} refresh={this.refresh} filter={this.filter}/>
             </View>
           </Swiper>
         </View>
@@ -892,8 +919,10 @@ var Map = React.createClass({
       />)
     })
 
+
     var gyms = this.props.gymmarkers.map(function(gymmarker, i) {
       var timeAgo = ((Date.now() - new Date(gymmarker.time).getTime()) / 60000)
+      var team = gymmarker.user.team.toLowerCase()
       return (<MapView.Marker
         coordinate={{
           latitude: parseFloat(gymmarker.location.latitude),
@@ -902,7 +931,7 @@ var Map = React.createClass({
         title={"Gym Request"}
         key={'gym-' + i}
         description={gymmarker.message}
-        image={require('./pokegym.png')}
+        image={{uri: 'http://localhost:3000/images/small_'+team+'.png'}}
       />)
     })
     var total = pokeballs.concat(gyms)
@@ -1056,7 +1085,7 @@ var Map = React.createClass({
       var pokepostbutton = (
         <TouchableHighlight onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={[{height: height*40/736, width: width*100/414, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center'}, styles.post]}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{color: 'red', fontWeight: 'bold'}}>Pokemon</Text>
+            <Text style={{color: 'white', fontWeight: 'bold'}}>Pokemon</Text>
             <Image source={require('./enter.png')} style={{width: width*20/414, height: height*20/736, marginLeft: 1}}/>
           </View>
         </TouchableHighlight>
@@ -1064,7 +1093,7 @@ var Map = React.createClass({
       var gympostbutton = (
         <TouchableHighlight onPress={() => {this.setModalVisible2(!this.state.modalVisible2)}} style={[{height: height*40/736, width: width*100/414, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center'}, styles.post]}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{color: 'red', fontWeight: 'bold'}}>Gym</Text>
+            <Text style={{color: 'white', fontWeight: 'bold'}}>Gym</Text>
             <Image source={require('./enter.png')} style={{width: width*20/414, height: height*20/736, marginLeft: 1}}/>
           </View>
         </TouchableHighlight>
@@ -1167,23 +1196,81 @@ var GymPostModal = React.createClass({
 })
 
 var GymPost = React.createClass({
+
+  getInitialState() {
+    return {
+      selected: false
+    }
+  },
+
   selectPost() {
-    // console.log("HEY ROW DATA", this.props.rowData.location)
-    this.props.changeRegion(
-      { latitude: this.props.rowData.location.latitude,
-        longitude: this.props.rowData.location.longitude,
-        latitudeDelta: this.props.region.latitudeDelta,
-        longitudeDelta: this.props.region.longitudeDelta,
-    })
+
+    if(!this.state.selected) {
+      this.props.changeRegion(
+        { latitude: this.props.rowData.location.latitude,
+          longitude: this.props.rowData.location.longitude,
+          latitudeDelta: this.props.region.latitudeDelta,
+          longitudeDelta: this.props.region.longitudeDelta,
+      })
+      this.setState({
+        selected: this.props.rowData._id
+      })
+    }
+    else if (this.state.selected) {
+      this.props.changeRegion(
+        { latitude: this.props.location.latitude,
+          longitude: this.props.location.longitude,
+          latitudeDelta: this.props.region.latitudeDelta,
+          longitudeDelta: this.props.region.longitudeDelta,
+      })
+      this.setState({
+        selected: 0
+      })
+    }
+  },
+
+  navigated() {
+    // this.setState({
+    //   navigated: true
+    // })
+    // this.props.popup(this.state.navigated)
+    var url = 'http://maps.apple.com/?q=' + this.props.rowData.location.latitude + ',' + this.props.rowData.location.longitude;
+    LinkingIOS.openURL(url);
   },
 
   render() {
     var widthUnit = width / 414;
     var heightUnit = 55;
+
+    var nav = null
+    var white = null
+    var mcolor = '#f6f6f6'
+    var scolor = 'grey'
+
+
+      if(this.state.selected) {
+        var mcolor = '#5C5C5C'
+        var scolor = 'white'
+        var nav = (
+          <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#5C5C5C'}}>
+            <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
+          </TouchableOpacity>
+        )
+      }
+      else if (!this.state.selected) {
+        var nav = null
+        var white = null
+        var mcolor = '#f6f6f6'
+        var scolor = 'grey'
+      }
+
+      var team = this.props.team.toLowerCase()
+      console.log("TEAM HEREEEE", team);
+
     return (
       <View
         style={{
-          backgroundColor: '#f6f6f6',
+          backgroundColor: mcolor,
           borderColor: '#d3d3d3',
           borderBottomWidth: 1,
           height: heightUnit,
@@ -1192,15 +1279,18 @@ var GymPost = React.createClass({
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity onPress={this.selectPost}>
             <View style={{flexDirection: 'row'}}>
-              <Image source={require('./pokegymnav.png')}
+              <Image source={{uri: 'http://localhost:3000/images/'+team+'.png'}}
               style={{width: 50*widthUnit, height: 50*height/736, marginTop: 5}} />
               <View style={{marginLeft: 10, marginTop: 3}}>
                 <Text style={{fontWeight: '600', fontSize: 15}}>{'Gym request ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mile(s) away'}</Text>
                 <Text style={{fontWeight: '600', fontSize: 13}}>{Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago'} </Text>
-                <Text style={{fontSize: 11, color: 'grey'}}>{this.props.rowData.user.username}: "{this.props.rowData.message}"</Text>
+                <Text style={{fontSize: 11, color: scolor}}>{this.props.rowData.user.username}: "{this.props.rowData.message}"</Text>
               </View>
             </View>
           </TouchableOpacity>
+        </View>
+        <View style={{position: 'absolute', right: 0, top: 0, backgroundColor: "rgba(0,0,0,0)", flexDirection: 'row'}}>
+          {nav}
         </View>
       </View>
     )
@@ -1210,9 +1300,18 @@ var GymPost = React.createClass({
 var GymFeed = React.createClass({
 
   getInitialState() {
+    var teamfeed = this.props.feed
+
     return {
-      modalVisible: false
+      modalVisible: false,
+      refreshing: false
     }
+  },
+
+  _onRefresh() {
+    this.setState({refreshing: true});
+    this.props.refresh()
+    this.setState({refreshing: false});
   },
 
   setModalVisible(visible) {
@@ -1222,39 +1321,22 @@ var GymFeed = React.createClass({
   render() {
     return (
       <View style={{backgroundColor: '#f5fcff'}}>
-        <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {alert("Modal has been closed.")}}
-          >
-         <View style={{marginTop: 22}}>
-          <View style={{height: height*132/320}}>
-            <GymPostModal location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible} modalVisible={this.state.modalVisible}/>
-
-            <TouchableHighlight style={[styles.button, styles.buttonBlue]} onPress={() => {
-              this.setModalVisible(!this.state.modalVisible)
-            }}>
-              <Text style={styles.buttonLabel2}>Cancel</Text>
-            </TouchableHighlight>
-
-          </View>
-         </View>
-        </Modal>
-        <TouchableHighlight onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={[styles.button, styles.buttonBlue]}>
-          <Text style={styles.buttonLabel2}>Post</Text>
-        </TouchableHighlight>
-
-        <View style={{width: width, height: height * 551/1280}}>
+        <View style={{width: width, height: height * 158/320}}>
         <ListView
         automaticallyAdjustContentInsets={false}
         enableEmptySections={true}
         dataSource={this.props.feed}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh}
+          />
+        }
         renderRow={(rowData) => {
           var col = 'black';
           var prefix = '';
           return (
-            <GymPost rowData={rowData} region={this.props.region} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter} changeRegion={this.props.changeRegion}/>
+            <GymPost rowData={rowData} team={this.props.team} region={this.props.region} location={this.props.location} refresh={this.props.refresh} vote={rowData.vote} pokemonList={this.props.pokemonList} filter={this.props.filter} changeRegion={this.props.changeRegion}/>
           )
           }
         } />
