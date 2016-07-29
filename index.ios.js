@@ -133,7 +133,12 @@ var Pokegame = React.createClass({
     // console.log('[HOW MANY]')
     // console.log("state upon render", this.state);
     return (
-    <View style={styles.container}>
+    <View style={{
+        flex: 1,
+        paddingTop: 100,
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF'
+      }}>
       <StatusBar hidden={true} />
       <View style={{flexDirection: 'row'}}>
         <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736}}>Poké</Text><Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: '#FF585B'}}>Finder</Text>
