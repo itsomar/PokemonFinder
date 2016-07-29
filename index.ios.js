@@ -64,14 +64,16 @@ function getDistanceFromLatLonInMiles(lat1,lon1,lat2,lon2) {
 var Start = React.createClass({
   render() {
     return (
-      <NavigatorIOS
-        initialRoute={{
-          component: Pokegame,
-          title: "Pokegame"
-        }}
-        style={{flex: 1}}
-        navigationBarHidden={true}
-      />
+
+        <NavigatorIOS
+          initialRoute={{
+            component: Pokegame,
+            title: "Pokegame"
+          }}
+          style={{flex: 1}}
+          navigationBarHidden={true}
+        />
+
     )
   }
 })
@@ -641,18 +643,25 @@ var Home = React.createClass({
     return 0;
   },
 
-  scroll() {
-    this.scrollBy.bind(null, i)
-  },
-
   render() {
     // console.log("STATE OF HOME", this.state.markers);
-
+    var index = this.getSwiperIndex();
+    
+    var col1 = 'grey';
+    var col2 = 'grey';
+    var col3 = 'grey';
+    if (index === 0) {
+      col1 = 'black'
+    } else if (index === 1) {
+      col2 = 'black'
+    } else {
+      col3 = 'black'
+    }
               // selectedIcon={require('./img/navigation2.png')}
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
       <View>
-        <View style={{backgroundColor: '#F5FCFF', width: width, height: height * 50/736}}>
+        <View style={{backgroundColor: 'grey', width: width, height: height * 50/736}}>
         </View>
         <View style={{flexDirection: 'row', marginTop: height*22/736, position: 'absolute', top: 0, zIndex: 999}}>
           <TouchableOpacity
@@ -717,18 +726,18 @@ var Home = React.createClass({
             </View>
           </Swiper>
         </View>
-        <View style={{width: width, height: height*50/736, backgroundColor: 'black', flexDirection: 'row'}}>
-          <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5}} onPress={this.scrollBy.bind(null, 0)}>
+        <View style={{width: width, height: height*50/736, flexDirection: 'row'}}>
+          <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5, backgroundColor: col1}} onPress={this.scrollBy.bind(null, 0)}>
             <Image source={require('./profile.png')}
               style={{width: 20, height: 20}} />
             <Text style={{color: 'white'}}>Profile</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5}} onPress={this.scrollBy.bind(null, 1)}>
+          <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5, backgroundColor: col2}} onPress={this.scrollBy.bind(null, 1)}>
             <Image source={require('./pokeballnav.png')}
               style={{width: 20, height: 20}} />
             <Text style={{color: 'white'}}>Pokemon Feed</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5}} onPress={this.scrollBy.bind(null, 2)}>
+          <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5, backgroundColor: col3}} onPress={this.scrollBy.bind(null, 2)}>
             <Image source={require('./pokegym.png')}
               style={{width: 20, height: 20}} />
             <Text style={{color: 'white'}}>Gym Feed</Text>
@@ -1387,9 +1396,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     height: 30*height/736,
     width: width*199/256,
-    backgroundColor: '#FFF',
-    borderColor: 'lightblue',
-    borderWidth: 1
+    backgroundColor: '#FFF'
   }
 });
 
