@@ -233,7 +233,7 @@ var Register = React.createClass({
 
   enlargeInstinct(){
     this.setState({
-      instinctsize: 140,
+      instinctsize: 150,
       mysticsize: 80,
       valorsize: 80,
       team: "Instinct",
@@ -243,7 +243,7 @@ var Register = React.createClass({
 
   enlargeMystic(){
     this.setState({
-      mysticsize: 125,
+      mysticsize: 135,
       instinctsize: 90,
       valorsize: 80,
       team: "Mystic",
@@ -310,7 +310,8 @@ var Register = React.createClass({
           <Text style={styles.buttonLabel}>Register</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={this.back} style={[styles.button, styles.buttonBlue]}>
+          onPress={this.back} style={[styles.button, styles.buttonBlue]} 
+         >
           <Text style={styles.buttonLabel2}>Back to Login</Text>
         </TouchableOpacity>
       </View>
@@ -379,13 +380,13 @@ var Home = React.createClass({
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
             latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
+            longitudeDelta: 0.0421,
           },
           location: {
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
+            latitudeDelta: 0.00922,
+            longitudeDelta: 0.00421
           }
         });
       },
@@ -427,14 +428,14 @@ var Home = React.createClass({
       location: {
         latitude: 0,
         longitude: 0,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421
+        latitudeDelta: 0.00922,
+        longitudeDelta: 0.00421
       },
       region: {
         latitude: 0,
         longitude: 0,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421
+        latitudeDelta: 0.015,
+        longitudeDelta: 0.015
       }
     }
   },
@@ -1344,7 +1345,7 @@ const styles = StyleSheet.create({
   buttonLabel: {
     textAlign: 'center',
     fontSize: 16*height/736,
-    color: 'white'
+    color: 'white',
   },
   buttonLabel2: {
     textAlign: 'center',
