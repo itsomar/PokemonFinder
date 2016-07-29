@@ -64,16 +64,14 @@ function getDistanceFromLatLonInMiles(lat1,lon1,lat2,lon2) {
 var Start = React.createClass({
   render() {
     return (
-
-        <NavigatorIOS
-          initialRoute={{
-            component: Pokegame,
-            title: "Pokegame"
-          }}
-          style={{flex: 1}}
-          navigationBarHidden={true}
-        />
-
+      <NavigatorIOS
+        initialRoute={{
+          component: Pokegame,
+          title: "Pokegame"
+        }}
+        style={{flex: 1}}
+        navigationBarHidden={true}
+      />
     )
   }
 })
@@ -159,6 +157,7 @@ var Pokegame = React.createClass({
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
     }}>
+      <StatusBar hidden={true} />
       <View style={{flexDirection: 'row'}}>
         <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736}}>Poke</Text><Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: '#FF585B'}}>Finder</Text>
       </View>
@@ -407,9 +406,6 @@ var Home = React.createClass({
     })
 
     return {
-      profile: false,
-      pfeed: false,
-      gfeed: false,
       selectedTab: 'redTab',
       notifCount: 0,
       presses: 0,
