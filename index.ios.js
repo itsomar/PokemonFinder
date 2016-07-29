@@ -301,6 +301,9 @@ var Profile = React.createClass({
         <TouchableOpacity onPress={this.props.logout}>
           <Text>Logout</Text>
         </TouchableOpacity>
+        <TouchableOpacity>
+          <Text>Settings</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -332,8 +335,8 @@ var Home = React.createClass({
       location: {
         latitude: 0,
         longitude: 0,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.00421
+        latitudeDelta: 0.015,
+        longitudeDelta: 0.015
       },
       region: {
         latitude: 0,
@@ -1151,7 +1154,7 @@ var GymPostModal = React.createClass({
          <TextInput
            style={{height: 30, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
            placeholder="Optional Text"
-           maxLength={10}
+           maxLength={45}
            onChangeText={(message) => this.setState({message})} value={this.state.message}
          />
           <TouchableOpacity
