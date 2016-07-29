@@ -158,6 +158,7 @@ var Pokegame = React.createClass({
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
     }}>
+      <StatusBar hidden={true} />
       <Image style={{alignItems: 'center', marginBottom: 30, height: 220, width: 250}} source={require('./pikachu.png')}/>
       <View style={{flexDirection: 'row'}}>
         <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736}}>Poke</Text><Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: '#FF585B'}}>Finder</Text>
