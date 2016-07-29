@@ -133,11 +133,15 @@ var Pokegame = React.createClass({
     // console.log('[HOW MANY]')
     // console.log("state upon render", this.state);
     return (
-    <View style={styles.container}>
+    <View style={{
+        flex: 1,
+        paddingTop: 100,
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF'
+      }}>
       <StatusBar hidden={true} />
-      <Image style={{alignItems: 'center', marginBottom: 30, height: 220, width: 250}} source={require('./pikachu.png')} />
       <View style={{flexDirection: 'row'}}>
-        <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736}}>Poke</Text><Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: '#FF585B'}}>Finder</Text>
+        <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736}}>Poké</Text><Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: '#FF585B'}}>Finder</Text>
       </View>
       <Text style={{color: '#a9a9a9'}}>Please sign in</Text>
       <View style={{width:width*.7}}>
@@ -157,7 +161,7 @@ var Pokegame = React.createClass({
         <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={this.register}>
           <Text style={styles.buttonLabel2}>Register</Text>
         </TouchableOpacity>
-        <Text>{this.state.message}</Text>
+        <Text style = {{color: "red", textAlign: "center", fontSize: 20}}>{this.state.message}</Text>
       </View>
     </View>
     )
@@ -240,7 +244,7 @@ var Register = React.createClass({
     return (
       <View style={styles.container}>
         <Text style={[styles.textBig, {color: '#FF585B'}]}>Register</Text>
-        <Text style={{color: 'red'}}>{this.state.message}</Text>
+        <Text style={{color: '#FF585B'}}>{this.state.message}</Text>
         <View style={{width:width*.7}}>
           <TextInput
             style={{height: 40*height/736, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
@@ -292,7 +296,7 @@ var Profile = React.createClass({
     return (
       <View style={{backgroundColor: '#f5fcff', flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Poke</Text>
+          <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Poké</Text>
           <Text style={{fontSize: 40 *height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)', color: '#FF585B'}}>Finder</Text>
         </View>
         <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
@@ -369,14 +373,14 @@ var Home = React.createClass({
           region: {
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.015,
           },
           location: {
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.015
           }
         });
       },
@@ -388,8 +392,8 @@ var Home = React.createClass({
         location: {
           longitude: position.coords.longitude,
           latitude: position.coords.latitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.015
         }
       })
     })
@@ -529,7 +533,7 @@ var Home = React.createClass({
         }
       })
     } else if (pokeList.indexOf(pokemon) === -1) {
-      return Alert.alert('Please enter a valid pokemon name');
+      return Alert.alert('Please enter a valid pokémon name');
     } else if (pokeList.indexOf(pokemon) > -1) {
       // console.log('[AM I HERE???]')
       this.setState({
@@ -677,7 +681,7 @@ var Home = React.createClass({
             maximumNumberOfAutoCompleteRows={10}
             style={styles.filterautocomplete}
             suggestions={this.state.data}
-            placeholder='Search for a specific Pokemon'
+            placeholder='Search for a specific Pokémon'
             value={this.state.pokemon}
           />
           <TouchableOpacity
@@ -737,7 +741,7 @@ var Home = React.createClass({
           <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5, backgroundColor: col2}} onPress={this.scrollBy.bind(null, 1)}>
             <Image source={require('./pokeballnav.png')}
               style={{width: 20, height: 20}} />
-            <Text style={{color: 'white'}}>Pokemon Feed</Text>
+            <Text style={{color: 'white'}}>Pokémon Feed</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5, backgroundColor: col3}} onPress={this.scrollBy.bind(null, 2)}>
             <Image source={require('./pokegym.png')}
@@ -829,7 +833,7 @@ var Map = React.createClass({
   post() {
     console.log('AM I FUCKING POSTING??????????????????????????')
     if (this.props.pokeNames.indexOf(this.state.pokemon) === -1) {
-      return Alert.alert('Please enter a valid pokemon name');
+      return Alert.alert('Please enter a valid pokémon name');
     }
 
     fetch('http://localhost:3000/post', {
@@ -992,8 +996,7 @@ var Map = React.createClass({
           visible={this.state.modalVisible}
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
-        <View style={{marginTop: 22}}>
-          <View style={{height: height*132/320}}>
+          <View style={{height: height*215/320}}>
             <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
               <View style={{flexDirection: 'row', position: 'absolute', top: 0, zIndex: 999}}>
                 <AutoComplete
@@ -1007,7 +1010,7 @@ var Map = React.createClass({
                   autoCompleteTableBackgroundColor='white'
                   style={styles.autocomplete}
                   suggestions={this.state.data}
-                  placeholder='Which Pokemon did you find?'
+                  placeholder='Which Pokémon did you find?'
                   value={this.state.pokemon}
                 />
                 <TouchableOpacity
@@ -1019,25 +1022,21 @@ var Map = React.createClass({
               </View>
               <View>
                 {(Object.keys(this.state.pokemonObj).length !== 0) ?
-                <View>
-                  <View style={{flexDirection: 'row'}}>
-                    <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
-                           style={{width: 196*width/414, height: 196*height/736}} />
-                    <View style={{position: 'absolute', top: 90*height/736, right: 20*width/414}}>
-                      <View style={{flexDirection: 'row'}}>
-                        <Text style={{fontWeight: 'bold'}}>Name: </Text><Text>{this.state.pokemonObj.name}</Text>
-                      </View>
-                      <View style={{flexDirection: 'row'}}>
-                        <Text style={{fontWeight: 'bold'}}>No: </Text><Text>{this.state.pokemonObj.number}</Text>
-                      </View>
-                      <View style={{flexDirection: 'row'}}>
-                        <Text style={{fontWeight: 'bold'}}>Type: </Text><Text>{this.state.pokemonObj.types}</Text>
-                      </View>
-                      <View style={{flexDirection: 'row'}}>
-                        <Text style={{fontWeight: 'bold'}}>Rarity: </Text><Text>{this.state.pokemonObj.rarity}</Text>
-                      </View>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
+                           style={{width: 300*width/414, height: 300*height/736, marginTop: 10}} />
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontWeight: 'bold', fontSize: 20}}>Name: </Text><Text style={{fontSize: 20}}>{this.state.pokemonObj.name}</Text>
                     </View>
-                  </View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontWeight: 'bold', fontSize: 20}}>No: </Text><Text style={{fontSize: 20}}>{this.state.pokemonObj.number}</Text>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontWeight: 'bold', fontSize: 20}}>Type: </Text><Text style={{fontSize: 20}}>{this.state.pokemonObj.types}</Text>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontWeight: 'bold', fontSize: 20}}>Rarity: </Text><Text style={{fontSize: 20}}>{this.state.pokemonObj.rarity}</Text>
+                    </View>
                 </View>
               : <View>
                 </View>
@@ -1051,7 +1050,6 @@ var Map = React.createClass({
               <Text style={styles.buttonLabel2}>Cancel</Text>
             </TouchableHighlight>
           </View>
-          </View>
       </Modal>
       )
 
@@ -1062,8 +1060,8 @@ var Map = React.createClass({
           visible={this.state.modalVisible2}
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
-         <View style={{marginTop: 22}}>
-          <View style={{height: height*132/320}}>
+
+          <View style={{height: height*215/320}}>
             <GymPostModal location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible2} modalVisible={this.state.modalVisible2}/>
 
             <TouchableHighlight style={[styles.button, styles.buttonBlue]} onPress={() => {
@@ -1073,7 +1071,7 @@ var Map = React.createClass({
             </TouchableHighlight>
 
           </View>
-         </View>
+
         </Modal>
       )
 
@@ -1088,9 +1086,10 @@ var Map = React.createClass({
       }
 
       var pokepostbutton = (
+
         <TouchableHighlight onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={[{height: height*50/736, width: width*100/414, borderWidth: 1, justifyContent: 'center', alignItems: 'center'}, styles.post]}>
           <View style={{alignItems: 'center'}}>
-            <Text style={{color: 'black'}}>Pokemon</Text>
+            <Text style={{color: 'black'}}>Pokémon</Text>
             <Text style={{color: 'black'}}>Post</Text>
           </View>
         </TouchableHighlight>
@@ -1179,21 +1178,23 @@ var GymPostModal = React.createClass({
   },
   render() {
     return (
-    <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
-      <View>
+    <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1, flexDirection: 'row'}]}>
+
          <TextInput
-           style={{height: 30, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
+           style={[styles.autocomplete, {textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}]}
            placeholder="Optional Text"
            maxLength={45}
            onChangeText={(message) => this.setState({message})} value={this.state.message}
          />
           <TouchableOpacity
-          style={[styles.button, styles.buttonRed, {marginTop: 202}]}
+          style={[styles.button, styles.buttonRed, {height: 30*height/736, width: 53, justifyContent: 'center', alignItems: 'center'}]}
           onPress={this.post}
           >
-            <Text style={styles.buttonLabel}>Post Gym</Text>
+            <Text style={styles.buttonLabel}>Send</Text>
           </TouchableOpacity>
-      </View>
+          <Image source={require('./001.png')}
+              style={{width: 50, height: 50*height/736, marginTop: 5}} />
+
     </View>
     )
   }
@@ -1680,7 +1681,7 @@ const styles = StyleSheet.create({
   post: {
     top: 276*height/736,
     right: 0,
-    position: 'absolute',
+    position: 'absolute'
   },
   absoluteb: {
     top: 260*height/736,
