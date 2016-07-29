@@ -307,6 +307,40 @@ var Profile = React.createClass({
 // HOME VIEW
 var Home = React.createClass({
   getInitialState() {
+    return {
+      selectedTab: 'redTab',
+      notifCount: 0,
+      presses: 1,
+      modalVisible: false,
+      username: '',
+      team: '',
+      filteredOne: {
+        on: false,
+        id: undefined
+      },
+      filtered: false,
+      pokemonList: [],
+      pokeNames: [],
+      data: [],
+      pokemon: "",
+      markers: [],
+      gymmarkers: [],
+      location: {
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: 0.00922,
+        longitudeDelta: 0.00421
+      },
+      region: {
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: 0.015,
+        longitudeDelta: 0.015
+      }
+    }
+  },
+
+  componentDidMount() {
     fetch('http://localhost:3000/user')
     .then((user) => user.json())
     .then((userJson) => {
@@ -349,42 +383,7 @@ var Home = React.createClass({
           longitudeDelta: 0.0421
         }
       })
-    })
-
-    return {
-      profile: 'grey',
-      pfeed: 'black',
-      gfeed: 'grey',
-      selectedTab: 'redTab',
-      notifCount: 0,
-      presses: 1,
-      modalVisible: false,
-      username: '',
-      team: '',
-      filteredOne: {
-        on: false,
-        id: undefined
-      },
-      filtered: false,
-      pokemonList: [],
-      pokeNames: [],
-      data: [],
-      pokemon: "",
-      markers: [],
-      gymmarkers: [],
-      location: {
-        latitude: 0,
-        longitude: 0,
-        latitudeDelta: 0.00922,
-        longitudeDelta: 0.00421
-      },
-      region: {
-        latitude: 0,
-        longitude: 0,
-        latitudeDelta: 0.015,
-        longitudeDelta: 0.015
-      }
-    }
+    })  
   },
 
   changeRegion(region) {
@@ -401,60 +400,52 @@ var Home = React.createClass({
   watchID: (null: ?number),
 
   refresh(lng, lat) {
-    // console.log("Calling refresh...LONG", this.state.location.longitude, "LAT: ", this.state.location.latitude);
-    // console.log("location: ", lng || this.state.location.longitude, ", ", lat || this.state.location.latitude);
-    var that = this
-    fetch('http://localhost:3000/gymfeed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
+    console.log("Calling refresh...")
+    if (!lng) lng = this.state.location.longitude;
+    if (!lat) lat = this.state.location.latitude;
+
+    
+
+    fetch('http://localhost:3000/gymfeed?longitude=' + lng + "&latitude=" + lat)
     .then((feed) => feed.json())
     .then((feedJson) => {
-      // console.log("IN CURRENT GYMFEED ", feedJson);
-      // console.log(feedJson);
+      console.log("Gym feed: ", feedJson)
       if (feedJson.success) {
-        var reversefeed = feedJson.feed.reverse();
-        // console.log("FROM MONGO", reversefeed);
-          // console.log("ENTERING ELSE ALL", reversefeed);
         this.setState({
-          gymmarkers: reversefeed
+          gymmarkers: feedJson.feed.reverse()
         })
       }
-    }).catch((err) => console.log(err))
+    })
+    .catch(console.log)
 
-
-    fetch('http://localhost:3000/feed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
+    fetch('http://localhost:3000/feed?longitude=' + lng + "&latitude=" + lat)
     .then((feed) => feed.json())
     .then((feedJson) => {
-      // console.log("current feed: ", feedJson);
-      // console.log(feedJson);
+      console.log("Post feed: ", feedJson)
       if (feedJson.success) {
-        var reversefeed = feedJson.feed.reverse();
-        // console.log("FROM MONGO", reversefeed);
+        // sort the feed chronologically
+        var array = feedJson.feed.reverse();
+
         if(this.state.filteredOne.on === true) {
-          // console.log('[FILTERED_POKEMON]', this.state.filteredOne);
-          var array = reversefeed.filter(function(item) {
-            // console.log("ITEM", item)
-            return item._id === that.state.filteredOne.id
-          })
-          this.setState({
-            markers: array
-          })
-        } else if(this.state.filtered === true) {
-          // console.log('[ALLFILTER]', this.state.filtered)
-          var array = reversefeed.filter(function(item) {
-            return item.pokemon === that.state.pokemon
-          })
-          // console.log("ARRAY BRO", array);
-          this.setState({
-            markers: array
+          // filter for one post
+          array = array.filter(function(item) {
+            return item._id === this.state.filteredOne.id
           })
         }
-        else {
-          // console.log("ENTERING ELSE ALL", reversefeed);
-          this.setState({
-            markers: reversefeed
-          })
+        else if(this.state.filtered === true) {
+          // filter for a single post
+          array = array.filter(function(item) {
+            return item.pokemon === this.state.pokemon
+          })    
         }
+
+        this.setState({
+          markers: array
+        })
       }
-    }).catch((err) => console.log(err))
+    })
+    .catch(console.log)
+
   },
 
   onTyping(text) {
@@ -746,7 +737,7 @@ var Map = React.createClass({
     if (this.props.pokeNames.indexOf(this.state.pokemon) === -1) {
       return Alert.alert('Please enter a valid pokemon name');
     }
-    // console.log("Current state", this.state);
+
     fetch('http://localhost:3000/post', {
       headers: {
          "Content-Type": "application/json"
@@ -761,14 +752,13 @@ var Map = React.createClass({
     .then((post) => post.json())
     .then((postJson) => {
       console.log("[HELLO]WORKING?", postJson);
-      if(postJson) {
-        console.log('HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO', postJson)
-        this.props.refresh();
-        this.setModalVisible(!this.state.modalVisible);
+      if(postJson.success) {
+        this.setModalVisible(false);
         this.setState({
           pokemonObj: {},
           pokemon: ''
         });
+        this.props.refresh();
       } else {
         console.log('error');
       }
@@ -792,10 +782,6 @@ var Map = React.createClass({
   },
 
   modal() {
-    if (this.work !== undefined) {
-      // console.log('[DID I WORK????????]', this.work)
-      this.work();
-    }
     this.setModalVisible(!this.state.modalVisible);
   },
 
@@ -904,9 +890,9 @@ var Map = React.createClass({
         style={{flex: 1}}
         onRegionChange={this.onRegionChange}
         region={{latitude: this.state.latitude,
-                longitude: this.state.longitude,
-                latitudeDelta: this.state.latitudeDelta,
-                longitudeDelta: this.state.longitudeDelta}}
+                 longitude: this.state.longitude,
+                 latitudeDelta: this.state.latitudeDelta,
+                 longitudeDelta: this.state.longitudeDelta}}
         showsUserLocation={true}
       >
       {all}
