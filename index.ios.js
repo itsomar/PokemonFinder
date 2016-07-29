@@ -281,51 +281,23 @@ var Register = React.createClass({
 });
 
 
-// PROFILE VIEW
-// var Profile = React.createClass({
-//   render() {
-//     var teamImg = null;
-//     if (this.props.team) {
-//       teamImg = (<Image source={{uri: 'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'}}
-//                         style={{width: 225*width/414, height: 225*height/736, alignItems: 'center'}} />
-//                 )
-//     }
-//     }
-  
-
-
-  var Profile = React.createClass({
-    render() {
-      var teamImg = null;
-      if (this.props.team) {
-        teamImg = (<Image source={{uri: 'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'}}
-               style={{width: 225*width/414, height: 225*height/736, alignItems: 'center'}} />
-                  )
-      }
-      return (
-        <View style={{backgroundColor: '#f5fcff', flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Poke</Text>
-            <Text style={{fontSize: 40 *height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)', color: '#FF585B'}}>Finder</Text>
-          </View>
-          <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
-          {teamImg}
-
-           <View style={{
-            flexWrap: 'wrap', 
-            alignSelf: "center",
-            flexDirection:'row',
-            }}>
-          <TouchableOpacity onPress={this.props.logout}>
-            <Text style={{marginRight: 10}}>Logout</Text>
-          </TouchableOpacity>
-          <TouchableOpacity >
-            <Text style={{marginLeft: 10}}>Settings</Text>
-          </TouchableOpacity>
+var Profile = React.createClass({
+  render() {
+    var teamImg = null;
+    if (this.props.team) {
+      teamImg = (<Image source={{uri: 'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'}}
+                        style={{width: 225*width/414, height: 225*height/736, alignItems: 'center'}} />
+                )
+    }
+    return (
+      <View style={{backgroundColor: '#f5fcff', flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Poke</Text>
+          <Text style={{fontSize: 40 *height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)', color: '#FF585B'}}>Finder</Text>
         </View>
-       
         <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
         {teamImg}
+        
         <TouchableOpacity onPress={this.props.logout}>
           <Text>Logout</Text>
         </TouchableOpacity>
@@ -647,7 +619,7 @@ var Home = React.createClass({
             Filter</Text>
           </TouchableOpacity>
         </View>
-        <View style={{height: height*120/320}}>
+        <View style={{height: height*141/320}}>
           <Map location={this.state.location} index={this.getSwiperIndex()} idpoke={this.state.filteredOne.id} region={this.state.region} changeRegion={this.changeRegion} chosen={this.state.chosen} markers={this.state.markers} gymmarkers={this.state.gymmarkers} refresh={this.refresh} pokemonList={this.state.pokemonList} pokeNames={this.state.pokeNames} filter={this.filter}/>
         </View>
         <View style={{height: height*158/320}}>
@@ -918,15 +890,15 @@ var Map = React.createClass({
       var widthUnit = width / 414;
 
       var pokebutton = (
-        <TouchableOpacity onPress={this.filterpoke} style={{width: 60, justifyContent: 'center', alignItems: 'center', height: 50, top: 200*height/736,
-        left: 6*width/10, position: 'absolute', backgroundColor: poke}}>
+        <TouchableOpacity onPress={this.filterpoke} style={{width: 60, justifyContent: 'center', alignItems: 'center', height: height*40/736, width: width*40/414, top: 280*height/736,
+        left: 58*width/414, position: 'absolute', backgroundColor: poke}}>
           <Image source={require('./pokeball.png')} style={{width: width*35/414, height: height*35/736}}/>
         </TouchableOpacity>
         )
 
       var gymbutton = (
-        <TouchableOpacity onPress={this.filtergym} style={{width: 60, justifyContent: 'center', alignItems: 'center', height: 50, top: 200*height/736,
-        left: 8*width/10, position: 'absolute', backgroundColor: poke}}>
+        <TouchableOpacity onPress={this.filtergym} style={{width: 60, justifyContent: 'center', alignItems: 'center', height: height*40/736, width: width*40/414, top: 280*height/736,
+        left: 108*width/414, position: 'absolute', backgroundColor: poke}}>
           <Image source={require('./pokegymnav.png')} style={{width: width*35/414, height: height*35/736}}/>
         </TouchableOpacity>
         )
@@ -1034,13 +1006,19 @@ var Map = React.createClass({
       }
 
       var pokepostbutton = (
-        <TouchableHighlight onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={[{height: height*35/736, width: width*35/414, backgroundColor: 'blue'}, styles.post]}>
-          <Text style={{color: 'red'}}>Post</Text>
+        <TouchableHighlight onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={[{height: height*40/736, width: width*100/414, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center'}, styles.post]}>
+          <View style={{flexDirection: 'row'}}>  
+            <Text style={{color: 'red', fontWeight: 'bold'}}>Pokemon</Text>
+            <Image source={require('./enter.png')} style={{width: width*20/414, height: height*20/736, marginLeft: 1}}/>
+          </View>
         </TouchableHighlight>
       )
       var gympostbutton = (
-        <TouchableHighlight onPress={() => {this.setModalVisible2(!this.state.modalVisible2)}} style={[{height: height*35/736, width: width*35/414, backgroundColor: 'red'}, styles.post]}>
-          <Text style={{color: 'red'}}>Post</Text>
+        <TouchableHighlight onPress={() => {this.setModalVisible2(!this.state.modalVisible2)}} style={[{height: height*40/736, width: width*100/414, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center'}, styles.post]}>
+          <View style={{flexDirection: 'row'}}>  
+            <Text style={{color: 'red', fontWeight: 'bold'}}>Gym</Text>
+            <Image source={require('./enter.png')} style={{width: width*20/414, height: height*20/736, marginLeft: 1}}/>
+          </View>
         </TouchableHighlight>
       )
 
@@ -1073,8 +1051,8 @@ var Map = React.createClass({
       >
       {all}
       </MapView>
-      <TouchableOpacity style={styles.blue} onPress={this.nav}>
-        <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
+      <TouchableOpacity style={[styles.blue, {width: width*40/414, height: height*40/736}]} onPress={this.nav}>
+        <Image source={require('./location.png')} style={{width: width*35/414, height: height*35/736}}/>
       </TouchableOpacity>
         {pokebutton}
         {gymbutton}
@@ -1531,19 +1509,22 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   blue: {
-    top: 240*height/736,
+    top: 280*height/736,
     left: 8*width/414,
+    position: 'absolute',
+    backgroundColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  post: {
+    top: 280*height/736,
+    right: 8*width/414,
     position: 'absolute',
   },
   absoluteb: {
     top: 260*height/736,
     left: 8*width/414,
     position: 'absolute'
-  },
-  post: {
-    top: 240*height/736,
-    right: 8*width/414,
-    position: 'absolute',
   },
   tabContent: {
     flex: 1,
