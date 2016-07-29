@@ -455,8 +455,8 @@ var Home = React.createClass({
   watchID: (null: ?number),
 
   refresh(lng, lat) {
-    console.log("Calling refresh...LONG", this.state.location.longitude, "LAT: ", this.state.location.latitude);
-    console.log("location: ", lng || this.state.location.longitude, ", ", lat || this.state.location.latitude);
+    // console.log("Calling refresh...LONG", this.state.location.longitude, "LAT: ", this.state.location.latitude);
+    // console.log("location: ", lng || this.state.location.longitude, ", ", lat || this.state.location.latitude);
     var that = this
     fetch('http://localhost:3000/gymfeed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
     .then((feed) => feed.json())
@@ -567,7 +567,7 @@ var Home = React.createClass({
 //will mount everytime its rerendered??
   componentWillMount() {
 
-    this.refresh()
+    // this.refresh()
     setInterval(this.refresh, 6*10*1000);
 
     var pokemonList = [];
@@ -648,6 +648,7 @@ var Home = React.createClass({
   },
 
   render() {
+    // console.log('[THIS IS THE SWIPER]', this.swiper)
     // console.log("STATE OF HOME", this.state.markers);
     var index = this.state.presses;
     console.log('test', this.state.presses);
@@ -869,7 +870,16 @@ var Map = React.createClass({
     })
   },
 
+  modal() {
+    if (this.work !== undefined) {
+      console.log('[DID I WORK????????]', this.work)
+      this.work();
+    }
+    this.setModalVisible(!this.state.modalVisible);
+  },
+
   render() {
+    // console.log(this.work)
 
     var pokeballs = this.props.markers.map(function(marker, i) {
       var timeAgo = ((Date.now() - new Date(marker.time).getTime()) / 60000)
@@ -909,7 +919,6 @@ var Map = React.createClass({
         visible={this.state.modalVisible}
         onRequestClose={() => {alert("Modal has been closed.")}}
         >
-        <View style={{marginTop: 22}}>
           <View style={{height: height*132/320}}>
             <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
               <View style={{flexDirection: 'row', position: 'absolute', top: 0, zIndex: 999}}>
@@ -969,7 +978,6 @@ var Map = React.createClass({
             </TouchableHighlight>
 
           </View>
-        </View>
       </Modal>
       <MapView
         style={{flex: 1}}
@@ -980,11 +988,19 @@ var Map = React.createClass({
                 longitudeDelta: this.state.longitudeDelta}}
         showsUserLocation={true}
       >
-      {all}</MapView>
+      {all}
+      <TextInput
+      style={{width: 10, height: 10}}
+      ref={function(input) {
+        if (input != null) {
+          this.work = input.focus();
+        }
+      }} />
+      </MapView>
       <TouchableOpacity style={styles.blue} onPress={this.nav}>
         <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
       </TouchableOpacity>
-      <TouchableHighlight onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={[{height: height*35/736, width: width*35/414, backgroundColor: 'red'}, styles.post]}>
+      <TouchableHighlight onPress={this.modal} style={[{height: height*35/736, width: width*35/414, backgroundColor: 'red'}, styles.post]}>
         <Text style={{color: 'red'}}>Post</Text>
       </TouchableHighlight>
       </View>
