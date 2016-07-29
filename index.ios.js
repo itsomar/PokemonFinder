@@ -406,9 +406,12 @@ var Home = React.createClass({
     })
 
     return {
+      profile: 'grey',
+      pfeed: 'black',
+      gfeed: 'grey',
       selectedTab: 'redTab',
       notifCount: 0,
-      presses: 0,
+      presses: 1,
       modalVisible: false,
       username: '',
       team: '',
@@ -632,6 +635,11 @@ var Home = React.createClass({
     if (this.scroll && scrollOffset !== 0) {
       console.log("[ETHAN DEBUG] now scrolling ", scrollOffset)
       this.scroll(scrollOffset);
+      this.setState({
+        presses: this.state.presses + scrollOffset
+      }, function() {
+        console.log(this.state.presses);
+      }.bind(this));
     }
     if (typeof this.scroll === "undefined") {
       console.log("[ETHAN WARN]: scroll() is undefined at this point");
@@ -648,14 +656,15 @@ var Home = React.createClass({
   render() {
 
     // console.log("STATE OF HOME", this.state.markers);
-    var index = this.getSwiperIndex();
+    var index = this.state.presses;
+    console.log('test', this.state.presses);
 
     var col1 = 'grey';
     var col2 = 'grey';
     var col3 = 'grey';
-    if (index === 0) {
+    if (this.state.presses === 0) {
       col1 = 'black'
-    } else if (index === 1) {
+    } else if (this.state.presses === 1) {
       col2 = 'black'
     } else {
       col3 = 'black'
@@ -710,6 +719,11 @@ var Home = React.createClass({
             loop={false}
             index={1}
             showsPagination={false}
+            onMomentumScrollEnd={function(e, state, context) {
+              this.setState({
+                presses: state.index
+              });
+            }.bind(this)}
             ref={function(swiper) {
               if (swiper !== null) {
                 this.swiper = swiper;
@@ -1394,6 +1408,11 @@ var Post = React.createClass({
     }
   },
 
+  navigated() {
+    var url = 'http://maps.apple.com/?q=' + this.props.rowData.location.latitude + ',' + this.props.rowData.location.longitude;
+    LinkingIOS.openURL(url);
+  },
+
   render() {
     // Rating
     var rating = null;
@@ -1432,12 +1451,18 @@ var Post = React.createClass({
       </TouchableOpacity>
       )
 
+    var nav = null
     var white = null
     var mcolor = '#f6f6f6'
     var scolor = 'grey'
       if(this.state.selected) {
         var mcolor = '#5C5C5C'
         var scolor = 'white'
+        var nav = (
+          <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#5C5C5C'}}>
+            <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
+          </TouchableOpacity>
+        )
       }
 
     // Everything lmao
@@ -1461,9 +1486,8 @@ var Post = React.createClass({
           </View>
         </TouchableOpacity>
         <View style={{position: 'absolute', right: 0, top: 0, backgroundColor: "rgba(0,0,0,0)", flexDirection: 'row'}}>
+          {nav}
           {rating}
-          {down}
-          {up}
         </View>
       </View>
     )
