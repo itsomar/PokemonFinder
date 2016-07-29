@@ -400,16 +400,16 @@ var Home = React.createClass({
   watchID: (null: ?number),
 
   refresh(lng, lat) {
-    console.log("Calling refresh...")
+    // console.log("Calling refresh...")
     if (!lng) lng = this.state.location.longitude;
     if (!lat) lat = this.state.location.latitude;
 
-    
+
 
     fetch('http://localhost:3000/gymfeed?longitude=' + lng + "&latitude=" + lat)
     .then((feed) => feed.json())
     .then((feedJson) => {
-      console.log("Gym feed: ", feedJson)
+      // console.log("Gym feed: ", feedJson)
       if (feedJson.success) {
         this.setState({
           gymmarkers: feedJson.feed.reverse()
@@ -421,21 +421,22 @@ var Home = React.createClass({
     fetch('http://localhost:3000/feed?longitude=' + lng + "&latitude=" + lat)
     .then((feed) => feed.json())
     .then((feedJson) => {
-      console.log("Post feed: ", feedJson)
+      // console.log("Post feed: ", feedJson)
       if (feedJson.success) {
+        var that = this;
         // sort the feed chronologically
         var array = feedJson.feed.reverse();
 
         if(this.state.filteredOne.on === true) {
           // filter for one post
           array = array.filter(function(item) {
-            return item._id === this.state.filteredOne.id
+            return item._id === that.state.filteredOne.id
           })
         }
         else if(this.state.filtered === true) {
           // filter for a single post
           array = array.filter(function(item) {
-            return item.pokemon === this.state.pokemon
+            return item.pokemon === that.state.pokemon
           })    
         }
 
@@ -464,11 +465,10 @@ var Home = React.createClass({
       filteredOne: ({
         on: false,
         id: undefined
-      })
-      // SET POKEMON TO EMPTY STRING?
+      }),
+      pokemon: ''
     })
-    pokemon = ''
-    return this.refresh()
+    this.refresh()
   },
 
   filter(pokeList, pokemon, placeholder, id) {
@@ -482,6 +482,7 @@ var Home = React.createClass({
     } else if (pokeList.indexOf(pokemon) === -1) {
       return Alert.alert('Please enter a valid pokemon name');
     } else if (pokeList.indexOf(pokemon) > -1) {
+      // console.log('[AM I HERE???]')
       this.setState({
         filtered: true
       })
@@ -598,6 +599,7 @@ var Home = React.createClass({
             style={styles.filterautocomplete}
             suggestions={this.state.data}
             placeholder='Search for a specific Pokemon'
+            value={this.state.pokemon}
           />
           <TouchableOpacity
             style={{
@@ -606,7 +608,7 @@ var Home = React.createClass({
               paddingTop: 5*height/736,
               paddingBottom: 5*height/736,
             }}
-            onPress={this.filter.bind(this, this.state.pokeNames, this.state.pokemon)}
+            onPress={this.filter.bind(this, this.state.pokeNames, this.state.pokemon, null, null)}
           >
             <Text style={{
               height: 20*height/736,
