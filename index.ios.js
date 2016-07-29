@@ -1055,7 +1055,7 @@ var Map = React.createClass({
 
       var pokepostbutton = (
         <TouchableHighlight onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={[{height: height*40/736, width: width*100/414, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center'}, styles.post]}>
-          <View style={{flexDirection: 'row'}}>  
+          <View style={{flexDirection: 'row'}}>
             <Text style={{color: 'red', fontWeight: 'bold'}}>Pokemon</Text>
             <Image source={require('./enter.png')} style={{width: width*20/414, height: height*20/736, marginLeft: 1}}/>
           </View>
@@ -1063,7 +1063,7 @@ var Map = React.createClass({
       )
       var gympostbutton = (
         <TouchableHighlight onPress={() => {this.setModalVisible2(!this.state.modalVisible2)}} style={[{height: height*40/736, width: width*100/414, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center'}, styles.post]}>
-          <View style={{flexDirection: 'row'}}>  
+          <View style={{flexDirection: 'row'}}>
             <Text style={{color: 'red', fontWeight: 'bold'}}>Gym</Text>
             <Image source={require('./enter.png')} style={{width: width*20/414, height: height*20/736, marginLeft: 1}}/>
           </View>
@@ -1290,7 +1290,7 @@ var Feed = React.createClass({
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
-              onRefresh={this._onRefresh.bind(this)}
+              onRefresh={this._onRefresh}
             />
           }
           renderRow={(rowData) => {
