@@ -35,9 +35,6 @@ var AutoComplete = require('react-native-autocomplete');
 var height = Dimensions.get('window').height;
 var width = Dimensions.get('window').width;
 
-console.log("height: " + height);
-console.log("width: " + width);
-
 function deg2rad(deg) {
   return deg * (Math.PI/180)
 }
@@ -145,12 +142,8 @@ var Pokegame = React.createClass({
     })
   },
 
-  random() {
-    console.log("ON PRESS WORKS")
-  },
-
   render() {
-    console.log("state upon render", this.state);
+    // console.log("state upon render", this.state);
     return <View style={{
       flex: 1,
       justifyContent: 'center',
@@ -364,7 +357,7 @@ var Home = React.createClass({
     fetch('http://localhost:3000/user')
     .then((user) => user.json())
     .then((userJson) => {
-      console.log(userJson);
+      // console.log(userJson);
       if (userJson.success) {
         this.setState({
           username: userJson.user.username,
@@ -461,8 +454,8 @@ var Home = React.createClass({
     fetch('http://localhost:3000/gymfeed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
     .then((feed) => feed.json())
     .then((feedJson) => {
-      console.log("IN CURRENT GYMFEED ", feedJson);
-      console.log(feedJson);
+      // console.log("IN CURRENT GYMFEED ", feedJson);
+      // console.log(feedJson);
       if (feedJson.success) {
         var reversefeed = feedJson.feed.reverse();
         // console.log("FROM MONGO", reversefeed);
@@ -477,22 +470,22 @@ var Home = React.createClass({
     fetch('http://localhost:3000/feed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
     .then((feed) => feed.json())
     .then((feedJson) => {
-      console.log("current feed: ", feedJson);
-      console.log(feedJson);
+      // console.log("current feed: ", feedJson);
+      // console.log(feedJson);
       if (feedJson.success) {
         var reversefeed = feedJson.feed.reverse();
         // console.log("FROM MONGO", reversefeed);
         if(this.state.filteredOne.on === true) {
-          console.log('[FILTERED_POKEMON]', this.state.filteredOne);
+          // console.log('[FILTERED_POKEMON]', this.state.filteredOne);
           var array = reversefeed.filter(function(item) {
-            console.log("ITEM", item)
+            // console.log("ITEM", item)
             return item._id === that.state.filteredOne.id
           })
           this.setState({
             markers: array
           })
         } else if(this.state.filtered === true) {
-          console.log('[ALLFILTER]', this.state.filtered)
+          // console.log('[ALLFILTER]', this.state.filtered)
           var array = reversefeed.filter(function(item) {
             return item.pokemon === that.state.pokemon
           })
@@ -515,7 +508,6 @@ var Home = React.createClass({
     var pokemonComplete = this.state.pokeNames.filter(function (name) {
       return name.toLowerCase().startsWith(text.toLowerCase())
     })
-
     this.setState({
       data: pokemonComplete,
       pokemon: text
@@ -534,6 +526,7 @@ var Home = React.createClass({
     pokemon = ''
     return this.refresh()
   },
+
   filter(pokeList, pokemon, placeholder, id) {
     if (id) {
       this.setState({
@@ -560,10 +553,6 @@ var Home = React.createClass({
     return this.refresh();
   },
 
-  componentDidMount() {
-
-  },
-
 //will mount everytime its rerendered??
   componentWillMount() {
 
@@ -575,7 +564,7 @@ var Home = React.createClass({
     fetch('http://localhost:3000/pokemon')
     .then((pokemon) => pokemon.json())
     .then((pokemonJson) => {
-      console.log(pokemonJson);
+      // console.log(pokemonJson);
       if (pokemonJson.success) {
         for (var i = 0; i < pokemonJson.pokemon.length; i ++) {
           var pokemon = pokemonJson.pokemon[i];
@@ -596,24 +585,15 @@ var Home = React.createClass({
     navigator.geolocation.clearWatch(this.watchId);
   },
 
-  _renderContent: function(color: string, pageText: string, num?: number) {
-    return (
-      <View style={[styles.tabContent, {backgroundColor: color}]}>
-        <Text style={styles.tabText}>{pageText}</Text>
-        <Text style={styles.tabText}>{num} re-renders of the {pageText}</Text>
-      </View>
-    );
-  },
-
   logout() {
-    console.log('logout');
+    // console.log('logout');
     fetch('http://localhost:3000/logout')
     .then((logout) => logout.json())
     .then((logoutJson) => {
       if (logoutJson.success) {
         // console.log(logoutJson);
         AsyncStorage.removeItem('user');
-        console.log("Navigating away");
+        // console.log("Navigating away");
         // this.props.navigator.push({
         //   component: Pokegame,
         //   title: 'Pokegame'
@@ -627,16 +607,16 @@ var Home = React.createClass({
   scrollBy(n) {
     var scrollOffset = n - this.getSwiperIndex();
     if (this.scroll && scrollOffset !== 0) {
-      console.log("[ETHAN DEBUG] now scrolling ", scrollOffset)
+      // console.log("[ETHAN DEBUG] now scrolling ", scrollOffset)
       this.scroll(scrollOffset);
       this.setState({
         presses: this.state.presses + scrollOffset
       }, function() {
-        console.log(this.state.presses);
+        // console.log(this.state.presses);
       }.bind(this));
     }
     if (typeof this.scroll === "undefined") {
-      console.log("[ETHAN WARN]: scroll() is undefined at this point");
+      // console.log("[ETHAN WARN]: scroll() is undefined at this point");
     }
   },
 
@@ -650,8 +630,9 @@ var Home = React.createClass({
   render() {
     // console.log('[THIS IS THE SWIPER]', this.swiper)
     // console.log("STATE OF HOME", this.state.markers);
-    var index = this.state.presses;
-    console.log('test', this.state.presses);
+    console.log('[HOW MANY TIMES AM I RENDERING????????????????????]')
+    // var index = this.state.presses;
+    // console.log('test', this.state.presses);
     
     var col1 = 'grey';
     var col2 = 'grey';
@@ -694,7 +675,7 @@ var Home = React.createClass({
               paddingTop: 5*height/736,
               paddingBottom: 5*height/736,
             }}
-            onPress={this.filter.bind(this, this.state.pokemonList, this.state.pokemon)}
+            onPress={this.filter.bind(this, this.state.pokeNames, this.state.pokemon, null, null)}
             >
             <Text style={{
               height: 20*height/736,
@@ -791,7 +772,7 @@ var Map = React.createClass({
     }
     if (pkIndex !== -1) {
       var pkmn = this.props.pokemonList[pkIndex];
-      console.log('[POKEMONNAME]', pkmn);
+      // console.log('[POKEMONNAME]', pkmn);
       pkmn.types = pkmn.types.toString();
       this.setState({
         pokemon: pokemon,
@@ -812,7 +793,7 @@ var Map = React.createClass({
     //     pokemonObj: pkmn
     //   })
     // } else {
-      console.log("Auto completed pokemon: ", pokemonComplete);
+      // console.log("Auto completed pokemon: ", pokemonComplete);
       this.setState({
         data: pokemonComplete,
         pokemon: text
@@ -872,7 +853,7 @@ var Map = React.createClass({
 
   modal() {
     if (this.work !== undefined) {
-      console.log('[DID I WORK????????]', this.work)
+      // console.log('[DID I WORK????????]', this.work)
       this.work();
     }
     this.setModalVisible(!this.state.modalVisible);
@@ -989,13 +970,6 @@ var Map = React.createClass({
         showsUserLocation={true}
       >
       {all}
-      <TextInput
-      style={{width: 10, height: 10}}
-      ref={function(input) {
-        if (input != null) {
-          this.work = input.focus();
-        }
-      }} />
       </MapView>
       <TouchableOpacity style={styles.blue} onPress={this.nav}>
         <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
@@ -1016,7 +990,7 @@ var GymPostModal = React.createClass({
   },
 
   post() {
-    console.log("IN POST GYM")
+    // console.log("IN POST GYM")
     fetch('http://localhost:3000/gympost', {
       headers: {
          "Content-Type": "application/json"
@@ -1031,7 +1005,7 @@ var GymPostModal = React.createClass({
     .then((post) => post.json())
     .then((postJson) => {
       if(postJson) {
-        console.log("[HELLO GYMMMMMMM]", postJson);
+        // console.log("[HELLO GYMMMMMMM]", postJson);
         this.props.refresh();
         this.props.setModalVisible(!this.props.modalVisible)
       } else {
@@ -1067,7 +1041,7 @@ var GymPostModal = React.createClass({
 var GymPost = React.createClass({
   selectPost() {
     // console.log("HEY ROW DATA", this.props.rowData.location)
-    console.log("[POST props]", this.props);
+    // console.log("[POST props]", this.props);
     this.props.filter(this.props.pokemonList, null, null, this.props.rowData._id);
     this.props.changeRegion(
       { latitude: this.props.rowData.location.latitude,
@@ -1232,7 +1206,7 @@ var Post = React.createClass({
 
   selectPost() {
     // console.log("HEY ROW DATA", this.props.rowData.location)
-    console.log("[POST props]", this.props);
+    // console.log("[POST props]", this.props);
     this.props.filter(this.props.pokemonList, null, null, this.props.rowData._id);
     this.props.changeRegion(
       { latitude: this.props.rowData.location.latitude,
