@@ -457,8 +457,8 @@ var Home = React.createClass({
   watchID: (null: ?number),
 
   refresh(lng, lat) {
-    console.log("Calling refresh...LONG", this.state.location.longitude, "LAT: ", this.state.location.latitude);
-    console.log("location: ", lng || this.state.location.longitude, ", ", lat || this.state.location.latitude);
+    // console.log("Calling refresh...LONG", this.state.location.longitude, "LAT: ", this.state.location.latitude);
+    // console.log("location: ", lng || this.state.location.longitude, ", ", lat || this.state.location.latitude);
     var that = this
     fetch('http://localhost:3000/gymfeed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
     .then((feed) => feed.json())
@@ -574,7 +574,7 @@ var Home = React.createClass({
 //will mount everytime its rerendered??
   componentWillMount() {
 
-    this.refresh()
+    // this.refresh()
     setInterval(this.refresh, 6*10*1000);
 
     var pokemonList = [];
@@ -908,7 +908,7 @@ var Map = React.createClass({
         filtergym: false,
       })
     }
-    else if(this.state.filtergym === false) {
+    else if(!this.state.filtergym) {
       this.setState({
         filtergym: true,
       })
@@ -916,36 +916,8 @@ var Map = React.createClass({
   },
 
 
-  poke() {
-    if(this.state.pressedpoke) {
-      this.setState({
-        pressedpoke: false
-      })
-      console.log("POKE", this.state.pressedpoke, "GYMDSTATE", this.state.pressedgym)
-    }
-    else if(this.state.pressedpoke === false) {
-      return this.setState({
-        pressedpoke: true
-      })
-    }
-  },
-
-  pokegym() {
-    console.log("INSIDE GYM");
-    if(this.state.pressedgym) {
-      this.setState({
-        pressedgym: false
-      })
-    }
-    else if(this.state.pressedgym === false) {
-      this.setState({
-        pressedgym: true
-      })
-    }
-  },
-
-
   render() {
+    // console.log(this.work)
 
     console.log("CHOSENBRO INSIDE MAP", this.props.chosen);
     var pokeballs = this.props.markers.map(function(marker, i) {
@@ -976,22 +948,36 @@ var Map = React.createClass({
         image={require('./pokegym.png')}
       />)
     })
-
+    var total = pokeballs.concat(gyms)
     var all = pokeballs.concat(gyms)
-    if(this.state.filterpoke) {
-      var all = pokeballs
-    }
-    if(this.state.filtergym) {
-      var all = gyms
-    }
+    var poke;
+    var gym;
+    if(this.state.filterpoke && this.state.filtergym) {
+      var all = total
       var poke = "#000000";
       var gym = "#000000";
-      if (this.state.pressedpoke) {
-        poke = "#ccc";
-      }
-      if (this.state.pressedgym) {
-        gym = "#ccc";
-      }
+    }
+    else if(!this.state.filterpoke && !this.state.filtergym) {
+      var all = total
+      var poke = "#000000";
+      var gym = "#000000";
+    }
+    else if(this.state.filtergym) {
+      var all = gyms
+      var gym = "#ccc";
+    }
+    else if(!this.state.filtergym) {
+      var all = total
+      var gym = "#000000";
+    }
+    else if(this.state.filterpoke) {
+      var all = pokeballs
+      var poke = "#ccc";
+    }
+    else if(!this.state.filterpokeballs) {
+      var all = total
+      var gym = "#000000";
+    }
       var widthUnit = width / 414;
 
       var pokebutton = (
@@ -1073,9 +1059,8 @@ var Map = React.createClass({
             }}>
               <Text style={styles.buttonLabel2}>Cancel</Text>
             </TouchableHighlight>
-
           </View>
-        </View>
+          </View>
       </Modal>
       )
 
@@ -1146,7 +1131,15 @@ var Map = React.createClass({
                 longitudeDelta: this.state.longitudeDelta}}
         showsUserLocation={true}
       >
-      {all}</MapView>
+      {all}
+      <TextInput
+      style={{width: 10, height: 10}}
+      ref={function(input) {
+        if (input != null) {
+          this.work = input.focus();
+        }
+      }} />
+      </MapView>
       <TouchableOpacity style={styles.blue} onPress={this.nav}>
         <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
       </TouchableOpacity>
