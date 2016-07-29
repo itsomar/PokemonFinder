@@ -380,13 +380,13 @@ var Home = React.createClass({
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
             latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
+            longitudeDelta: 0.0421,
           },
           location: {
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
+            latitudeDelta: 0.00922,
+            longitudeDelta: 0.00421
           }
         });
       },
@@ -428,14 +428,14 @@ var Home = React.createClass({
       location: {
         latitude: 0,
         longitude: 0,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421
+        latitudeDelta: 0.00922,
+        longitudeDelta: 0.00421
       },
       region: {
         latitude: 0,
         longitude: 0,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421
+        latitudeDelta: 0.015,
+        longitudeDelta: 0.015
       }
     }
   },
@@ -1117,7 +1117,7 @@ var Feed = React.createClass({
                 <View>
                   <View style={{flexDirection: 'row'}}>
                     <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
-                           style={{width: 196*width/414, height: 196*height/736}} />
+                           style={{width: 185*width/414, height: 185*height/736}} />
                     <View style={{position: 'absolute', top: 90*height/736, right: 20*width/414}}>
                       <View style={{flexDirection: 'row'}}>
                         <Text style={{fontWeight: 'bold'}}>Name: </Text><Text>{this.state.pokemonObj.name}</Text>
