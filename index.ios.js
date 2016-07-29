@@ -405,9 +405,12 @@ var Home = React.createClass({
     })
 
     return {
+      profile: 'grey',
+      pfeed: 'black',
+      gfeed: 'grey',
       selectedTab: 'redTab',
       notifCount: 0,
-      presses: 0,
+      presses: 1,
       modalVisible: false,
       username: '',
       team: '',
@@ -625,6 +628,11 @@ var Home = React.createClass({
     if (this.scroll && scrollOffset !== 0) {
       console.log("[ETHAN DEBUG] now scrolling ", scrollOffset)
       this.scroll(scrollOffset);
+      this.setState({
+        presses: this.state.presses + scrollOffset
+      }, function() {
+        console.log(this.state.presses);
+      }.bind(this));
     }
     if (typeof this.scroll === "undefined") {
       console.log("[ETHAN WARN]: scroll() is undefined at this point");
@@ -640,14 +648,15 @@ var Home = React.createClass({
 
   render() {
     // console.log("STATE OF HOME", this.state.markers);
-    var index = this.getSwiperIndex();
+    var index = this.state.presses;
+    console.log('test', this.state.presses);
     
     var col1 = 'grey';
     var col2 = 'grey';
     var col3 = 'grey';
-    if (index === 0) {
+    if (this.state.presses === 0) {
       col1 = 'black'
-    } else if (index === 1) {
+    } else if (this.state.presses === 1) {
       col2 = 'black'
     } else {
       col3 = 'black'
@@ -702,6 +711,11 @@ var Home = React.createClass({
             loop={false}
             index={1}
             showsPagination={false}
+            onMomentumScrollEnd={function(e, state, context) {
+              this.setState({
+                presses: state.index
+              });
+            }.bind(this)}
             ref={function(swiper) {
               if (swiper !== null) {
                 this.swiper = swiper;
