@@ -282,16 +282,16 @@ var Register = React.createClass({
 
 
 // PROFILE VIEW
-var Profile = React.createClass({
-  render() {
-    var teamImg = null;
-    if (this.props.team) {
-      teamImg = (<Image source={{uri: 'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'}}
-                        style={{width: 225*width/414, height: 225*height/736, alignItems: 'center'}} />
-                )
-    }
-    }
-  })
+// var Profile = React.createClass({
+//   render() {
+//     var teamImg = null;
+//     if (this.props.team) {
+//       teamImg = (<Image source={{uri: 'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'}}
+//                         style={{width: 225*width/414, height: 225*height/736, alignItems: 'center'}} />
+//                 )
+//     }
+//     }
+  
 
 
   var Profile = React.createClass({
