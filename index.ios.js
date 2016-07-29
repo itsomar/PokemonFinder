@@ -367,14 +367,14 @@ var Home = React.createClass({
           region: {
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.015,
           },
           location: {
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.015
           }
         });
       },
@@ -386,8 +386,8 @@ var Home = React.createClass({
         location: {
           longitude: position.coords.longitude,
           latitude: position.coords.latitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.015
         }
       })
     })
@@ -947,7 +947,6 @@ var Map = React.createClass({
           visible={this.state.modalVisible}
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
-        <View style={{marginTop: 22}}>
           <View style={{height: height*132/320}}>
             <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
               <View style={{flexDirection: 'row', position: 'absolute', top: 0, zIndex: 999}}>
@@ -1005,7 +1004,6 @@ var Map = React.createClass({
             }}>
               <Text style={styles.buttonLabel2}>Cancel</Text>
             </TouchableHighlight>
-          </View>
           </View>
       </Modal>
       )
@@ -1564,7 +1562,7 @@ const styles = StyleSheet.create({
   post: {
     top: 276*height/736,
     right: 0,
-    position: 'absolute',
+    position: 'absolute'
   },
   absoluteb: {
     top: 260*height/736,
