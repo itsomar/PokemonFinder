@@ -25,7 +25,8 @@ import {
   Modal,
   TouchableHighlight,
   RefreshControl,
-  TabBarIOS
+  TabBarIOS,
+  LinkingIOS
 } from 'react-native';
 
 var reactNative = require('react-native');
@@ -252,6 +253,7 @@ var Register = React.createClass({
             onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
           />
           <Text style={[styles.textMed, {color: '#a9a9a9'}]}>Pick your team</Text>
+
           <View style={{height: 270}}>
             <TouchableOpacity onPress={this.enlargeInstinct}>
               <Image source={{uri: 'http://localhost:3000/images/instinct.png'}} style={{alignSelf: "center", width: width*this.state.instinctsize/414, height: height*this.state.instinctsize/736, marginBottom: 20}}/>
@@ -328,7 +330,7 @@ var Home = React.createClass({
       location: {
         latitude: 0,
         longitude: 0,
-        latitudeDelta: 0.00922,
+        latitudeDelta: 0.0922,
         longitudeDelta: 0.00421
       },
       region: {
@@ -366,8 +368,8 @@ var Home = React.createClass({
           location: {
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
-            latitudeDelta: 0.00922,
-            longitudeDelta: 0.00421
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
           }
         });
       },
@@ -383,7 +385,7 @@ var Home = React.createClass({
           longitudeDelta: 0.0421
         }
       })
-    })  
+    })
   },
 
   changeRegion(region) {
@@ -400,16 +402,16 @@ var Home = React.createClass({
   watchID: (null: ?number),
 
   refresh(lng, lat) {
-    console.log("Calling refresh...")
+    // console.log("Calling refresh...")
     if (!lng) lng = this.state.location.longitude;
     if (!lat) lat = this.state.location.latitude;
 
-    
+
 
     fetch('http://localhost:3000/gymfeed?longitude=' + lng + "&latitude=" + lat)
     .then((feed) => feed.json())
     .then((feedJson) => {
-      console.log("Gym feed: ", feedJson)
+      // console.log("Gym feed: ", feedJson)
       if (feedJson.success) {
         this.setState({
           gymmarkers: feedJson.feed.reverse()
@@ -421,22 +423,23 @@ var Home = React.createClass({
     fetch('http://localhost:3000/feed?longitude=' + lng + "&latitude=" + lat)
     .then((feed) => feed.json())
     .then((feedJson) => {
-      console.log("Post feed: ", feedJson)
+      // console.log("Post feed: ", feedJson)
       if (feedJson.success) {
+        var that = this;
         // sort the feed chronologically
         var array = feedJson.feed.reverse();
 
         if(this.state.filteredOne.on === true) {
           // filter for one post
           array = array.filter(function(item) {
-            return item._id === this.state.filteredOne.id
+            return item._id === that.state.filteredOne.id
           })
         }
         else if(this.state.filtered === true) {
           // filter for a single post
           array = array.filter(function(item) {
-            return item.pokemon === this.state.pokemon
-          })    
+            return item.pokemon === that.state.pokemon
+          })
         }
 
         this.setState({
@@ -464,11 +467,11 @@ var Home = React.createClass({
       filteredOne: ({
         on: false,
         id: undefined
-      })
-      // SET POKEMON TO EMPTY STRING?
+      }),
+      chosen: null,
+      pokemon: ''
     })
-    pokemon = ''
-    return this.refresh()
+    this.refresh()
   },
 
   filter(pokeList, pokemon, placeholder, id) {
@@ -482,6 +485,7 @@ var Home = React.createClass({
     } else if (pokeList.indexOf(pokemon) === -1) {
       return Alert.alert('Please enter a valid pokemon name');
     } else if (pokeList.indexOf(pokemon) > -1) {
+      // console.log('[AM I HERE???]')
       this.setState({
         filtered: true
       })
@@ -562,12 +566,9 @@ var Home = React.createClass({
   },
 
   render() {
-    // console.log('[THIS IS THE SWIPER]', this.swiper)
+
     // console.log("STATE OF HOME", this.state.markers);
-    // console.log('[HOW MANY TIMES AM I RENDERING????????????????????]')
-    // var index = this.state.presses;
-    // console.log('test', this.state.presses);
-    
+    var index = this.state.presses;
     var col1 = 'grey';
     var col2 = 'grey';
     var col3 = 'grey';
@@ -598,6 +599,7 @@ var Home = React.createClass({
             style={styles.filterautocomplete}
             suggestions={this.state.data}
             placeholder='Search for a specific Pokemon'
+            value={this.state.pokemon}
           />
           <TouchableOpacity
             style={{
@@ -606,7 +608,7 @@ var Home = React.createClass({
               paddingTop: 5*height/736,
               paddingBottom: 5*height/736,
             }}
-            onPress={this.filter.bind(this, this.state.pokeNames, this.state.pokemon)}
+            onPress={this.filter.bind(this, this.state.pokeNames, this.state.pokemon, null, null)}
           >
             <Text style={{
               height: 20*height/736,
@@ -617,8 +619,8 @@ var Home = React.createClass({
             Filter</Text>
           </TouchableOpacity>
         </View>
-        <View style={{height: height*141/320}}>
-          <Map location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} gymmarkers={this.state.gymmarkers} refresh={this.refresh} pokemonList={this.state.pokemonList} pokeNames={this.state.pokeNames} filter={this.filter}/>
+        <View style={{height: height*120/320}}>
+          <Map location={this.state.location} index={this.getSwiperIndex()} idpoke={this.state.filteredOne.id} region={this.state.region} changeRegion={this.changeRegion} chosen={this.state.chosen} markers={this.state.markers} gymmarkers={this.state.gymmarkers} refresh={this.refresh} pokemonList={this.state.pokemonList} pokeNames={this.state.pokeNames} filter={this.filter}/>
         </View>
         <View style={{height: height*158/320}}>
           <Swiper
@@ -640,7 +642,7 @@ var Home = React.createClass({
               <Profile username={this.state.username} team={this.state.team} logout={this.logout}/>
             </View>
             <View style={{height: height*158/320}}>
-              <Feed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} pokeNames={this.state.pokeNames} filter={this.filter}/>
+              <Feed location={this.state.location} chosen={this.state.chosen} idpoke={this.state.filteredOne.id} region={this.state.region} changeRegion={this.changeRegion} markers={this.state.markers} feed={ds.cloneWithRows(this.state.markers)} refresh={this.refresh} pokemonList={this.state.pokemonList} pokeNames={this.state.pokeNames} filter={this.filter}/>
             </View>
             <View style={{height: height*158/320}}>
               <GymFeed location={this.state.location} region={this.state.region} changeRegion={this.changeRegion} gymmarkers={this.state.gymmarkers} feed={ds.cloneWithRows(this.state.gymmarkers)} refresh={this.refresh} filter={this.filter}/>
@@ -672,7 +674,13 @@ var Home = React.createClass({
 var Map = React.createClass({
 
   getInitialState() {
+    // pressedpoke: false,
+    // pressedgym: false,
+    console.log("INDEX HERE", this.props.index)
+
     return {
+      filterpoke: false,
+      filtergym: false,
       latitude: this.props.location.latitude,
       longitude: this.props.location.longitude,
       latitudeDelta: this.props.location.latitudeDelta,
@@ -680,7 +688,8 @@ var Map = React.createClass({
       pokemon: '',
       data: [],
       pokemonObj: {},
-      modalVisible: false
+      modalVisible: false,
+      modalVisible2: false
     };
   },
   componentWillReceiveProps(newProps) {
@@ -689,6 +698,10 @@ var Map = React.createClass({
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
+  },
+
+  setModalVisible2(visible) {
+    this.setState({modalVisible2: visible});
   },
 
   onSelect(pokemon) {
@@ -781,14 +794,43 @@ var Map = React.createClass({
     })
   },
 
+  filterpoke() {
+    if(this.state.filterpoke) {
+      this.setState({
+        filterpoke: false,
+      })
+    }
+    else if(this.state.filterpoke === false) {
+      this.setState({
+        filterpoke: true,
+      })
+    }
+  },
+
+  filtergym() {
+    if(this.state.filtergym) {
+      this.setState({
+        filtergym: false,
+      })
+    }
+    else if(!this.state.filtergym) {
+      this.setState({
+        filtergym: true,
+      })
+    }
+},
+
   modal() {
     this.setModalVisible(!this.state.modalVisible);
   },
 
+
   render() {
     // console.log(this.work)
 
+    console.log("CHOSENBRO INSIDE MAP", this.props.chosen);
     var pokeballs = this.props.markers.map(function(marker, i) {
+
       var timeAgo = ((Date.now() - new Date(marker.time).getTime()) / 60000)
       return (<MapView.Marker
         coordinate={{
@@ -815,17 +857,60 @@ var Map = React.createClass({
         image={require('./pokegym.png')}
       />)
     })
-
+    var total = pokeballs.concat(gyms)
     var all = pokeballs.concat(gyms)
+    var poke;
+    var gym;
+    if(this.state.filterpoke && this.state.filtergym) {
+      var all = total
+      var poke = "#000000";
+      var gym = "#000000";
+    }
+    else if(!this.state.filterpoke && !this.state.filtergym) {
+      var all = total
+      var poke = "#000000";
+      var gym = "#000000";
+    }
+    else if(this.state.filtergym) {
+      var all = gyms
+      var gym = "#ccc";
+    }
+    else if(!this.state.filtergym) {
+      var all = total
+      var gym = "#000000";
+    }
+    else if(this.state.filterpoke) {
+      var all = pokeballs
+      var poke = "#ccc";
+    }
+    else if(!this.state.filterpokeballs) {
+      var all = total
+      var gym = "#000000";
+    }
+      var widthUnit = width / 414;
 
-    return (
-      <View style={{flex: 1}}>
-      <Modal
-        animationType={"slide"}
-        transparent={false}
-        visible={this.state.modalVisible}
-        onRequestClose={() => {alert("Modal has been closed.")}}
-        >
+      var pokebutton = (
+        <TouchableOpacity onPress={this.filterpoke} style={{width: 60, justifyContent: 'center', alignItems: 'center', height: 50, top: 200*height/736,
+        left: 6*width/10, position: 'absolute', backgroundColor: poke}}>
+          <Image source={require('./pokeball.png')} style={{width: width*35/414, height: height*35/736}}/>
+        </TouchableOpacity>
+        )
+
+      var gymbutton = (
+        <TouchableOpacity onPress={this.filtergym} style={{width: 60, justifyContent: 'center', alignItems: 'center', height: 50, top: 200*height/736,
+        left: 8*width/10, position: 'absolute', backgroundColor: poke}}>
+          <Image source={require('./pokegymnav.png')} style={{width: width*35/414, height: height*35/736}}/>
+        </TouchableOpacity>
+        )
+
+      var pokepost = (
+        <Modal
+          animationType={"slide"}
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {alert("Modal has been closed.")}}
+          >
+        <View style={{marginTop: 22}}>
           <View style={{height: height*132/320}}>
             <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1}]}>
               <View style={{flexDirection: 'row', position: 'absolute', top: 0, zIndex: 999}}>
@@ -883,9 +968,72 @@ var Map = React.createClass({
             }}>
               <Text style={styles.buttonLabel2}>Cancel</Text>
             </TouchableHighlight>
-
+          </View>
           </View>
       </Modal>
+      )
+
+      var gympost = (
+        <Modal
+          animationType={"slide"}
+          transparent={false}
+          visible={this.state.modalVisible2}
+          onRequestClose={() => {alert("Modal has been closed.")}}
+          >
+         <View style={{marginTop: 22}}>
+          <View style={{height: height*132/320}}>
+            <GymPostModal location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible2} modalVisible={this.state.modalVisible2}/>
+
+            <TouchableHighlight style={[styles.button, styles.buttonBlue]} onPress={() => {
+              this.setModalVisible2(!this.state.modalVisible2)
+            }}>
+              <Text style={styles.buttonLabel2}>Cancel</Text>
+            </TouchableHighlight>
+
+          </View>
+         </View>
+        </Modal>
+      )
+
+      if(this.props.index === 1) {
+        var post = pokepost
+      }
+      else if(this.props.index === 2) {
+        var post = gympost
+      }
+      else {
+        var post = pokepost
+      }
+
+      var pokepostbutton = (
+        <TouchableHighlight onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={[{height: height*35/736, width: width*35/414, backgroundColor: 'blue'}, styles.post]}>
+          <Text style={{color: 'red'}}>Post</Text>
+        </TouchableHighlight>
+      )
+      var gympostbutton = (
+        <TouchableHighlight onPress={() => {this.setModalVisible2(!this.state.modalVisible2)}} style={[{height: height*35/736, width: width*35/414, backgroundColor: 'red'}, styles.post]}>
+          <Text style={{color: 'red'}}>Post</Text>
+        </TouchableHighlight>
+      )
+
+      if(this.props.index === 1) {
+        var postbutton = pokepostbutton
+      }
+      else if(this.props.index === 2) {
+        var postbutton = gympostbutton
+      }
+      else if(this.props.index === 0) {
+        var postbutton = null
+      }
+      else {
+        var postbutton = pokepostbutton
+      }
+        // width: heightUnit - 10, height: heightUnit - 1, top: 250*height/736,
+        // left: 8*width/414, position: 'absolute', backgroundColor: gym}}
+        //
+    return (
+      <View style={{flex: 1}}>
+        {post}
       <MapView
         style={{flex: 1}}
         onRegionChange={this.onRegionChange}
@@ -900,9 +1048,9 @@ var Map = React.createClass({
       <TouchableOpacity style={styles.blue} onPress={this.nav}>
         <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
       </TouchableOpacity>
-      <TouchableHighlight onPress={this.modal} style={[{height: height*35/736, width: width*35/414, backgroundColor: 'red'}, styles.post]}>
-        <Text style={{color: 'red'}}>Post</Text>
-      </TouchableHighlight>
+        {pokebutton}
+        {gymbutton}
+        {postbutton}
       </View>
     )
   }
@@ -967,8 +1115,6 @@ var GymPostModal = React.createClass({
 var GymPost = React.createClass({
   selectPost() {
     // console.log("HEY ROW DATA", this.props.rowData.location)
-    // console.log("[POST props]", this.props);
-    this.props.filter(this.props.pokemonList, null, null, this.props.rowData._id);
     this.props.changeRegion(
       { latitude: this.props.rowData.location.latitude,
         longitude: this.props.rowData.location.longitude,
@@ -1078,6 +1224,7 @@ var Feed = React.createClass({
           renderRow={(rowData) => {
             return (
               <Post rowData={rowData}
+                markers={this.props.markers}
                 rating={rowData.rating}
                 region={this.props.region}
                 location={this.props.location}
@@ -1101,10 +1248,12 @@ var Post = React.createClass({
   getInitialState() {
     return ({
       upvoted: (this.props.vote === 'up') || false,
-      downvoted: (this.props.vote === 'down') || false
+      downvoted: (this.props.vote === 'down') || false,
+      selected: 0
     })
   },
   componentWillReceiveProps(nextProps) {
+        console.log("SELECTED STATE REFRESH", this.state.selected)
       this.setState({
         upvoted: (nextProps.vote === 'up') || false,
         downvoted: (nextProps.vote === 'down') || false
@@ -1132,14 +1281,42 @@ var Post = React.createClass({
 
   selectPost() {
     // console.log("HEY ROW DATA", this.props.rowData.location)
-    // console.log("[POST props]", this.props);
-    this.props.filter(this.props.pokemonList, null, null, this.props.rowData._id);
-    this.props.changeRegion(
-      { latitude: this.props.rowData.location.latitude,
-        longitude: this.props.rowData.location.longitude,
-        latitudeDelta: this.props.region.latitudeDelta,
-        longitudeDelta: this.props.region.longitudeDelta,
-    })
+    console.log("SELECTED STATE", this.state.selected)
+    console.log("CURRENT ROW ID", this.props.rowData._id)
+
+    if(!this.state.selected) {
+      this.props.changeRegion(
+        { latitude: this.props.rowData.location.latitude,
+          longitude: this.props.rowData.location.longitude,
+          latitudeDelta: this.props.region.latitudeDelta,
+          longitudeDelta: this.props.region.longitudeDelta,
+      })
+      this.setState({
+        selected: this.props.rowData._id
+      })
+    }
+    else if (this.state.selected === this.props.rowData._id) {
+      this.props.changeRegion(
+        { latitude: this.props.location.latitude,
+          longitude: this.props.location.longitude,
+          latitudeDelta: this.props.region.latitudeDelta,
+          longitudeDelta: this.props.region.longitudeDelta,
+      })
+      this.props.refresh()
+      this.setState({
+        selected: 0
+      })
+    }
+    else if (this.state.selected !== this.props.rowData._id) {
+      this.setState({
+        selected: this.props.rowData._id
+      })
+    }
+  },
+
+  navigated() {
+    var url = 'http://maps.apple.com/?q=' + this.props.rowData.location.latitude + ',' + this.props.rowData.location.longitude;
+    LinkingIOS.openURL(url);
   },
 
   render() {
@@ -1180,12 +1357,39 @@ var Post = React.createClass({
       </TouchableOpacity>
       )
 
+    var nav = null
+    var white = null
+    var mcolor = '#f6f6f6'
+    var scolor = 'grey'
+    // console.log("ROWDATA BEOFRE RENDER", this.props.feed.dataBlob.s1)
+    console.log("markers BEOFRE renderyoooo", this.props.markers)
+    console.log("SELCTED state IN render", this.state.selected);
+
+    for(var i = 0; i < this.props.markers.length; i++) {
+      if(this.state.selected === this.props.markers[i]._id) {
+        var mcolor = '#5C5C5C'
+        var scolor = 'white'
+        var nav = (
+          <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#5C5C5C'}}>
+            <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
+          </TouchableOpacity>
+        )
+      }
+      else if (this.state.selected !== this.props.markers[i]._id) {
+        var nav = null
+        var white = null
+        var mcolor = '#f6f6f6'
+        var scolor = 'grey'
+      }
+    }
+
+
     // Everything lmao
 
     return (
       <View
         style={{
-          backgroundColor: '#f6f6f6',
+          backgroundColor: mcolor,
           borderBottomWidth: 1,
           borderColor: '#d3d3d3',
           paddingLeft: 10 * widthUnit,
@@ -1197,18 +1401,18 @@ var Post = React.createClass({
           <View style={{marginLeft: 10*widthUnit, marginTop: 3*height/736}}>
             <Text style={{fontWeight: '600', fontSize: 15}}>{this.props.rowData.pokemon + ' ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mi away'}</Text>
             <Text style={{fontWeight: '600', fontSize: 13}}>{Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago '}</Text>
-            <Text style={{fontSize: 11, color: 'grey'}}>seen by {this.props.rowData.user.username}</Text>
+            <Text style={{fontSize: 11, color: scolor}}>seen by {this.props.rowData.user.username}</Text>
           </View>
         </TouchableOpacity>
         <View style={{position: 'absolute', right: 0, top: 0, backgroundColor: "rgba(0,0,0,0)", flexDirection: 'row'}}>
+          {nav}
           {rating}
-          {down}
-          {up}
         </View>
       </View>
     )
   }
 });
+
 
 const styles = StyleSheet.create({
   container: {
@@ -1303,6 +1507,11 @@ const styles = StyleSheet.create({
     left: 8*width/414,
     position: 'absolute',
   },
+  absoluteb: {
+    top: 260*height/736,
+    left: 8*width/414,
+    position: 'absolute'
+  },
   post: {
     top: 240*height/736,
     right: 8*width/414,
@@ -1325,4 +1534,3 @@ const styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('Pokegame', () => Start);
-
