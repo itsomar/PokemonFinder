@@ -305,9 +305,6 @@ var Profile = React.createClass({
         <TouchableOpacity onPress={this.props.logout}>
           <Text>Logout</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>Settings</Text>
-        </TouchableOpacity>
       </View>
     )
   }
