@@ -599,8 +599,7 @@ var Home = React.createClass({
   },
 
   render() {
-    // console.log("STATE OF HOME", this.state.markers);
-
+    // // console.log("STATE OF HOME", this.state.markers);
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
@@ -690,6 +689,8 @@ var Map = React.createClass({
 
   getInitialState() {
     return {
+      pressedpoke: false,
+      pressedgym: false,
       latitude: this.props.location.latitude,
       longitude: this.props.location.longitude,
       latitudeDelta: this.props.location.latitudeDelta,
@@ -712,6 +713,33 @@ var Map = React.createClass({
         longitudeDelta: this.props.location.longitudeDelta
     })
   },
+
+  poke() {
+    if(this.state.pressedpoke) {
+      this.setState({
+        pressedpoke: false
+      })
+    }
+    else if(this.state.pressedpoke === false) {
+      return this.setState({
+        pressedpoke: true
+      })
+    }
+  },
+
+  gym() {
+    if(this.state.pressedgym) {
+      this.setState({
+        pressedgym: false
+      })
+    }
+    else if(this.state.pressedgym === false) {
+      this.setState({
+        pressedgym: true
+      })
+    }
+  },
+
 
   render() {
 
@@ -763,6 +791,33 @@ var Map = React.createClass({
           })
       var all = chosen
     }
+      var poke = "#000000";
+      var gym = "#000000";
+      if (this.state.pressedpoke) {
+        poke = "#ccc";
+      }
+      if (this.state.pressedgym) {
+        gym = "#ccc";
+      }
+      var widthUnit = width / 414;
+
+      var pokebutton = (
+        <TouchableOpacity onPress={this.poke} style={{width: 60, justifyContent: 'center', alignItems: 'center', height: 50, top: 200*height/736,
+        left: 6*width/10, position: 'absolute', backgroundColor: poke}}>
+          <Image source={require('./pokeball.png')} style={{width: width*35/414, height: height*35/736}}/>
+        </TouchableOpacity>
+        )
+
+      var gymbutton = (
+        <TouchableOpacity onPress={this.gym} style={{width: 60, justifyContent: 'center', alignItems: 'center', height: 50, top: 200*height/736,
+        left: 8*width/10, position: 'absolute', backgroundColor: poke}}>
+          <Image source={require('./pokegymnav.png')} style={{width: width*35/414, height: height*35/736}}/>
+        </TouchableOpacity>
+        )
+
+        // width: heightUnit - 10, height: heightUnit - 1, top: 250*height/736,
+        // left: 8*width/414, position: 'absolute', backgroundColor: gym}}
+        //
     return (
       <View style={{flex: 1}}>
       <MapView
@@ -778,6 +833,8 @@ var Map = React.createClass({
       <TouchableOpacity style={styles.blue} onPress={this.nav}>
         <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
       </TouchableOpacity>
+        {pokebutton}
+        {gymbutton}
       </View>
     )
   }
@@ -1286,7 +1343,6 @@ var Post = React.createClass({
   }
 })
 
-
 // var TabBarExample = React.createClass({
 //   statics: {
 //     title: '<TabBarIOS>',
@@ -1475,6 +1531,11 @@ const styles = StyleSheet.create({
   },
   blue: {
     top: 250*height/736,
+    left: 8*width/414,
+    position: 'absolute',
+  },
+  absoluteb: {
+    top: 260*height/736,
     left: 8*width/414,
     position: 'absolute',
   },
