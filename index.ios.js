@@ -135,9 +135,8 @@ var Pokegame = React.createClass({
     return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
-      <Image style={{alignItems: 'center', marginBottom: 30, height: 220, width: 250}} source={require('./pikachu.png')} />
       <View style={{flexDirection: 'row'}}>
-        <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736}}>Poke</Text><Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: '#FF585B'}}>Finder</Text>
+        <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736}}>Poké</Text><Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: '#FF585B'}}>Finder</Text>
       </View>
       <Text style={{color: '#a9a9a9'}}>Please sign in</Text>
       <View style={{width:width*.7}}>
@@ -157,7 +156,7 @@ var Pokegame = React.createClass({
         <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={this.register}>
           <Text style={styles.buttonLabel2}>Register</Text>
         </TouchableOpacity>
-        <Text>{this.state.message}</Text>
+        <Text style = {{color: "red", textAlign: "center", fontSize: 20}}>{this.state.message}</Text>
       </View>
     </View>
     )
@@ -240,7 +239,7 @@ var Register = React.createClass({
     return (
       <View style={styles.container}>
         <Text style={[styles.textBig, {color: '#FF585B'}]}>Register</Text>
-        <Text style={{color: 'red'}}>{this.state.message}</Text>
+        <Text style={{color: '#FF585B'}}>{this.state.message}</Text>
         <View style={{width:width*.7}}>
           <TextInput
             style={{height: 40*height/736, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
@@ -292,7 +291,7 @@ var Profile = React.createClass({
     return (
       <View style={{backgroundColor: '#f5fcff', flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Poke</Text>
+          <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Poké</Text>
           <Text style={{fontSize: 40 *height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)', color: '#FF585B'}}>Finder</Text>
         </View>
         <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
@@ -502,7 +501,7 @@ var Home = React.createClass({
         }
       })
     } else if (pokeList.indexOf(pokemon) === -1) {
-      return Alert.alert('Please enter a valid pokemon name');
+      return Alert.alert('Please enter a valid pokémon name');
     } else if (pokeList.indexOf(pokemon) > -1) {
       // console.log('[AM I HERE???]')
       this.setState({
@@ -649,7 +648,7 @@ var Home = React.createClass({
             maximumNumberOfAutoCompleteRows={10}
             style={styles.filterautocomplete}
             suggestions={this.state.data}
-            placeholder='Search for a specific Pokemon'
+            placeholder='Search for a specific Pokémon'
             value={this.state.pokemon}
           />
           <TouchableOpacity
@@ -709,7 +708,7 @@ var Home = React.createClass({
           <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5, backgroundColor: col2}} onPress={this.scrollBy.bind(null, 1)}>
             <Image source={require('./pokeballnav.png')}
               style={{width: 20, height: 20}} />
-            <Text style={{color: 'white'}}>Pokemon Feed</Text>
+            <Text style={{color: 'white'}}>Pokémon Feed</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5, backgroundColor: col3}} onPress={this.scrollBy.bind(null, 2)}>
             <Image source={require('./pokegym.png')}
@@ -799,7 +798,7 @@ var Map = React.createClass({
   post() {
     console.log('AM I FUCKING POSTING??????????????????????????')
     if (this.props.pokeNames.indexOf(this.state.pokemon) === -1) {
-      return Alert.alert('Please enter a valid pokemon name');
+      return Alert.alert('Please enter a valid pokémon name');
     }
 
     fetch('http://localhost:3000/post', {
@@ -976,7 +975,7 @@ var Map = React.createClass({
                   autoCompleteTableBackgroundColor='white'
                   style={styles.autocomplete}
                   suggestions={this.state.data}
-                  placeholder='Which Pokemon did you find?'
+                  placeholder='Which Pokémon did you find?'
                   value={this.state.pokemon}
                 />
                 <TouchableOpacity
@@ -1059,7 +1058,7 @@ var Map = React.createClass({
       var pokepostbutton = (
         <TouchableHighlight onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={[{height: height*40/736, width: width*100/414, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center'}, styles.post]}>
           <View style={{flexDirection: 'row'}}>  
-            <Text style={{color: 'white', fontWeight: 'bold'}}>Pokemon</Text>
+            <Text style={{color: 'white', fontWeight: 'bold'}}>Pokémon</Text>
             <Image source={require('./enter.png')} style={{width: width*20/414, height: height*20/736, marginLeft: 1}}/>
           </View>
         </TouchableHighlight>
