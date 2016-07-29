@@ -157,7 +157,7 @@ var Pokegame = React.createClass({
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
     }}>
-      <StatusBar hidden={true} />
+      <Image style={{alignItems: 'center', marginBottom: 30, height: 220, width: 250}} source={require('./pikachu.png')}/>
       <View style={{flexDirection: 'row'}}>
         <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736}}>Poke</Text><Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: '#FF585B'}}>Finder</Text>
       </View>
@@ -258,7 +258,6 @@ var Register = React.createClass({
       instinctsize: 90,
       mysticsize: 80,
       team: "Valor",
-
     })
   },
 
@@ -282,7 +281,7 @@ var Register = React.createClass({
           />
 
           <Text style={[styles.textMed, {color: '#a9a9a9'}]}>Pick your team</Text>
-
+        <View style={{height: 270}}>
         <TouchableOpacity
         onPress={this.enlargeInstinct}>
         <Image source={{uri: 'http://localhost:3000/images/instinct.png'}} style={{alignSelf: "center", width: width*this.state.instinctsize/414, height: height*this.state.instinctsize/736, marginBottom: 20}}/>
@@ -303,7 +302,7 @@ var Register = React.createClass({
         onPress={this.enlargeValor}>
         <Image source={{uri: 'http://localhost:3000/images/valor.png'}} style={{marginLeft: width*35/414, width: width*this.state.valorsize/414, height: height*this.state.valorsize/736}}/>
          </TouchableOpacity>
-
+        </View>
         </View>
 
         <TouchableOpacity
