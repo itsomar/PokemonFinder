@@ -1056,7 +1056,7 @@ var Map = React.createClass({
       var pokepostbutton = (
         <TouchableHighlight onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={[{height: height*40/736, width: width*100/414, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center'}, styles.post]}>
           <View style={{flexDirection: 'row'}}>  
-            <Text style={{color: 'red', fontWeight: 'bold'}}>Pokemon</Text>
+            <Text style={{color: 'white', fontWeight: 'bold'}}>Pokemon</Text>
             <Image source={require('./enter.png')} style={{width: width*20/414, height: height*20/736, marginLeft: 1}}/>
           </View>
         </TouchableHighlight>
@@ -1064,7 +1064,7 @@ var Map = React.createClass({
       var gympostbutton = (
         <TouchableHighlight onPress={() => {this.setModalVisible2(!this.state.modalVisible2)}} style={[{height: height*40/736, width: width*100/414, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center'}, styles.post]}>
           <View style={{flexDirection: 'row'}}>  
-            <Text style={{color: 'red', fontWeight: 'bold'}}>Gym</Text>
+            <Text style={{color: 'white', fontWeight: 'bold'}}>Gym</Text>
             <Image source={require('./enter.png')} style={{width: width*20/414, height: height*20/736, marginLeft: 1}}/>
           </View>
         </TouchableHighlight>
@@ -1222,30 +1222,7 @@ var GymFeed = React.createClass({
   render() {
     return (
       <View style={{backgroundColor: '#f5fcff'}}>
-        <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {alert("Modal has been closed.")}}
-          >
-         <View style={{marginTop: 22}}>
-          <View style={{height: height*132/320}}>
-            <GymPostModal location={this.props.location} refresh={this.props.refresh} setModalVisible={this.setModalVisible} modalVisible={this.state.modalVisible}/>
-
-            <TouchableHighlight style={[styles.button, styles.buttonBlue]} onPress={() => {
-              this.setModalVisible(!this.state.modalVisible)
-            }}>
-              <Text style={styles.buttonLabel2}>Cancel</Text>
-            </TouchableHighlight>
-
-          </View>
-         </View>
-        </Modal>
-        <TouchableHighlight onPress={() => {this.setModalVisible(!this.state.modalVisible)}} style={[styles.button, styles.buttonBlue]}>
-          <Text style={styles.buttonLabel2}>Post</Text>
-        </TouchableHighlight>
-
-        <View style={{width: width, height: height * 551/1280}}>
+        <View style={{width: width, height: height * 158/320}}>
         <ListView
         automaticallyAdjustContentInsets={false}
         enableEmptySections={true}
