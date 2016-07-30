@@ -174,6 +174,7 @@ var Register = React.createClass({
     return {
       username: "",
       password: "",
+      repassword: "",
       team: "",
       message: "",
       instinctsize: 110,
@@ -183,6 +184,7 @@ var Register = React.createClass({
   },
 
   submit() {
+    console.log("Starting submit")
     fetch('http://localhost:3000/register', {
       method: 'POST',
       headers: {
@@ -191,20 +193,27 @@ var Register = React.createClass({
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password,
+        repassword: this.state.repassword,
         team: this.state.team
       })
     })
     .then((response) => response.json())
     .then((responseJSON) => {
+      console.log(responseJSON)
       if(responseJSON.success) {
         this.props.navigator.pop()
       } else {
+        console.log("This is an error")
         this.setState({
           message: responseJSON.error
         });
       }
     }).catch((error) => {
-      console.log(error)
+      console.log("This is the error: ", error)
+      console.log("This is the error.error: ", error.error)
+      this.setState({
+        message: error.error
+      })
     });
   },
 
@@ -255,6 +264,11 @@ var Register = React.createClass({
             style={{height: 40, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
             placeholder="Choose a password"
             onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
+          />
+          <TextInput
+            style={{height: 40, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
+            placeholder="Retype password"
+            onChangeText={(text) => this.setState({repassword: text})} value={this.state.repassword} secureTextEntry={true}
           />
           <Text style={[styles.textMed, {color: '#a9a9a9'}]}>Pick your team</Text>
 
