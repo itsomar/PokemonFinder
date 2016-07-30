@@ -147,7 +147,7 @@ var Pokegame = React.createClass({
           <Text style={{fontSize: 60*height/736, marginBottom: 5*height/736, color: "white"}}>Ditto</Text>
         </View>
         <View style={{flexDirection: 'row', left: 9*width/24, top: height/9}}>
-          <Text style={{fontSize: 30*height/736, marginBottom: 5*height/736, color: "#F5C114"}}>Pokemon Finder</Text>
+          <Text style={{fontSize: 30*height/736, marginBottom: 5*height/736, color: "#F5C114"}}>Pokémon Finder</Text>
         </View>
         <Text style={{color: '#a9a9a9', top: 3*height/24, left: 8*width/12, width: 7*width/12}}>Please sign in</Text>
           <TextInput
@@ -370,23 +370,24 @@ var Profile = React.createClass({
                 )
     }
     return (
-      <View style={{backgroundColor: '#f5fcff', flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
+      <View style={{backgroundColor: '#f5fcff'}}>
+      <View style={{flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
         <View style={{flexDirection: 'row'}}>
           <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Poké</Text>
           <Text style={{fontSize: 40 *height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)', color: '#FF585B'}}>Finder</Text>
         </View>
         <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
         {teamImg}
-
-        <TouchableHighlight onPress={this.props.scrollBy.bind(null, 0)} style={{height: height*50/736, width: width*100/414, borderWidth: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <View style={{alignItems: 'center'}}>
-            <Text style={{color: 'black'}}>Settings</Text>
-          </View>
-        </TouchableHighlight>
-        <TouchableOpacity onPress={this.props.logout}>
-          <Text>Logout</Text>
-        </TouchableOpacity>
       </View>
+      <View style={{flexDirection: 'row', position: 'absolute', top: 5*height/12, left: 17*width/48}}>
+      <TouchableHighlight onPress={this.props.scrollBy.bind(null, 0)} style={{height: 32, width: 32}}>
+        <Image source={require('./settings.png')} style={{height: 40, width: 40}}/>
+      </TouchableHighlight>
+      <TouchableOpacity onPress={this.props.logout} style={{height: 30, width: 70, borderWidth: 1, left: 15, top: 5, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Logout</Text>
+      </TouchableOpacity>
+      </View>
+    </View>
     )
   }
 })
@@ -728,11 +729,11 @@ var Home = React.createClass({
     var col2 = 'grey';
     var col3 = 'grey';
     if (this.state.presses === 1) {
-      col1 = 'black'
+      col1 = '#1F1F1F'
     } else if (this.state.presses === 2) {
-      col2 = 'black'
+      col2 = '#1F1F1F'
     } else if(this.state.presses === 3) {
-      col3 = 'black'
+      col3 = '#1F1F1F'
     }
               // selectedIcon={require('./img/navigation2.png')}
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -875,7 +876,7 @@ var Home = React.createClass({
               }
             }.bind(this)}>
             <View style={{width: width, height: height*158/320}}>
-              <Settings/>
+              <Settings scrollBy={this.scrollBy}/>
             </View>
             <View style={{height: height*158/320}}>
               <Profile scrollBy={this.scrollBy} username={this.state.username} team={this.state.team} logout={this.logout}/>
@@ -939,6 +940,11 @@ var Settings = React.createClass({
       <View style={{backgroundColor: '#f5fcff', flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Settings</Text>
+
+            <TouchableOpacity onPress={this.props.scrollBy.bind(null, 1)} style={{height: 30, width: 70, borderWidth: 1, left: 15, top: 5, justifyContent: 'center', alignItems: 'center'}}>
+              <Text>Back</Text>
+            </TouchableOpacity>
+
         </View>
       </View>
     )
@@ -1560,7 +1566,7 @@ var Feed = React.createClass({
 
   render() {
     return (
-      <View style={{backgroundColor: '#f5fcff'}}>
+      <Image source={require('./ditto_b.png')} style={styles.backgroundImage}>
       <View style={{width: width, height: height * 158/320}}>
         <ListView
           automaticallyAdjustContentInsets={true}
@@ -1590,7 +1596,7 @@ var Feed = React.createClass({
             }
           } />
       </View>
-      </View>
+    </Image>
     )
   }
 });
@@ -1811,9 +1817,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     paddingTop: 8*height/736,
     paddingBottom: 8*height/736,
-    width: width/3,
-    left: 2*width/3,
-    top: 7*height/48
   },
   button2: {
     alignSelf: 'stretch',
