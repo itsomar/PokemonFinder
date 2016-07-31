@@ -133,36 +133,54 @@ var Pokegame = React.createClass({
     // console.log('[HOW MANY]')
     // console.log("state upon render", this.state);
     return (
-    <View style={{
+    <View 
+      style={{
         flex: 1,
-        paddingTop: 100,
+        padding: 80,
         alignItems: 'center',
-        backgroundColor: '#F5FCFF'
+        backgroundColor: 'rgba(0,0,0,0.54)'
       }}>
+    <Image source={require('./background.png')} style={{width:width, height: height}}>
+    <View
+        style={{
+        flex: 1,
+        paddingTop: 55,
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)'
+      }}>
+      
       <StatusBar hidden={true} />
       <View style={{flexDirection: 'row'}}>
-        <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736}}>Poké</Text><Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: '#FF585B'}}>Finder</Text>
+        <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: 'white'}}>Poké</Text><Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: '#FF585B'}}>Finder</Text>
       </View>
-      <Text style={{color: '#a9a9a9'}}>Please sign in</Text>
+      <Text style = {{color: "#ff585b", textAlign: "center"}}>{this.state.message}</Text>
+      
       <View style={{width:width*.7}}>
-        <TextInput
-          style={{height: 30*height/736, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
-          placeholder="Username"
-          onChangeText={(username) => this.setState({username})} value={this.state.username}
-        />
-        <TextInput
-          style={{height: 30, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
-          placeholder="Password"
-          onChangeText={(password) => this.setState({password})} value={this.state.password} secureTextEntry={true}
-        />
-        <TouchableOpacity onPress={this.submit} style={[styles.button, styles.buttonRed]}>
-          <Text style={styles.buttonLabel}>Login</Text>
+        <View style={{borderColor: '#d3d3d3', borderBottomWidth: 1, marginBottom: 5}}>
+          <TextInput
+            style={{height: 30*height/736, textAlign: "center", color: 'white'}}
+            placeholder="Username"
+            placeholderTextColor="white"
+            onChangeText={(username) => this.setState({username})} value={this.state.username}
+          />
+        </View>
+        <View style={{borderColor: '#d3d3d3', borderBottomWidth: 1, marginBottom: 5}}>
+          <TextInput
+            style={{height: 30, textAlign: "center", color: 'white'}}
+            placeholder="Password"
+            placeholderTextColor="white"
+            onChangeText={(password) => this.setState({password})} value={this.state.password} secureTextEntry={true}
+          />
+        </View>
+        <TouchableOpacity onPress={this.submit} style={[styles.button, styles.buttonRed, {marginBottom: 5}]}>
+          <Text style={styles.buttonLabel}>Sign In</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={this.register}>
-          <Text style={styles.buttonLabel2}>Register</Text>
+          <Text style={styles.buttonLabel2}>Create Account</Text>
         </TouchableOpacity>
-        <Text style = {{color: "red", textAlign: "center", fontSize: 20}}>{this.state.message}</Text>
       </View>
+      </View>
+    </Image>
     </View>
     )
   }
