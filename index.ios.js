@@ -134,76 +134,55 @@ var Pokegame = React.createClass({
     // console.log('[HOW MANY]')
     // console.log("state upon render", this.state);
     return (
-      <View style={{
+      <View
+        style={{
           flex: 1,
-          backgroundColor: '#1F1F1F'
+          padding: 80,
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.54)'
         }}>
-      <Image source={require('./ditto_b.png')} style={styles.backgroundImage}>
-        <View style={{
-            flex: 1
-          }}>
-        <StatusBar hidden={true} />
-        <View style={{flexDirection: 'row', left: 7*width/12, top: height/9}}>
-          <Text style={{fontSize: 60*height/736, marginBottom: 5*height/736, color: "white"}}>Ditto</Text>
-        </View>
-        <View style={{flexDirection: 'row', left: 9*width/24, top: height/9}}>
-          <Text style={{fontSize: 30*height/736, marginBottom: 5*height/736, color: "#F5C114"}}>Pokémon Finder</Text>
-        </View>
-        <Text style={{color: '#a9a9a9', top: 3*height/24, left: 8*width/12, width: 7*width/12}}>Please sign in</Text>
-          <TextInput
-            style={{backgroundColor: 'white',
-                        height: 30*height/736,
-                        paddingTop: 8*height/736,
-                        paddingBottom: 8*height/736,
-                        textAlign: "center",
-                        width: 8*width/12,
-                        left: 5*width/12,
-                        top: 3*height/24
-                      }}
-            placeholder="Username"
-            onChangeText={(username) => this.setState({username})} value={this.state.username}
-          />
-          <TextInput
-            style={{backgroundColor: 'white',
-                        height: 30*height/736,
-                        paddingTop: 8*height/736,
-                        paddingBottom: 8*height/736,
-                        textAlign: "center",
-                        width: 6*width/12,
-                        left: 6*width/12,
-                        top: 3*height/24
-                      }}
-            placeholder="Password"
-            onChangeText={(password) => this.setState({password})} value={this.state.password} secureTextEntry={true}
-          />
-        <TouchableOpacity onPress={this.submit}
-          style={{backgroundColor: '#FF585B',
-            paddingTop: 8*height/736,
-            paddingBottom: 8*height/736,
-            width: 5*width/12,
-            left: 7*width/12,
-            top: 3*height/24
-          }}>
-            <Text style={{
-              textAlign: 'center',
-              fontSize: 16*height/736,
-              color: 'white'
-            }}>Login</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{backgroundColor: '#2167E3',
-                      paddingTop: 8*height/736,
-                      paddingBottom: 8*height/736,
-                      width: 3*width/12,
-                      left: 8*width/12,
-                      top: 3*height/24
-                    }} onPress={this.register}>
-            <Text style={styles.buttonLabel2}>Register</Text>
-          </TouchableOpacity>
-          <Text style = {{color: "white", textAlign: "center", fontSize: 20, top: 3*height/24, left: 7*width/12, width: 3*width/12}}>{this.state.message}</Text>
-      </View>
-    </Image>
-  </View>
+      <Image source={require('./background.png')} style={{width:width, height: height}}>
+      <View
+          style={{
+          flex: 1,
+          paddingTop: 55,
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)'
+        }}>
 
+        <StatusBar hidden={true} />
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: 'white'}}>Poké</Text><Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, color: '#FF585B'}}>Finder</Text>
+        </View>
+        <Text style = {{color: "#ff585b", textAlign: "center"}}>{this.state.message}</Text>
+
+        <View style={{width:width*.7}}>
+          <View style={{borderColor: '#d3d3d3', borderBottomWidth: 1, marginBottom: 5}}>
+            <TextInput
+              style={{height: 30*height/736, textAlign: "center", color: 'white'}}
+              placeholder="Username"
+              placeholderTextColor="white"
+              onChangeText={(username) => this.setState({username})} value={this.state.username}
+            />
+          </View>
+          <View style={{borderColor: '#d3d3d3', borderBottomWidth: 1, marginBottom: 5}}>
+            <TextInput
+              style={{height: 30, textAlign: "center", color: 'white'}}
+              placeholder="Password"
+              placeholderTextColor="white"
+              onChangeText={(password) => this.setState({password})} value={this.state.password} secureTextEntry={true}
+            />
+          </View>
+          <TouchableOpacity onPress={this.submit} style={[styles.button, styles.buttonRed, {marginBottom: 5}]}>
+            <Text style={styles.buttonLabel}>Sign In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, styles.buttonBlue]} onPress={this.register}>
+            <Text style={styles.buttonLabel2}>Create Account</Text>
+          </TouchableOpacity>
+        </View>
+        </View>
+      </Image>
+      </View>
     )
   }
 })
@@ -249,6 +228,7 @@ var Register = React.createClass({
     return {
       username: "",
       password: "",
+      repassword: "",
       team: "",
       message: "",
       instinctsize: 110,
@@ -258,6 +238,7 @@ var Register = React.createClass({
   },
 
   submit() {
+    console.log("Starting submit")
     fetch('http://localhost:3000/register', {
       method: 'POST',
       headers: {
@@ -266,20 +247,27 @@ var Register = React.createClass({
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password,
+        repassword: this.state.repassword,
         team: this.state.team
       })
     })
     .then((response) => response.json())
     .then((responseJSON) => {
+      console.log(responseJSON)
       if(responseJSON.success) {
         this.props.navigator.pop()
       } else {
+        console.log("This is an error")
         this.setState({
           message: responseJSON.error
         });
       }
     }).catch((error) => {
-      console.log(error)
+      console.log("This is the error: ", error)
+      console.log("This is the error.error: ", error.error)
+      this.setState({
+        message: error.error
+      })
     });
   },
 
@@ -331,6 +319,11 @@ var Register = React.createClass({
             placeholder="Choose a password"
             onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
           />
+          <TextInput
+            style={{height: 40, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
+            placeholder="Retype password"
+            onChangeText={(text) => this.setState({repassword: text})} value={this.state.repassword} secureTextEntry={true}
+          />
           <Text style={[styles.textMed, {color: '#a9a9a9'}]}>Pick your team</Text>
 
           <View style={{height: 270}}>
@@ -370,7 +363,7 @@ var Profile = React.createClass({
                 )
     }
     return (
-      <View style={{backgroundColor: '#f5fcff'}}>
+      <View style={{backgroundColor: '#F5FCFF'}}>
       <View style={{flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
         <View style={{flexDirection: 'row'}}>
           <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Poké</Text>
@@ -938,7 +931,7 @@ var Settings = React.createClass({
 
   render() {
     return (
-      <View style={{backgroundColor: '#f5fcff', flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
+      <View style={{backgroundColor: '#F5FCFF', flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Settings</Text>
 
@@ -1526,7 +1519,7 @@ var GymFeed = React.createClass({
 
   render() {
     return (
-      <View style={{backgroundColor: '#f5fcff'}}>
+      <View style={{backgroundColor: '#F5FCFF'}}>
         <View style={{width: width, height: height * 158/320}}>
         <ListView
         automaticallyAdjustContentInsets={false}
@@ -1569,7 +1562,7 @@ var Feed = React.createClass({
 
   render() {
     return (
-    <View style={{backgroundColor: '#f5fcff'}}>
+    <View style={{backgroundColor: '#F5FCFF'}}>
       <View style={{width: width, height: height * 158/320}}>
         <ListView
           automaticallyAdjustContentInsets={true}
@@ -1785,138 +1778,125 @@ var Post = React.createClass({
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  containerFull: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20*height/736,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5*height/736,
-  },
-  textBig: {
-    fontSize: 36*height/736,
-    textAlign: 'center',
-    margin: 10,
-  },
-  textMed: {
-    fontSize: 20*height/736,
-    textAlign: 'center',
-    margin: 10,
-  },
-  button: {
-    alignSelf: 'stretch',
-    paddingTop: 8*height/736,
-    paddingBottom: 8*height/736,
-  },
-  button2: {
-    alignSelf: 'stretch',
-    paddingTop: 8*height/736,
-    paddingBottom: 8*height/736,
-    width: 3*width/12,
-    left: 2*width/3,
-    top: 57*height/384
-  },
-  buttonRed: {
-    backgroundColor: '#FF585B'
-  },
-  buttonBlue: {
-    backgroundColor: 'blue'
-  },
-  buttonGreen: {
-    backgroundColor: '#2ECC40'
-  },
-  buttonPost: {
-    backgroundColor: '#FF585B',
-    height: 24*height/736
-  },
-  buttonAll: {
-    backgroundColor: '#FF585B',
-    paddingTop: 5*height/736,
-    paddingBottom: 5*height/736,
-    paddingLeft: 10*width/414,
-    paddingRight: 10*width/414
-  },
-  buttonSettings: {
-    backgroundColor: '#FF585B',
-    paddingTop: 5*height/736,
-    paddingBottom: 5*height/736,
-    paddingLeft: 10*width/414,
-    paddingRight: 10*width/414
-  },
-  buttonLabel: {
-    textAlign: 'center',
-    fontSize: 16*height/736,
-    color: 'white',
-  },
-  buttonLabel2: {
-    textAlign: 'center',
-    fontSize: 16*height/736,
-    color: "white"
-  },
-  autocomplete: {
-    alignSelf: 'stretch',
-    height: 30*height/736,
-    width: width*6/7,
-    backgroundColor: '#FFF',
-  },
-  containerAuto: {
-    flex: 1,
-    backgroundColor: '#F5FCFF'
-  },
-  welcome: {
-    fontSize: 20*height/736,
-    textAlign: 'center'
-  },
-  blue: {
-    top: 276*height/736,
-    left: -1,
-    position: 'absolute',
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  post: {
-    top: 276*height/736,
-    right: 0,
-    position: 'absolute'
-  },
-  absoluteb: {
-    top: 260*height/736,
-    left: 8*width/414,
-    position: 'absolute'
-  },
-  tabContent: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  tabText: {
-    color: 'white',
-    margin: 50,
-  },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: 'stretch',
-  },
-  filterautocomplete: {
-    alignSelf: 'stretch',
-    height: 35*height/736,
-    width: width*223/256,
-    backgroundColor: '#FFF'
-  }
+ container: {
+   flex: 1,
+   justifyContent: 'center',
+   alignItems: 'center',
+   backgroundColor: '#F5FCFF '
+ },
+ containerFull: {
+   flex: 1,
+   justifyContent: 'center',
+   alignItems: 'stretch',
+   backgroundColor: '#F5FCFF ',
+ },
+ welcome: {
+   fontSize: 20*height/736,
+   textAlign: 'center',
+   margin: 10,
+ },
+ instructions: {
+   textAlign: 'center',
+   color: '#333333 ',
+   marginBottom: 5*height/736,
+ },
+ textBig: {
+   fontSize: 36*height/736,
+   textAlign: 'center',
+   margin: 10,
+ },
+ textMed: {
+   fontSize: 20*height/736,
+   textAlign: 'center',
+   margin: 10,
+ },
+ button: {
+   alignSelf: 'stretch',
+   paddingTop: 8*height/736,
+   paddingBottom: 8*height/736,
+ },
+ buttonRed: {
+   backgroundColor: '#FF585B '
+ },
+ buttonBlue: {
+   backgroundColor: 'white'
+ },
+ buttonGreen: {
+   backgroundColor: '#2ECC40 '
+ },
+ buttonPost: {
+   backgroundColor: '#FF585B ',
+   height: 24*height/736
+ },
+ buttonAll: {
+   backgroundColor: '#FF585B ',
+   paddingTop: 5*height/736,
+   paddingBottom: 5*height/736,
+   paddingLeft: 10*width/414,
+   paddingRight: 10*width/414
+ },
+ buttonSettings: {
+   backgroundColor: '#FF585B ',
+   paddingTop: 5*height/736,
+   paddingBottom: 5*height/736,
+   paddingLeft: 10*width/414,
+   paddingRight: 10*width/414
+ },
+ buttonLabel: {
+   textAlign: 'center',
+   fontSize: 16*height/736,
+   color: 'white',
+ },
+ buttonLabel2: {
+   textAlign: 'center',
+   fontSize: 16*height/736
+ },
+ autocomplete: {
+   alignSelf: 'stretch',
+   height: 30*height/736,
+   width: width*6/7,
+   backgroundColor: '#FFF',
+ },
+ containerAuto: {
+   flex: 1,
+   backgroundColor: '#F5FCFF '
+ },
+ welcome: {
+   fontSize: 20*height/736,
+   textAlign: 'center'
+ },
+ blue: {
+   top: 276*height/736,
+   left: -1,
+   position: 'absolute',
+   borderWidth: 1,
+   justifyContent: 'center',
+   alignItems: 'center'
+ },
+ post: {
+   top: 276*height/736,
+   right: 0,
+   position: 'absolute'
+ },
+ absoluteb: {
+   top: 260*height/736,
+   left: 8*width/414,
+   position: 'absolute'
+ },
+ tabContent: {
+   flex: 1,
+   alignItems: 'center',
+ },
+ tabText: {
+   color: 'white',
+   margin: 50,
+ },
+ filterautocomplete: {
+   alignSelf: 'stretch',
+   height: 30*height/736,
+   width: width*199/256,
+   backgroundColor: '#FFF'
+ }
 });
 
 AppRegistry.registerComponent('Pokegame', () => Start);
