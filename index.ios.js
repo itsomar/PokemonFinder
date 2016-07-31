@@ -494,7 +494,8 @@ var Home = React.createClass({
   watchID: (null: ?number),
 
   refresh(lng, lat) {
-    // console.log("Calling refresh...")
+    console.log("Calling refresh...")
+    // console.log(lng, lat, this.state.location.longitude, this.state.location.latitude, "asdfasdfasdfasdf+")
     if (!lng) lng = this.state.location.longitude;
     if (!lat) lat = this.state.location.latitude;
 
@@ -505,9 +506,9 @@ var Home = React.createClass({
       console.log("IN CURRENT GYMFEED ", feedJson);
       console.log(feedJson);
       if (feedJson.success) {
-        var reversefeed = feedJson.feed.reverse();
-        var teamfeed = feedJson.feed.reverse().filter(function(item) {
-          return item.team === that.state.team
+          var reversefeed = feedJson.feed.reverse();
+          var teamfeed = feedJson.feed.reverse().filter(function(item) {
+            return item.team === that.state.team
         })
 
         // console.log("FROM MONGO", reversefeed);
@@ -1060,7 +1061,7 @@ var Map = React.createClass({
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
   },
 
@@ -1452,12 +1453,14 @@ var GymPost = React.createClass({
 
 
       if(this.state.selected) {
-        var mcolor = '#5C5C5C'
+        var acolor = 'white'
+        var mcolor = 'grey'
         var scolor = 'white'
         var nav = (
-          <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#5C5C5C'}}>
-            <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
-          </TouchableOpacity>
+          <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FF585B'}}>
+            <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'up'}/>
+            <Text style={{color: 'white', fontSize: 9}}>Navigate</Text>
+        </TouchableOpacity>
         )
       }
       else if (!this.state.selected) {
@@ -1485,8 +1488,8 @@ var GymPost = React.createClass({
               <Image source={{uri: 'http://localhost:3000/images/'+team+'.png'}}
               style={{width: 50*widthUnit, height: 50*height/736, marginTop: 5}} />
               <View style={{marginLeft: 10, marginTop: 3}}>
-                <Text style={{fontWeight: '600', fontSize: 15}}>{'Gym request ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mile(s) away'}</Text>
-                <Text style={{fontWeight: '600', fontSize: 13}}>{Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago'} </Text>
+                <Text style={{fontWeight: '600', fontSize: 15, color: acolor}}>{'Gym request ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mile(s) away'}</Text>
+                <Text style={{fontWeight: '600', fontSize: 13, color: acolor}}>{Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago'} </Text>
                 <Text style={{fontSize: 11, color: scolor}}>{this.props.rowData.user.username}: "{this.props.rowData.message}"</Text>
               </View>
             </View>
@@ -1566,7 +1569,7 @@ var Feed = React.createClass({
 
   render() {
     return (
-      <Image source={require('./ditto_b.png')} style={styles.backgroundImage}>
+    <View style={{backgroundColor: '#f5fcff'}}>
       <View style={{width: width, height: height * 158/320}}>
         <ListView
           automaticallyAdjustContentInsets={true}
@@ -1596,7 +1599,7 @@ var Feed = React.createClass({
             }
           } />
       </View>
-    </Image>
+    </View>
     )
   }
 });
@@ -1742,6 +1745,7 @@ var Post = React.createClass({
         var nav = (
           <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FF585B'}}>
             <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'up'}/>
+            <Text style={{color: 'white', fontSize: 9}}>Navigate</Text>
           </TouchableOpacity>
         )
       }
@@ -1830,7 +1834,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF585B'
   },
   buttonBlue: {
-    backgroundColor: 'white'
+    backgroundColor: 'blue'
   },
   buttonGreen: {
     backgroundColor: '#2ECC40'
