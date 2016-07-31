@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import Triangle from 'react-native-triangle';
 import Swiper from 'react-native-swiper';
+import PushNotification from 'react-native-push-notification';
 
 import {
   AppRegistry,
@@ -1160,6 +1161,14 @@ var GymPostModal = React.createClass({
     }
   },
 
+  componentDidMount(){
+    PushNotification.configure({
+      onNotification: function(notification){
+        console.log('NOTIFICATION: ', notification);
+      },
+    });
+  },
+
   post() {
     // console.log("IN POST GYM")
     fetch('http://localhost:3000/gympost', {
@@ -1186,6 +1195,11 @@ var GymPostModal = React.createClass({
     .catch((err) => {
       console.log(err);
     });
+    console.log("Notification EXTRA STUFF HERE");
+    PushNotification.localNotification({
+        message: this.state.message, // (required)
+
+    });
   },
   render() {
     return (
@@ -1205,7 +1219,6 @@ var GymPostModal = React.createClass({
           </TouchableOpacity>
           <Image source={require('./001.png')}
               style={{width: 50, height: 50*height/736, marginTop: 5}} />
-
     </View>
     )
   }
