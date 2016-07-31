@@ -283,7 +283,7 @@ var Register = React.createClass({
         <View style={{width:width*.7}}>
           <View style={{borderColor: '#d3d3d3', borderBottomWidth: 1, marginBottom: 5}}>
             <TextInput
-              style={{height: 40*height/736, textAlign: "center"}}
+              style={{height: 30*height/736, textAlign: "center"}}
               placeholder="Choose a username"
               placeholderTextColor="white"
               color='white'
@@ -292,7 +292,7 @@ var Register = React.createClass({
           </View>
           <View style={{borderColor: '#d3d3d3', borderBottomWidth: 1, marginBottom: 5}}>
             <TextInput
-              style={{height: 40, textAlign: "center"}}
+              style={{height: 30, textAlign: "center"}}
               placeholder="Choose a password"
               placeholderTextColor="white"
               color='white'
@@ -301,7 +301,7 @@ var Register = React.createClass({
           </View>
           <View style={{borderColor: '#d3d3d3', borderBottomWidth: 1, marginBottom: 5}}>
             <TextInput
-              style={{height: 40, textAlign: "center"}}
+              style={{height: 30, textAlign: "center"}}
               placeholder="Retype password"
               placeholderTextColor="white"
               color='white'
@@ -317,7 +317,7 @@ var Register = React.createClass({
 
             <View style={{flexWrap: 'wrap', alignSelf: "center", flexDirection:'row', marginBottom: 50 }}>
               <TouchableOpacity onPress={this.enlargeMystic}>
-                <Image source={{uri: 'http://localhost:3000/images/mystic.png'}} style={{marginRight: width*35/414, width: width*(this.state.mysticsize-5)/414, height: height*(this.state.mysticsize-5)/736, opacity: .7}}/>
+                <Image source={{uri: 'http://localhost:3000/images/mystic.png'}} style={{marginRight: width*35/414, width: width*(this.state.mysticsize-5)/414, height: height*(this.state.mysticsize-5)/736}}/>
               </TouchableOpacity>
               <TouchableOpacity onPress={this.enlargeValor}>
                 <Image source={{uri: 'http://localhost:3000/images/valor.png'}} style={{marginLeft: width*35/414, width: width*this.state.valorsize/414, height: height*this.state.valorsize/736}}/>
@@ -901,11 +901,11 @@ var PostView = React.createClass({
       console.log("[HELLO]WORKING?", postJson);
       if(postJson.success) {
         // this.setModalVisible(false);
+        this.props.scroll(1);
         this.setState({
           pokemonObj: {},
           pokemon: ''
         });
-        this.props.scroll(1);
         this.props.refresh();
       } else {
         console.log('error');
@@ -943,25 +943,51 @@ var PostView = React.createClass({
         </View>
         <View>
           {(Object.keys(this.state.pokemonObj).length !== 0) ?
-          <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
-            <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
-                     style={{width: 230*width/414, height: 230*height/736, marginTop: 50}} />
-            <View style={{marginTop: 30}}>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{fontWeight: 'bold'}}>Name: </Text><Text>{this.state.pokemonObj.name}</Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{fontWeight: 'bold'}}>No: </Text><Text>{this.state.pokemonObj.number}</Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{fontWeight: 'bold'}}>Type: </Text><Text>{this.state.pokemonObj.types}</Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{fontWeight: 'bold'}}>Rarity: </Text><Text>{this.state.pokemonObj.rarity}</Text>
+          <View>
+            <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+              <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
+                       style={{width: 230*width/414, height: 230*height/736, marginTop: 50}} />
+              <View style={{marginTop: 30}}>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontWeight: 'bold'}}>Name: </Text><Text>{this.state.pokemonObj.name}</Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontWeight: 'bold'}}>No: </Text><Text>{this.state.pokemonObj.number}</Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontWeight: 'bold'}}>Type: </Text><Text>{this.state.pokemonObj.types}</Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontWeight: 'bold'}}>Rarity: </Text><Text>{this.state.pokemonObj.rarity}</Text>
+                </View>
               </View>
             </View>
+            <TouchableOpacity onPress={this.props.scroll.bind(null, 1)} style={[{height: height*50/736, width: width*100/414, borderWidth: 1, justifyContent: 'center', alignItems: 'center'}, styles.post]}>
+              <Text >Back</Text>
+            </TouchableOpacity>
           </View>
-        : <View>
+        : 
+          <View>
+            <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+              <Image source={require('./question.png')} style={{width: 230*width/414, height: 230*height/736, marginTop: 50, opacity: .7}} />
+              <View style={{marginTop: 30}}>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontWeight: 'bold', marginRight: 80}}>Name: </Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontWeight: 'bold', marginRight: 80}}>No: </Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontWeight: 'bold', marginRight: 80}}>Type: </Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontWeight: 'bold', marginRight: 80}}>Rarity: </Text>
+                </View>
+              </View>
+            </View>
+            <TouchableOpacity onPress={this.props.scroll.bind(null, 1)} style={[{height: height*50/736, width: width*100/414, borderWidth: 1, justifyContent: 'center', alignItems: 'center'}, styles.post]}>
+              <Text>Back</Text>
+            </TouchableOpacity>
           </View>
         }
         </View>
@@ -1235,8 +1261,9 @@ var GymView = React.createClass({
           >
             <Text style={styles.buttonLabel}>Send</Text>
           </TouchableOpacity>
-          <Image source={require('./001.png')}
-              style={{width: 50, height: 50*height/736, marginTop: 5}} />
+          <TouchableOpacity onPress={this.props.scroll.bind(null, 1)} style={[{height: height*50/736, width: width*100/414, borderWidth: 1, justifyContent: 'center', alignItems: 'center'}, styles.post]}>
+            <Text>Back</Text>
+          </TouchableOpacity>
 
     </View>
     )
