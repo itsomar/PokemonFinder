@@ -346,6 +346,7 @@ var Profile = React.createClass({
 var Home = React.createClass({
   getInitialState() {
     return {
+      filterclick: true,
       navigated: false,
       selectedTab: 'redTab',
       notifCount: 0,
@@ -520,6 +521,7 @@ var Home = React.createClass({
 
   all() {
     this.setState({
+      filterclick: true,
       filtered: false,
       filteredOne: ({
         on: false,
@@ -545,6 +547,7 @@ var Home = React.createClass({
     } else if (pokeList.indexOf(pokemon) > -1) {
       // console.log('[AM I HERE???]')
       this.setState({
+        filterclick: false,
         filtered: true
       })
     }
@@ -647,7 +650,6 @@ var Home = React.createClass({
 
   render() {
 
-    // console.log("STATE OF HOME", this.state.markers);
     var bar;
     var index = this.state.presses;
     var col1 = 'grey';
@@ -660,15 +662,60 @@ var Home = React.createClass({
     } else {
       col3 = 'black'
     }
-              // selectedIcon={require('./img/navigation2.png')}
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+    var button;
+    if (this.state.filterclick) {
+      button = (
+        <TouchableOpacity
+          style={{
+            justifyContent: "center",
+            backgroundColor: "#FF585B",
+            paddingTop: 5*height/736,
+            paddingBottom: 5*height/736,
+          }}
+          onPress={this.filter.bind(this, this.state.pokeNames, this.state.pokemon, null, null)}
+        >
+          <Text style={{
+            height: 20*height/736,
+            width: 54*width/414,
+            color: "white",
+            textAlign: "center",
+            marginRight: 1*height/736}}
+          >
+            Filter
+          </Text>
+        </TouchableOpacity>
+      )
+    } else {
+      button = (
+        <TouchableOpacity 
+          style={{
+            justifyContent: "center",
+            backgroundColor: "#FF585B",
+            paddingTop: 5*height/736,
+            paddingBottom: 5*height/736,
+          }} 
+          onPress={this.all}>
+          <Text style={{
+            height: 20*height/736,
+            width: 54*width/414,
+            color: "white",
+            textAlign: "center",
+            marginRight: 1*height/736}
+          }>
+            All
+          </Text>
+        </TouchableOpacity>
+      )
+    }
 
     return (
       <View>
         <View style={{height: height*141/320}}>
         <Swiper
           loop={false}
-          index={0}
+          index={1}
           showsPagination={false}
           onMomentumScrollEnd={function(e, state, context) {
             this.setState({
@@ -686,9 +733,6 @@ var Home = React.createClass({
           </View>
           <View style={{height: height*141/320}}>
             <View style={{flexDirection: 'row', position: 'absolute', top: 0, zIndex: 999}}>
-              <TouchableOpacity style={styles.buttonAll} onPress={this.all}>
-                <Text style={styles.buttonLabel}>All</Text>
-              </TouchableOpacity>
               <AutoComplete
                 autoCorrect={false}
                 onSelect={this.onTyping}
@@ -703,23 +747,7 @@ var Home = React.createClass({
                 placeholder='Search for a specific Pokémon'
                 value={this.state.pokemon}
               />
-              <TouchableOpacity
-                style={{
-                  justifyContent: "center",
-                  backgroundColor: "#FF585B",
-                  paddingTop: 5*height/736,
-                  paddingBottom: 5*height/736,
-                }}
-                onPress={this.filter.bind(this, this.state.pokeNames, this.state.pokemon, null, null)}
-              >
-                <Text style={{
-                  height: 20*height/736,
-                  width: 54*width/414,
-                  color: "white",
-                  textAlign: "center",
-                  marginRight: 1*height/736}}>
-                Filter</Text>
-              </TouchableOpacity>
+              {button}
             </View>
             <Map location={this.state.location} index={this.getSwiperIndex()} idpoke={this.state.filteredOne.id} region={this.state.region} changeRegion={this.changeRegion} chosen={this.state.chosen} markers={this.state.markers} gymmarkers={this.state.gymmarkers} refresh={this.refresh} pokemonList={this.state.pokemonList} pokeNames={this.state.pokeNames} filter={this.filter} scroll={this.scrollBy2}/>
           </View>
@@ -869,7 +897,7 @@ var PostView = React.createClass({
   },
 
   render() {
-    return (<View style={{height: height*141/320}}>
+    return (<View style={{height: height*141/320, backgroundColor: '#f6f6f6'}}>
       <View style={styles.containerAuto}>
         <View style={{flexDirection: 'row', position: 'absolute', zIndex: 999}}>
           <AutoComplete
@@ -1174,10 +1202,10 @@ var GymView = React.createClass({
   },
   render() {
     return (
-    <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1, flexDirection: 'row'}]}>
+    <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1, flexDirection: 'row', backgroundColor: '#f6f6f6'}]}>
 
          <TextInput
-           style={[styles.autocomplete, {textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}]}
+           style={styles.autocomplete}
            placeholder="Optional Text"
            maxLength={45}
            onChangeText={(message) => this.setState({message})} value={this.state.message}
@@ -1321,7 +1349,7 @@ var GymFeed = React.createClass({
 
   render() {
     return (
-      <View style={{backgroundColor: '#f5fcff'}}>
+      <View style={{backgroundColor: '#f5fcff', borderTopWidth: 1, borderColor: '#d3d3d3'}}>
         <View style={{width: width, height: height * 158/320}}>
         <ListView
         automaticallyAdjustContentInsets={false}
@@ -1364,7 +1392,7 @@ var Feed = React.createClass({
 
   render() {
     return (
-      <View style={{backgroundColor: '#f5fcff'}}>
+      <View style={{backgroundColor: '#f5fcff', borderTopWidth: 1, borderColor: '#d3d3d3'}}>
       <View style={{width: width, height: height * 158/320}}>
         <ListView
           automaticallyAdjustContentInsets={true}
@@ -1463,26 +1491,9 @@ var Post = React.createClass({
         selected: 0
       })
     }
-    // else if (this.state.selected === this.props.rowData._id) {
-    //   this.props.changeRegion(
-    //     { latitude: this.props.location.latitude,
-    //       longitude: this.props.location.longitude,
-    //       latitudeDelta: this.props.region.latitudeDelta,
-    //       longitudeDelta: this.props.region.longitudeDelta,
-    //   })
-    //   this.setState({
-    //     selected: 0
-    //   })
-    // }
-    // else if (this.state.selected !== this.props.rowData._id) {
-    //   this.setState({
-    //     selected: this.props.rowData._id
-    //   })
-    // }
   },
 
   navigated() {
-    // this.props.popup(!this.state.navigated);
     var url = 'http://maps.apple.com/?q=' + this.props.rowData.location.latitude + ',' + this.props.rowData.location.longitude;
     LinkingIOS.openURL(url);
   },
@@ -1529,27 +1540,24 @@ var Post = React.createClass({
     var white = null
     var mcolor = '#f6f6f6'
     var scolor = 'grey'
-    // console.log("ROWDATA BEOFRE RENDER", this.props.feed.dataBlob.s1)
-    console.log("markers BEOFRE renderyoooo", this.props.markers)
-    console.log("SELCTED state IN render", this.state.selected);
 
-      if(this.state.selected) {
-        var acolor = 'white'
-        var mcolor = 'grey'
-        var scolor = 'white'
-        var nav = (
-          <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FF585B'}}>
-            <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'up'}/>
-          </TouchableOpacity>
-        )
-      }
-      else {
-        var nav = null
-        var white = null
-        var mcolor = '#f6f6f6'
-        var scolor = 'grey'
-        var acolor = 'black'
-      }
+    if(this.state.selected) {
+      var acolor = 'white'
+      var mcolor = 'grey'
+      var scolor = 'white'
+      var nav = (
+        <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FF585B'}}>
+          <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'up'}/>
+        </TouchableOpacity>
+      )
+    }
+    else {
+      var nav = null
+      var white = null
+      var mcolor = '#f6f6f6'
+      var scolor = 'grey'
+      var acolor = 'black'
+    }
 
     return (
       <View
@@ -1695,7 +1703,7 @@ const styles = StyleSheet.create({
   filterautocomplete: {
     alignSelf: 'stretch',
     height: 30*height/736,
-    width: width*199/256,
+    width: width*222/256,
     backgroundColor: '#FFF'
   }
 });
