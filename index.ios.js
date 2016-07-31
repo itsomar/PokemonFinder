@@ -269,26 +269,46 @@ var Register = React.createClass({
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={[styles.textBig, {color: '#FF585B'}]}>Register</Text>
+      <View 
+      style={{
+        flex: 1,
+        paddingTop: 55,
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.55)'}}
+      >
+        <View style={{flexDirection: 'row'}}>
+          <Text style={[styles.textBig, {color: 'white'}]}>Create</Text><Text style={[styles.textBig, {color: '#FF585B'}]}> Account</Text>
+        </View>
         <Text style={{color: '#FF585B'}}>{this.state.message}</Text>
         <View style={{width:width*.7}}>
-          <TextInput
-            style={{height: 40*height/736, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
-            placeholder="Choose a username"
-            onChangeText={(text) => this.setState({username: text})} value={this.state.username}
-          />
-          <TextInput
-            style={{height: 40, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
-            placeholder="Choose a password"
-            onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
-          />
-          <TextInput
-            style={{height: 40, textAlign: "center", borderColor: '#d3d3d3', borderWidth: 1}}
-            placeholder="Retype password"
-            onChangeText={(text) => this.setState({repassword: text})} value={this.state.repassword} secureTextEntry={true}
-          />
-          <Text style={[styles.textMed, {color: '#a9a9a9'}]}>Pick your team</Text>
+          <View style={{borderColor: '#d3d3d3', borderBottomWidth: 1, marginBottom: 5}}>
+            <TextInput
+              style={{height: 40*height/736, textAlign: "center"}}
+              placeholder="Choose a username"
+              placeholderTextColor="white"
+              color='white'
+              onChangeText={(text) => this.setState({username: text})} value={this.state.username}
+            />
+          </View>
+          <View style={{borderColor: '#d3d3d3', borderBottomWidth: 1, marginBottom: 5}}>
+            <TextInput
+              style={{height: 40, textAlign: "center"}}
+              placeholder="Choose a password"
+              placeholderTextColor="white"
+              color='white'
+              onChangeText={(text) => this.setState({password: text})} value={this.state.password} secureTextEntry={true}
+            />
+          </View>
+          <View style={{borderColor: '#d3d3d3', borderBottomWidth: 1, marginBottom: 5}}>
+            <TextInput
+              style={{height: 40, textAlign: "center"}}
+              placeholder="Retype password"
+              placeholderTextColor="white"
+              color='white'
+              onChangeText={(text) => this.setState({repassword: text})} value={this.state.repassword} secureTextEntry={true}
+            />
+          </View>
+          <Text style={[styles.textMed, {color: 'white'}]}>Pick your team</Text>
 
           <View style={{height: 270}}>
             <TouchableOpacity onPress={this.enlargeInstinct}>
@@ -297,14 +317,14 @@ var Register = React.createClass({
 
             <View style={{flexWrap: 'wrap', alignSelf: "center", flexDirection:'row', marginBottom: 50 }}>
               <TouchableOpacity onPress={this.enlargeMystic}>
-                <Image source={{uri: 'http://localhost:3000/images/mystic.png'}} style={{marginRight: width*35/414, width: width*(this.state.mysticsize-5)/414, height: height*(this.state.mysticsize-5)/736}}/>
+                <Image source={{uri: 'http://localhost:3000/images/mystic.png'}} style={{marginRight: width*35/414, width: width*(this.state.mysticsize-5)/414, height: height*(this.state.mysticsize-5)/736, opacity: .7}}/>
               </TouchableOpacity>
               <TouchableOpacity onPress={this.enlargeValor}>
                 <Image source={{uri: 'http://localhost:3000/images/valor.png'}} style={{marginLeft: width*35/414, width: width*this.state.valorsize/414, height: height*this.state.valorsize/736}}/>
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity onPress={this.submit} style={[styles.button, styles.buttonRed]}>
+          <TouchableOpacity onPress={this.submit} style={[styles.button, styles.buttonRed, {marginBottom: 5}]}>
             <Text style={styles.buttonLabel}>Register</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.back} style={[styles.button, styles.buttonBlue]}>
@@ -326,7 +346,7 @@ var Profile = React.createClass({
                 )
     }
     return (
-      <View style={{backgroundColor: '#f5fcff', flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
+      <View style={{flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', alignItems: 'center'}}>
         <View style={{flexDirection: 'row'}}>
           <Text style={{fontSize: 40*height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)'}}>Poké</Text>
           <Text style={{fontSize: 40 *height/736, marginBottom: 5*height/736, backgroundColor: 'rgba(0,0,0,0)', color: '#FF585B'}}>Finder</Text>
@@ -1348,7 +1368,7 @@ var GymFeed = React.createClass({
 
   render() {
     return (
-      <View style={{backgroundColor: '#f5fcff', borderTopWidth: 1, borderColor: '#d3d3d3'}}>
+      <View style={{borderTopWidth: 1, borderColor: '#d3d3d3'}}>
         <View style={{width: width, height: height * 158/320}}>
         <ListView
         automaticallyAdjustContentInsets={false}
@@ -1391,7 +1411,7 @@ var Feed = React.createClass({
 
   render() {
     return (
-      <View style={{backgroundColor: '#f5fcff', borderTopWidth: 1, borderColor: '#d3d3d3'}}>
+      <View style={{borderTopWidth: 1, borderColor: '#d3d3d3'}}>
       <View style={{width: width, height: height * 158/320}}>
         <ListView
           automaticallyAdjustContentInsets={true}
@@ -1611,7 +1631,6 @@ const styles = StyleSheet.create({
   textBig: {
     fontSize: 36*height/736,
     textAlign: 'center',
-    margin: 10,
   },
   textMed: {
     fontSize: 20*height/736,
