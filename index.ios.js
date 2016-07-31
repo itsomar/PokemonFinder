@@ -897,8 +897,8 @@ var PostView = React.createClass({
   },
 
   render() {
-    return (<View style={{height: height*141/320, backgroundColor: '#f6f6f6'}}>
-      <View style={styles.containerAuto}>
+    return (
+      <View style={[styles.containerAuto, {backgroundColor: '#f6f6f6', height: height*141/320}]}>
         <View style={{flexDirection: 'row', position: 'absolute', zIndex: 999}}>
           <AutoComplete
             autoCorrect={false}
@@ -925,8 +925,8 @@ var PostView = React.createClass({
           {(Object.keys(this.state.pokemonObj).length !== 0) ?
           <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
             <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
-                     style={{width: 230*width/414, height: 230*height/736, marginTop: 10}} />
-            <View>
+                     style={{width: 230*width/414, height: 230*height/736, marginTop: 50}} />
+            <View style={{marginTop: 30}}>
               <View style={{flexDirection: 'row'}}>
                 <Text style={{fontWeight: 'bold'}}>Name: </Text><Text>{this.state.pokemonObj.name}</Text>
               </View>
@@ -946,7 +946,6 @@ var PostView = React.createClass({
         }
         </View>
       </View>
-    </View>
     )
   }
 })
