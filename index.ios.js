@@ -1149,6 +1149,7 @@ var Map = React.createClass({
       look = 'rgba(0,0,0,0.5)'
     }
 
+
     var navbutton = (
       <TouchableOpacity style={[styles.blue, {width: width*50/414, height: height*50/736, borderWidth: 1, backgroundColor: look}]} onPress={this.nav}>
         <Image source={require('./location.png')} style={{width: width*30/414, height: height*25/736}}/>
