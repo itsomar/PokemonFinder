@@ -1173,7 +1173,6 @@ var Map = React.createClass({
       </TouchableHighlight>
     )
 
-
     if(this.props.index === 1) {
       var postbutton = pokepostbutton
     }
@@ -1275,15 +1274,14 @@ var GymView = React.createClass({
           >
             <Text style={styles.buttonLabel}>Send</Text>
           </TouchableOpacity>
-<<<<<<< HEAD
+
           <Image source={require('./001.png')}
               style={{width: 50, height: 50*height/736, marginTop: 5}} />
-=======
+
           <TouchableOpacity onPress={this.props.scroll.bind(null, 1)} style={[{height: height*50/736, width: width*100/414, borderWidth: 1, justifyContent: 'center', alignItems: 'center'}, styles.post]}>
             <Text>Back</Text>
           </TouchableOpacity>
 
->>>>>>> master
     </View>
     )
   }
