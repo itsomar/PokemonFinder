@@ -1024,7 +1024,7 @@ console.log("MODALP BRO", this.state.modalp);
           </TouchableOpacity>
           <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5, backgroundColor: col2}} onPress={this.scrollBy.bind(null, 2)}>
             <Image source={require('./pokeballnav.png')}
-              style={{width: 30, height: 30}} />
+              style={{width: 20, height: 20}} />
             <Text style={{color: 'white'}}>Pokémon Feed</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5, backgroundColor: col3}} onPress={this.scrollBy.bind(null, 3)}>
