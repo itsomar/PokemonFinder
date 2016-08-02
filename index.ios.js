@@ -362,14 +362,14 @@ var Profile = React.createClass({
         </View>
         <Text style={{backgroundColor: 'rgba(0,0,0,0)'}}>{this.props.username} | {this.props.team}</Text>
         {teamImg}
-      </View>
-      <View style={{flexDirection: 'row', position: 'absolute', top: 5*height/12, left: 17*width/48}}>
-      <TouchableOpacity onPress={this.props.scrollBy.bind(null, 0)} style={{height: 32, width: 32}}>
-        <Image source={require('./settings.png')} style={{height: 40, width: 40}}/>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={this.props.logout} style={{height: 30, width: 70, borderWidth: 1, left: 15, top: 5, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Logout</Text>
-      </TouchableOpacity>
+        <View style={{flexDirection: 'row', marginTop: 15}}>
+          <TouchableOpacity onPress={this.props.scrollBy.bind(null, 0)} style={{height: 30, width: 70, borderWidth: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text>Settings</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.props.logout} style={{height: 30, width: 70, borderWidth: 1, borderLeftWidth: 0, justifyContent: 'center', alignItems: 'center'}}>
+            <Text>Logout</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
     )
