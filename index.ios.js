@@ -796,7 +796,7 @@ var Home = React.createClass({
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <Text style={{fontSize: 30, color: 'white'}}>Did you see this Pokémon?</Text>
+            <Text style={{fontSize: 30*height/736, color: 'white'}}>Did you see this Pokémon?</Text>
             <Image source={{uri: 'http://localhost:3000/images/'+this.state.modalp.pokemon.toLowerCase()+'.png'}} style={{width: 250, height: 250, marginTop: 5}} />
             <View style={{marginLeft: 10*widthUnit, marginTop: 3*height/736, alignItems: 'center'}}>
               <Text style={{fontWeight: '600', fontSize: 50, color: 'white'}}>{this.state.modalp.pokemon}</Text>
