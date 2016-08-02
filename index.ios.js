@@ -1976,6 +1976,7 @@ var Feed = React.createClass({
             }
           } />
       </View>
+      <Image
       </View>
     )
   }
