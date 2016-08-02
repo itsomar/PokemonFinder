@@ -26,12 +26,12 @@ import {
   TouchableHighlight,
   RefreshControl,
   TabBarIOS,
-  LinkingIOS,
+  Linking,
   Slider,
   Switch
 } from 'react-native';
 
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+
 
 var reactNative = require('react-native');
 var MapView = require('react-native-maps');
@@ -117,7 +117,8 @@ var Pokegame = React.createClass({
       }));
         this.props.navigator.push({
           component: Home,
-          title: "Home"
+          title: "Home",
+          passProps: {user: response.user}
         });
       }
       else {
@@ -404,7 +405,7 @@ var Home = React.createClass({
       markers: [],
       gymmarkers: [],
       teamfeed: [],
-      modalVisible: true,
+      user: this.props.user,
       location: {
         latitude: 0,
         longitude: 0,
@@ -421,6 +422,8 @@ var Home = React.createClass({
   },
 
   componentDidMount() {
+
+    console.log("USERRR", this.props.user, this.state.user)
 
     fetch('http://localhost:3000/user')
     .then((user) => user.json())
@@ -540,7 +543,8 @@ var Home = React.createClass({
       this.setState({
         navigated: true,
         modalp: pokemon,
-        rating: pokemon.rating
+        rating: pokemon.rating,
+        modalVisible: true
       })
     }
   },
@@ -581,32 +585,15 @@ var Home = React.createClass({
     } else if (pokeList.indexOf(pokemon) === -1) {
       return Alert.alert('Please enter a valid pokémon name');
     } else if (pokeList.indexOf(pokemon) > -1) {
-      // console.log('[AM I HERE???]')
       this.setState({
         filterclick: false,
         filtered: true
       })
     }
-    // if(!this.state.filterclick) {
-    //   this.setState({
-    //     pokemon: ""
-    //   })
-    // }
-
-
-    // if (pokeList.indexOf(pokemon) === -1) {
-    //   return Alert.alert('shit');
-    // }
-    // this.setState({
-    //   filtered: true
-    // })
-    // console.log('WHY AM I DEFINED??????', placeholder)
-    // console.log('WHAT ABOUT ME?????????', id)
     return this.refresh();
   },
-//will mount everytime its rerendered??
+
   componentWillMount() {
-    // this.refresh()
     setInterval(this.refresh, 6*10*1000);
 
     var pokemonList = [];
@@ -614,7 +601,6 @@ var Home = React.createClass({
     fetch('http://localhost:3000/pokemon')
     .then((pokemon) => pokemon.json())
     .then((pokemonJson) => {
-      // console.log(pokemonJson);
       if (pokemonJson.success) {
         for (var i = 0; i < pokemonJson.pokemon.length; i ++) {
           var pokemon = pokemonJson.pokemon[i];
@@ -628,9 +614,6 @@ var Home = React.createClass({
         });
       }
     }).catch((err) => console.log(err));
-
-        console.log("POKEMON LIST", this.state.pokemonList);
-
   },
 
   componentWillUnmount() {
@@ -693,65 +676,22 @@ var Home = React.createClass({
   setModalVisible(visible) {
     if(visible === false) {
       this.setState({
-        modalVisible: false,
+        modalVisible: true,
         navigated: false,
         upvoted: false,
         downvoted: false
         });
     } else {
       this.setState({
-        modalVisible: true,
+        modalVisible: false,
         navigated: true})
     }
   },
 
   sendVote(id, vote) {
-    if(this.state.upvoted) {
-    if(vote === "up") {
-      this.setState({
-        upvoted: false,
-        downvoted: false,
-        rating: this.state.modalp.rating
-      })
-    }
-    else if(vote === "down") {
-      this.setState({
-        upvoted: false,
-        downvoted: true,
-        rating: this.state.modalp.rating - 1
-      })
-    }
-    }
-    else if(this.state.downvoted) {
-    if(vote === "up") {
-      this.setState({
-        upvoted: true,
-        downvoted: false,
-        rating: this.state.modalp.rating + 1
-      })
-    }
-    else if(vote === "down") {
-      this.setState({
-        upvoted: false,
-        downvoted: false,
-        rating: this.state.modalp.rating
-      })
-    }
-    }
-    else {
-      if(vote === "up") {
-        this.setState({
-          upvoted: true,
-          rating: this.state.modalp.rating + 1
-        })
-      }
-      else if(vote === "down") {
-        this.setState({
-          downvoted: true,
-          rating: this.state.modalp.rating - 1
-        })
-      }
-    }
+    this.setState({
+      modalVisible: false
+    });
     fetch('http://localhost:3000/post/' + this.state.modalp._id, {
       method: 'POST',
       headers: {
@@ -764,9 +704,7 @@ var Home = React.createClass({
     .then((rating) => rating.json())
     .then((ratingJson) => {
       if(ratingJson.success) {
-        this.props.refresh();
-      } else {
-        console.log("UNSUCCESSFUL RATE")
+        this.refresh();
       }
     }).catch((error) => {
       console.log(error)
@@ -804,52 +742,49 @@ console.log("MODALP BRO", this.state.modalp);
       }
       // Voting
       var widthUnit = width / 414;
-      var heightUnit = 55;
       var modal = (
-        <BlurView blurType="dark" style={{width: width, height: height, position: "absolute", zIndex: 9999}}>
-            <Modal
+        <Modal
         animationType={"slide"}
         transparent={true}
-        visible={true}
+        visible={this.state.modalVisible}
         onRequestClose={() => {alert("Modal has been closed.")}}
         >
-       <View style={{marginTop: 22}}>
-        <View>
           <View
-            style={{
-              backgroundColor: '#f6f6f6',
-              borderBottomWidth: 1,
-              borderColor: '#d3d3d3',
-              paddingLeft: 10 * widthUnit,
-              height: heightUnit,
-              flexDirection: 'row',
-              top: height/2
-            }}>
-              <Image source={{uri: 'http://localhost:3000/emojis/'+this.state.modalp.pokemon.toLowerCase()+'.png'}} style={{width: 50*widthUnit, height: 50*height/736, marginTop: 5}} />
-              <View style={{marginLeft: 10*widthUnit, marginTop: 3*height/736}}>
-                <Text style={{fontWeight: '600', fontSize: 15, color: 'black'}}>{this.state.modalp.pokemon + ' ' + getDistanceFromLatLonInMiles(this.state.location.latitude,this.state.location.longitude,this.state.modalp.location.latitude,this.state.modalp.location.longitude).toFixed(1) + ' mile(s) away'}</Text>
-                <Text style={{fontWeight: '600', fontSize: 13, color: 'black'}}>{Math.floor((Date.now() - new Date(this.state.modalp.time).getTime()) / 60000) + ' minute(s) ago '}</Text>
-                <Text style={{fontSize: 11, color: 'grey'}}>seen by {this.state.modalp.user.username}</Text>
-              </View>
-              <TouchableOpacity onPress={this.sendVote.bind(this, this.state.modalp._id, 'up')} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#669966"}}>
+          style={{
+            backgroundColor: '#f6f6f6',
+            borderBottomWidth: 1,
+            borderColor: '#d3d3d3',
+            paddingLeft: 10 * widthUnit,
+            height: height,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Text style={{fontSize: 30}}>Did you see this Pokémon?</Text>
+            <Image source={{uri: 'http://localhost:3000/images/'+this.state.modalp.pokemon.toLowerCase()+'.png'}} style={{width: 250, height: 250, marginTop: 5}} />
+            <View style={{marginLeft: 10*widthUnit, marginTop: 3*height/736, alignItems: 'center'}}>
+              <Text style={{fontWeight: '600', fontSize: 50}}>{this.state.modalp.pokemon}</Text>
+              <Text style={{fontWeight: '600', fontSize: 15}}>Posted:</Text>
+              <Text style={{fontWeight: '600', fontSize: 15}}>{getDistanceFromLatLonInMiles(this.state.location.latitude,this.state.location.longitude,this.state.modalp.location.latitude,this.state.modalp.location.longitude).toFixed(1) + ' mile(s) away'}</Text>
+              <Text style={{fontWeight: '600', fontSize: 13}}>{Math.floor((Date.now() - new Date(this.state.modalp.time).getTime()) / 60000) + ' minute(s) ago '}</Text>
+              <Text style={{fontSize: 11, color: 'grey'}}>seen by {this.state.modalp.user.username}</Text>
+            </View>
+            <View style={{flexDirection: 'row', marginTop: 20}}>
+              <TouchableOpacity onPress={this.sendVote.bind(this, this.state.modalp._id, 'up')} style={{width: 100, height: 40, justifyContent: 'center', alignItems: 'center', backgroundColor: "#669966"}}>
                 <Text style={{color:'white'}}>Yes</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={this.sendVote.bind(this, this.state.modalp._id, 'down')} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FF585B"}}>
+              <TouchableOpacity onPress={this.sendVote.bind(this, this.state.modalp._id, 'down')} style={{width: 100, height: 40, justifyContent: 'center', alignItems: 'center', backgroundColor: "#FF585B"}}>
                 <Text style={{color:'white'}}>No</Text>
               </TouchableOpacity>
-              <Text style={{fontSize: 20*height/736, marginRight: 3, color: col, marginTop: 15}}>{prefix + this.state.rating}</Text>
-        </View>
-
-          <TouchableHighlight onPress={() => {
-            this.setModalVisible(false)
-          }}>
-            <Text>Cancel</Text>
-          </TouchableHighlight>
-
-        </View>
-       </View>
+            </View>
+            <TouchableHighlight 
+            onPress={() => {
+              this.setModalVisible(false)
+            }}
+            style={{marginTop: 10, borderWidth: 1, height: 40, width: 200, justifyContent: 'center', alignItems: 'center'}}>
+              <Text>Back</Text>
+            </TouchableHighlight>
+          </View>
       </Modal>
-    </BlurView>
     )
   } else {
     modal = null
@@ -1162,7 +1097,7 @@ var Settings = React.createClass({
           </View>
           <View style={{flexDirection: "row"}}>
             <View style={{alignItems: 'center', backgroundColor: "#F7F7F7"}}>
-              <Text style={{color: "Black"}}>Notifications</Text>
+              <Text style={{color: "black"}}>Notifications</Text>
             </View>
             <View style={{flexDirection: 'row', position: 'absolute', zIndex: 999}}>
               <AutoComplete
@@ -1493,21 +1428,11 @@ var Map = React.createClass({
       pokemon: '',
       data: [],
       pokemonObj: {},
-      // modalVisible: false,
-      // modalVisible2: false
     };
   },
   componentWillReceiveProps(newProps) {
     this.setState(newProps.region)
   },
-
-  // setModalVisible(visible) {
-  //   this.setState({modalVisible: visible});
-  // },
-
-  // setModalVisible2(visible) {
-  //   this.setState({modalVisible2: visible});
-  // },
 
   onRegionChange(region) {
     this.props.changeRegion(region)
@@ -1549,11 +1474,6 @@ var Map = React.createClass({
       })
     }
   },
-
-  // modal() {
-  //   this.setModalVisible(!this.state.modalVisible);
-  // },
-
 
   render() {
     // console.log(this.work)
@@ -1781,7 +1701,7 @@ var GymPost = React.createClass({
   navigated() {
     // this.props.popup(!this.state.navigated)
     var url = 'http://maps.apple.com/?q=' + this.props.rowData.location.latitude + ',' + this.props.rowData.location.longitude;
-    LinkingIOS.openURL(url);
+    Linking.openURL(url);
   },
 
   render() {
@@ -1796,16 +1716,19 @@ var GymPost = React.createClass({
 
       if(this.state.selected) {
         var mcolor = '#5C5C5C'
+        var acolor = 'white'
         var scolor = 'white'
         var nav = (
-          <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#5C5C5C'}}>
-            <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
-          </TouchableOpacity>
+          <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FF585B'}}>
+          <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'up'}/>
+          <Text style={{color: 'white', fontSize: 8}}>Directions</Text>
+        </TouchableOpacity>
         )
       }
       else if (!this.state.selected) {
         var nav = null
         var white = null
+        var acolor = 'black'
         var mcolor = '#f6f6f6'
         var scolor = 'grey'
       }
@@ -1828,8 +1751,8 @@ var GymPost = React.createClass({
               <Image source={{uri: 'http://localhost:3000/images/'+team+'.png'}}
               style={{width: 50*widthUnit, height: 50*height/736, marginTop: 5}} />
               <View style={{marginLeft: 10, marginTop: 3}}>
-                <Text style={{fontWeight: '600', fontSize: 15}}>{'Gym request ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mile(s) away'}</Text>
-                <Text style={{fontWeight: '600', fontSize: 13}}>{Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago'} </Text>
+                <Text style={{fontWeight: '600', fontSize: 15, color: acolor}}>{'Gym request ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mile(s) away'}</Text>
+                <Text style={{fontWeight: '600', fontSize: 13, color: acolor}}>{Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago'} </Text>
                 <Text style={{fontSize: 11, color: scolor}}>{this.props.rowData.user.username}: "{this.props.rowData.message}"</Text>
               </View>
             </View>
@@ -1994,7 +1917,7 @@ var Post = React.createClass({
   navigated() {
     this.props.popup(!this.state.navigated, this.props.rowData)
     var url = 'http://maps.apple.com/?q=' + this.props.rowData.location.latitude + ',' + this.props.rowData.location.longitude;
-    LinkingIOS.openURL(url);
+    Linking.openURL(url);
   },
 
   render() {
@@ -2048,6 +1971,7 @@ var Post = React.createClass({
       var nav = (
         <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FF585B'}}>
           <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'up'}/>
+          <Text style={{color: 'white', fontSize: 8}}>Directions</Text>
         </TouchableOpacity>
       )
     }
