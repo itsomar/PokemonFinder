@@ -820,46 +820,44 @@ var Home = React.createClass({
       var widthUnit = width / 414;
       var heightUnit = 55;
       var modal = (
-        <BlurView blurType="dark" style={{width: width, height: height, position: "absolute", zIndex: 9999}}>
-            <Modal
-            animationType={"slide"}
-            transparent={true}
-            visible={true}
-            onRequestClose={() => {alert("Modal has been closed.")}}
-            >
-              <View
-                style={{
-                  marginTop: 22,
-                  backgroundColor: 'rgba(0,0,0,0.85)',
-                  borderBottomWidth: 1,
-                  borderColor: '#d3d3d3',
-                  height: height,
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                <Text style={{fontSize: 30, color: 'white'}}>Did you see this Pokémon?</Text>
-                <Image source={{uri: 'http://pokeconnect.herokuapp.com/images/'+this.state.modalp.pokemon.toLowerCase()+'.png'}} style={{width: 250, height: 250, marginTop: 5}} />
-                <View style={{marginLeft: 10*widthUnit, marginTop: 3*height/736, alignItems: 'center'}}>
-                  <Text style={{fontWeight: '600', fontSize: 50, color: 'white'}}>{this.state.modalp.pokemon}</Text>
-                  <Text style={{fontWeight: '600', fontSize: 15, color: 'white'}}>Seen:</Text>
-                  <Text style={{fontWeight: '600', fontSize: 15, color: 'white'}}>{getDistanceFromLatLonInMiles(this.state.location.latitude,this.state.location.longitude,this.state.modalp.location.latitude,this.state.modalp.location.longitude).toFixed(1) + ' mile(s) away'}</Text>
-                  <Text style={{fontWeight: '600', fontSize: 13, color: 'white'}}>{Math.floor((Date.now() - new Date(this.state.modalp.time).getTime()) / 60000) + ' minute(s) ago '}</Text>
-                  <Text style={{fontSize: 11, color: 'white'}}>by {this.state.modalp.user.username}</Text>
-                </View>
-                <View style={{flexDirection: 'row', marginTop: 20}}>
-                  {up}
-                  {down}
-                </View>
-                <TouchableHighlight
-                  onPress={this.modal}
-                  style={{marginTop: 10, height: 40, width: 200, justifyContent: 'center', alignItems: 'center'}}>
-                  <View style={{borderWidth: 1, borderColor: 'white', height: 40, width: 200, justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{color: 'white'}}>Back</Text>
-                  </View>
-                </TouchableHighlight>
+
+        <Modal
+        animationType={"slide"}
+        transparent={true}
+        visible={this.state.modalVisible}
+        onRequestClose={() => {alert("Modal has been closed.")}}
+        >
+          <View
+          style={{
+            backgroundColor: 'rgba(0,0,0,0.85)',
+            borderBottomWidth: 1,
+            borderColor: '#d3d3d3',
+            height: height,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Text style={{fontSize: 30*height/736, color: 'white'}}>Did you see this Pokémon?</Text>
+            <Image source={{uri: 'http://pokeconnect.herokuapp.com/images/'+this.state.modalp.pokemon.toLowerCase()+'.png'}} style={{width: 250, height: 250, marginTop: 5}} />
+            <View style={{marginLeft: 10*widthUnit, marginTop: 3*height/736, alignItems: 'center'}}>
+              <Text style={{fontWeight: '600', fontSize: 50, color: 'white'}}>{this.state.modalp.pokemon}</Text>
+              <Text style={{fontWeight: '600', fontSize: 15, color: 'white'}}>Seen:</Text>
+              <Text style={{fontWeight: '600', fontSize: 15, color: 'white'}}>{getDistanceFromLatLonInMiles(this.state.location.latitude,this.state.location.longitude,this.state.modalp.location.latitude,this.state.modalp.location.longitude).toFixed(1) + ' mile(s) away'}</Text>
+              <Text style={{fontWeight: '600', fontSize: 13, color: 'white'}}>{Math.floor((Date.now() - new Date(this.state.modalp.time).getTime()) / 60000) + ' minute(s) ago '}</Text>
+              <Text style={{fontSize: 11, color: 'white'}}>by {this.state.modalp.user.username}</Text>
+            </View>
+            <View style={{flexDirection: 'row', marginTop: 20}}>
+              {up}
+              {down}
+            </View>
+            <TouchableHighlight
+              onPress={this.modal}
+              style={{marginTop: 10, height: 40, width: 200, justifyContent: 'center', alignItems: 'center'}}>
+              <View style={{borderWidth: 1, borderColor: 'white', height: 40, width: 200, justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{color: 'white'}}>Back</Text>
               </View>
-          </Modal>
-        </BlurView>
+            </TouchableHighlight>
+          </View>
+        </Modal>
         )
       } else {
         modal = null
