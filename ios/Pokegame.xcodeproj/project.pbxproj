@@ -424,8 +424,8 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Pokegame" */;
 			buildPhases = (
 				13B07F871A680F5B00A75B9A /* Sources */,
-				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
+				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 			);
 			buildRules = (
@@ -785,7 +785,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pokefinder.Pokegame;
+				PRODUCT_BUNDLE_IDENTIFIER = com.horizons.PokegameDitto;
 				PRODUCT_NAME = Pokegame;
 				PROVISIONING_PROFILE = "";
 			};
@@ -813,7 +813,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pokefinder.Pokegame;
+				PRODUCT_BUNDLE_IDENTIFIER = com.horizons.PokegameDitto;
 				PRODUCT_NAME = Pokegame;
 				PROVISIONING_PROFILE = "";
 			};

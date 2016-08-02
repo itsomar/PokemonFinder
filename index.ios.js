@@ -400,7 +400,8 @@ var Home = React.createClass({
         longitude: 0,
         latitudeDelta: 0.015,
         longitudeDelta: 0.015
-      }
+      },
+      notificationsSeen: []
     }
   },
 
@@ -468,6 +469,38 @@ var Home = React.createClass({
     // console.log("Calling refresh...")
     if (!lng) lng = this.state.location.longitude;
     if (!lat) lat = this.state.location.latitude;
+
+
+    fetch('http://localhost:3000/notifications')
+      .then((notifications) => notifications.json())
+      .then((notificationsJson) => {
+        for (var i = 0; i < notificationsJson.notifications.length; i++){
+          var seen = false;
+          for (var j = 0; j < this.state.notificationsSeen.length; j++){
+            if (notificationsJson.notifications[i]._id.toString() === this.state.notificationsSeen[j]){
+              console.log("Already Seen");
+              seen = true;
+              }
+            }
+          if(!seen){
+          this.setState({
+            notificationsSeen: this.state.notificationsSeen.concat(notificationsJson.notifications[i]._id.toString())
+          })
+          console.log("mr.mime: ", notificationsJson.notifications);
+          console.log("This works now: ", this.state.notificationsSeen)
+          if(!notificationsJson.notifications[i].message)
+            PushNotification.localNotification({
+              message: "Team " + notificationsJson.notifications[i].team + ", I need help to take down this gym." // (required)
+            });
+              else{
+                PushNotification.localNotification({
+                message: notificationsJson.notifications[i].message
+                });
+              }
+            };
+            }
+      })
+
 
     var that = this;
     fetch('http://localhost:3000/gymfeed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
@@ -1253,11 +1286,6 @@ var GymView = React.createClass({
     })
     .catch((err) => {
       console.log(err);
-    });
-    console.log("Notification EXTRA STUFF HERE");
-    PushNotification.localNotification({
-        message: this.state.message, // (required)
-
     });
   },
   render() {
