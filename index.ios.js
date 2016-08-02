@@ -1119,7 +1119,7 @@ var Settings = React.createClass({
       pokemon: "",
       pokemonObj: {},
       data: [],
-      notif: this.props.notif
+      notif: this.props.notif || []
     }
   },
 
@@ -1214,7 +1214,6 @@ var Settings = React.createClass({
           <View>
             <View style={{flexDirection: "row", zIndex: 9}}>
             <View style={{alignItems: 'center', backgroundColor: "#F7F7F7"}}>
-              <Text style={{color: "Black"}}>Notifications</Text>
             </View>
             <View style={{flexDirection: 'row', position: 'absolute'}}>
               <AutoComplete
@@ -1227,11 +1226,12 @@ var Settings = React.createClass({
                 maximumNumberOfAutoCompleteRows={10}
                 autoCompleteTableBackgroundColor='white'
                 style={{alignSelf: 'stretch',
+                    marginLeft: width * 1/14,
                     height: 40*height/736,
-                    width: width*3/7,
+                    width: width*5/7,
                     backgroundColor: '#FFF'}}
                 suggestions={this.state.data}
-                placeholder='Add a P'
+                placeholder='Notify me about...'
                 value={this.state.pokemon}
               />
               <TouchableOpacity
