@@ -1,6 +1,7 @@
 package com.pokegame;
 
 import com.facebook.react.ReactActivity;
+import com.cmcewen.blurview.BlurViewPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 
 public class MainActivity extends ReactActivity {
