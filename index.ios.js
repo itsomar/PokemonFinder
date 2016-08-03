@@ -144,7 +144,7 @@ var Pokegame = React.createClass({
     <View
       style={{
         flex: 1,
-        padding: 80,
+        padding: 50,
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.54)'
       }}>
@@ -318,7 +318,7 @@ var Register = React.createClass({
           </View>
           <Text style={[styles.textMed, {color: 'white'}]}>Pick your team</Text>
 
-          <View style={{height: 270}}>
+          <View style={{height: 260/700 * height}}>
             <TouchableOpacity onPress={this.enlargeInstinct}>
               <Image source={{uri: 'http://localhost:3000/images/instinct.png'}} style={{alignSelf: "center", width: width*this.state.instinctsize/414, height: height*this.state.instinctsize/736, marginBottom: 20}}/>
             </TouchableOpacity>
@@ -1171,9 +1171,9 @@ var Settings = React.createClass({
 
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       return (
+
         <View style={{flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', backgroundColor:"white"}}>
           <View>
-
             <View>
               <View style={{flexDirection: "row", zIndex: 9}}>
               <View style={{alignItems: 'center', backgroundColor: "#F7F7F7"}}>
@@ -1203,7 +1203,6 @@ var Settings = React.createClass({
                 >
                   <Text style={styles.buttonLabel}>Add</Text>
                 </TouchableOpacity>
-
 
                       <View>
                         <Switch
@@ -1372,14 +1371,14 @@ var PostView = React.createClass({
   post() {
     console.log('AM I FUCKING POSTING??????????????????????????')
     if(this.state.pokemon === "Umfolozi") {
-      return Alert.alert('MOTHAFUCKKASS')
+      return Alert.alert('Quis furor est?')
     }
     if(this.state.pokemon === "Company IX") {
       return Alert.alert('George')
     }
     if(this.state.pokemon === "MewTwo" || this.state.pokemon === "Mew" || this.state.pokemon === "Ditto" ||
   this.state.pokemon === "Zapdos" || this.state.pokemon === "Articuno" || this.state.pokemon === "Moltres") {
-    return Alert.alert('This Pokémon is not in the PokéDex');
+    return Alert.alert('This Pokémon is event only');
   }
     if (this.props.pokeNames.indexOf(this.state.pokemon) === -1) {
       return Alert.alert('Please enter a valid pokémon name');
@@ -1735,7 +1734,6 @@ var Map = React.createClass({
         </View>
       </TouchableHighlight>
     )
-
 
     if(this.props.index === 2) {
       var postbutton = pokepostbutton
