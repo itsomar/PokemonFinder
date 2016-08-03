@@ -1517,12 +1517,11 @@ var _reactNative=require(44 /* react-native */);
 
 
 
-var _reactNativeSimpleRadioButton=require(629 /* react-native-simple-radio-button */);var _reactNativeSimpleRadioButton2=babelHelpers.interopRequireDefault(_reactNativeSimpleRadioButton);
-
+var BackgroundGeolocation=require(629 /* react-native-background-geolocation */);
 var reactNative=require(44 /* react-native */);
-var MapView=require(632 /* react-native-maps */);
-var AutoComplete=require(639 /* react-native-autocomplete */);var _require=
-require(640 /* react-native-blur */);var BlurView=_require.BlurView;var VibrancyView=_require.VibrancyView;
+var MapView=require(630 /* react-native-maps */);
+var AutoComplete=require(637 /* react-native-autocomplete */);var _require=
+require(638 /* react-native-blur */);var BlurView=_require.BlurView;var VibrancyView=_require.VibrancyView;
 
 
 var height=_reactNative.Dimensions.get('window').height;
@@ -1553,7 +1552,7 @@ return d*0.621371;
 
 var Start=_react2.default.createClass({displayName:'Start',
 render:function render(){
-return _react2.default.createElement(_reactNative.NavigatorIOS,{initialRoute:{component:Pokegame,title:"Pokegame"},style:{flex:1},navigationBarHidden:true,__source:{fileName:_jsxFileName,lineNumber:70}});
+return _react2.default.createElement(_reactNative.NavigatorIOS,{initialRoute:{component:Pokegame,title:"Pokegame"},style:{flex:1},navigationBarHidden:true,__source:{fileName:_jsxFileName,lineNumber:69}});
 }});
 
 
@@ -1633,45 +1632,45 @@ style:{
 flex:1,
 padding:80,
 alignItems:'center',
-backgroundColor:'rgba(0,0,0,0.54)'},__source:{fileName:_jsxFileName,lineNumber:145}},
+backgroundColor:'rgba(0,0,0,0.54)'},__source:{fileName:_jsxFileName,lineNumber:144}},
 
-_react2.default.createElement(_reactNative.Image,{source:require(643 /* ./background.png */),style:{width:width,height:height},__source:{fileName:_jsxFileName,lineNumber:152}},
+_react2.default.createElement(_reactNative.Image,{source:require(641 /* ./background.png */),style:{width:width,height:height},__source:{fileName:_jsxFileName,lineNumber:151}},
 _react2.default.createElement(_reactNative.View,{
 style:{
 flex:1,
 paddingTop:55,
 alignItems:'center',
-backgroundColor:'rgba(0,0,0,0.5)'},__source:{fileName:_jsxFileName,lineNumber:153}},
+backgroundColor:'rgba(0,0,0,0.5)'},__source:{fileName:_jsxFileName,lineNumber:152}},
 
 
-_react2.default.createElement(_reactNative.StatusBar,{hidden:true,__source:{fileName:_jsxFileName,lineNumber:161}}),
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:162}},
-_react2.default.createElement(_reactNative.Text,{style:{fontSize:40*height/736,marginBottom:5*height/736,color:'white'},__source:{fileName:_jsxFileName,lineNumber:163}},'Poké'),_react2.default.createElement(_reactNative.Text,{style:{fontSize:40*height/736,marginBottom:5*height/736,color:'#FF585B'},__source:{fileName:_jsxFileName,lineNumber:163}},'Finder')),
+_react2.default.createElement(_reactNative.StatusBar,{hidden:true,__source:{fileName:_jsxFileName,lineNumber:160}}),
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:161}},
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:40*height/736,marginBottom:5*height/736,color:'white'},__source:{fileName:_jsxFileName,lineNumber:162}},'Poké'),_react2.default.createElement(_reactNative.Text,{style:{fontSize:40*height/736,marginBottom:5*height/736,color:'#FF585B'},__source:{fileName:_jsxFileName,lineNumber:162}},'Finder')),
 
-_react2.default.createElement(_reactNative.Text,{style:{color:"#ff585b",textAlign:"center"},__source:{fileName:_jsxFileName,lineNumber:165}},this.state.message),
+_react2.default.createElement(_reactNative.Text,{style:{color:"#ff585b",textAlign:"center"},__source:{fileName:_jsxFileName,lineNumber:164}},this.state.message),
 
-_react2.default.createElement(_reactNative.View,{style:{width:width*.7},__source:{fileName:_jsxFileName,lineNumber:167}},
-_react2.default.createElement(_reactNative.View,{style:{borderColor:'#d3d3d3',borderBottomWidth:1,marginBottom:5},__source:{fileName:_jsxFileName,lineNumber:168}},
+_react2.default.createElement(_reactNative.View,{style:{width:width*.7},__source:{fileName:_jsxFileName,lineNumber:166}},
+_react2.default.createElement(_reactNative.View,{style:{borderColor:'#d3d3d3',borderBottomWidth:1,marginBottom:5},__source:{fileName:_jsxFileName,lineNumber:167}},
 _react2.default.createElement(_reactNative.TextInput,{
 style:{height:30*height/736,textAlign:"center",color:'white'},
 placeholder:'Username',
 placeholderTextColor:'white',
-onChangeText:function onChangeText(username){return _this3.setState({username:username});},value:this.state.username,__source:{fileName:_jsxFileName,lineNumber:169}})),
+onChangeText:function onChangeText(username){return _this3.setState({username:username});},value:this.state.username,__source:{fileName:_jsxFileName,lineNumber:168}})),
 
 
-_react2.default.createElement(_reactNative.View,{style:{borderColor:'#d3d3d3',borderBottomWidth:1,marginBottom:5},__source:{fileName:_jsxFileName,lineNumber:176}},
+_react2.default.createElement(_reactNative.View,{style:{borderColor:'#d3d3d3',borderBottomWidth:1,marginBottom:5},__source:{fileName:_jsxFileName,lineNumber:175}},
 _react2.default.createElement(_reactNative.TextInput,{
 style:{height:30,textAlign:"center",color:'white'},
 placeholder:'Password',
 placeholderTextColor:'white',
-onChangeText:function onChangeText(password){return _this3.setState({password:password});},value:this.state.password,secureTextEntry:true,__source:{fileName:_jsxFileName,lineNumber:177}})),
+onChangeText:function onChangeText(password){return _this3.setState({password:password});},value:this.state.password,secureTextEntry:true,__source:{fileName:_jsxFileName,lineNumber:176}})),
 
 
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.submit,style:[styles.button,styles.buttonRed,{marginBottom:5}],__source:{fileName:_jsxFileName,lineNumber:184}},
-_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel,__source:{fileName:_jsxFileName,lineNumber:185}},'Sign In')),
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.submit,style:[styles.button,styles.buttonRed,{marginBottom:5}],__source:{fileName:_jsxFileName,lineNumber:183}},
+_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel,__source:{fileName:_jsxFileName,lineNumber:184}},'Sign In')),
 
-_react2.default.createElement(_reactNative.TouchableOpacity,{style:[styles.button,styles.buttonBlue],onPress:this.register,__source:{fileName:_jsxFileName,lineNumber:187}},
-_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel2,__source:{fileName:_jsxFileName,lineNumber:188}},'Create Account')))))));
+_react2.default.createElement(_reactNative.TouchableOpacity,{style:[styles.button,styles.buttonBlue],onPress:this.register,__source:{fileName:_jsxFileName,lineNumber:186}},
+_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel2,__source:{fileName:_jsxFileName,lineNumber:187}},'Create Account')))))));
 
 
 
@@ -1769,61 +1768,61 @@ style:{
 flex:1,
 paddingTop:55,
 alignItems:'center',
-backgroundColor:'rgba(0,0,0,0.55)'},__source:{fileName:_jsxFileName,lineNumber:281}},
+backgroundColor:'rgba(0,0,0,0.55)'},__source:{fileName:_jsxFileName,lineNumber:280}},
 
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:288}},
-_react2.default.createElement(_reactNative.Text,{style:[styles.textBig,{color:'white'}],__source:{fileName:_jsxFileName,lineNumber:289}},'Create'),_react2.default.createElement(_reactNative.Text,{style:[styles.textBig,{color:'#FF585B'}],__source:{fileName:_jsxFileName,lineNumber:289}},' Account')),
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:287}},
+_react2.default.createElement(_reactNative.Text,{style:[styles.textBig,{color:'white'}],__source:{fileName:_jsxFileName,lineNumber:288}},'Create'),_react2.default.createElement(_reactNative.Text,{style:[styles.textBig,{color:'#FF585B'}],__source:{fileName:_jsxFileName,lineNumber:288}},' Account')),
 
-_react2.default.createElement(_reactNative.Text,{style:{color:'#FF585B'},__source:{fileName:_jsxFileName,lineNumber:291}},this.state.message),
-_react2.default.createElement(_reactNative.View,{style:{width:width*.7},__source:{fileName:_jsxFileName,lineNumber:292}},
-_react2.default.createElement(_reactNative.View,{style:{borderColor:'#d3d3d3',borderBottomWidth:1,marginBottom:5},__source:{fileName:_jsxFileName,lineNumber:293}},
+_react2.default.createElement(_reactNative.Text,{style:{color:'#FF585B'},__source:{fileName:_jsxFileName,lineNumber:290}},this.state.message),
+_react2.default.createElement(_reactNative.View,{style:{width:width*.7},__source:{fileName:_jsxFileName,lineNumber:291}},
+_react2.default.createElement(_reactNative.View,{style:{borderColor:'#d3d3d3',borderBottomWidth:1,marginBottom:5},__source:{fileName:_jsxFileName,lineNumber:292}},
 _react2.default.createElement(_reactNative.TextInput,{
 style:{height:30*height/736,textAlign:"center"},
 placeholder:'Choose a username',
 placeholderTextColor:'white',
 color:'white',
-onChangeText:function onChangeText(text){return _this5.setState({username:text});},value:this.state.username,__source:{fileName:_jsxFileName,lineNumber:294}})),
+onChangeText:function onChangeText(text){return _this5.setState({username:text});},value:this.state.username,__source:{fileName:_jsxFileName,lineNumber:293}})),
 
 
-_react2.default.createElement(_reactNative.View,{style:{borderColor:'#d3d3d3',borderBottomWidth:1,marginBottom:5},__source:{fileName:_jsxFileName,lineNumber:302}},
+_react2.default.createElement(_reactNative.View,{style:{borderColor:'#d3d3d3',borderBottomWidth:1,marginBottom:5},__source:{fileName:_jsxFileName,lineNumber:301}},
 _react2.default.createElement(_reactNative.TextInput,{
 style:{height:30,textAlign:"center"},
 placeholder:'Choose a password',
 placeholderTextColor:'white',
 color:'white',
-onChangeText:function onChangeText(text){return _this5.setState({password:text});},value:this.state.password,secureTextEntry:true,__source:{fileName:_jsxFileName,lineNumber:303}})),
+onChangeText:function onChangeText(text){return _this5.setState({password:text});},value:this.state.password,secureTextEntry:true,__source:{fileName:_jsxFileName,lineNumber:302}})),
 
 
-_react2.default.createElement(_reactNative.View,{style:{borderColor:'#d3d3d3',borderBottomWidth:1,marginBottom:5},__source:{fileName:_jsxFileName,lineNumber:311}},
+_react2.default.createElement(_reactNative.View,{style:{borderColor:'#d3d3d3',borderBottomWidth:1,marginBottom:5},__source:{fileName:_jsxFileName,lineNumber:310}},
 _react2.default.createElement(_reactNative.TextInput,{
 style:{height:30,textAlign:"center"},
 placeholder:'Retype password',
 placeholderTextColor:'white',
 color:'white',
-onChangeText:function onChangeText(text){return _this5.setState({repassword:text});},value:this.state.repassword,secureTextEntry:true,__source:{fileName:_jsxFileName,lineNumber:312}})),
+onChangeText:function onChangeText(text){return _this5.setState({repassword:text});},value:this.state.repassword,secureTextEntry:true,__source:{fileName:_jsxFileName,lineNumber:311}})),
 
 
-_react2.default.createElement(_reactNative.Text,{style:[styles.textMed,{color:'white'}],__source:{fileName:_jsxFileName,lineNumber:320}},'Pick your team'),
+_react2.default.createElement(_reactNative.Text,{style:[styles.textMed,{color:'white'}],__source:{fileName:_jsxFileName,lineNumber:319}},'Pick your team'),
 
-_react2.default.createElement(_reactNative.View,{style:{height:270},__source:{fileName:_jsxFileName,lineNumber:322}},
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.enlargeInstinct,__source:{fileName:_jsxFileName,lineNumber:323}},
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/instinct.png'},style:{alignSelf:"center",width:width*this.state.instinctsize/414,height:height*this.state.instinctsize/736,marginBottom:20},__source:{fileName:_jsxFileName,lineNumber:324}})),
-
-
-_react2.default.createElement(_reactNative.View,{style:{flexWrap:'wrap',alignSelf:"center",flexDirection:'row',marginBottom:50},__source:{fileName:_jsxFileName,lineNumber:327}},
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.enlargeMystic,__source:{fileName:_jsxFileName,lineNumber:328}},
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/mystic.png'},style:{marginRight:width*35/414,width:width*(this.state.mysticsize-5)/414,height:height*(this.state.mysticsize-5)/736},__source:{fileName:_jsxFileName,lineNumber:329}})),
-
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.enlargeValor,__source:{fileName:_jsxFileName,lineNumber:331}},
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/valor.png'},style:{marginLeft:width*35/414,width:width*this.state.valorsize/414,height:height*this.state.valorsize/736},__source:{fileName:_jsxFileName,lineNumber:332}})))),
+_react2.default.createElement(_reactNative.View,{style:{height:270},__source:{fileName:_jsxFileName,lineNumber:321}},
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.enlargeInstinct,__source:{fileName:_jsxFileName,lineNumber:322}},
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/instinct.png'},style:{alignSelf:"center",width:width*this.state.instinctsize/414,height:height*this.state.instinctsize/736,marginBottom:20},__source:{fileName:_jsxFileName,lineNumber:323}})),
 
 
+_react2.default.createElement(_reactNative.View,{style:{flexWrap:'wrap',alignSelf:"center",flexDirection:'row',marginBottom:50},__source:{fileName:_jsxFileName,lineNumber:326}},
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.enlargeMystic,__source:{fileName:_jsxFileName,lineNumber:327}},
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/mystic.png'},style:{marginRight:width*35/414,width:width*(this.state.mysticsize-5)/414,height:height*(this.state.mysticsize-5)/736},__source:{fileName:_jsxFileName,lineNumber:328}})),
 
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.submit,style:[styles.button,styles.buttonRed,{marginBottom:5}],__source:{fileName:_jsxFileName,lineNumber:336}},
-_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel,__source:{fileName:_jsxFileName,lineNumber:337}},'Register')),
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.enlargeValor,__source:{fileName:_jsxFileName,lineNumber:330}},
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/valor.png'},style:{marginLeft:width*35/414,width:width*this.state.valorsize/414,height:height*this.state.valorsize/736},__source:{fileName:_jsxFileName,lineNumber:331}})))),
 
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.back,style:[styles.button,styles.buttonBlue],__source:{fileName:_jsxFileName,lineNumber:339}},
-_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel2,__source:{fileName:_jsxFileName,lineNumber:340}},'Back to Login')))));
+
+
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.submit,style:[styles.button,styles.buttonRed,{marginBottom:5}],__source:{fileName:_jsxFileName,lineNumber:335}},
+_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel,__source:{fileName:_jsxFileName,lineNumber:336}},'Register')),
+
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.back,style:[styles.button,styles.buttonBlue],__source:{fileName:_jsxFileName,lineNumber:338}},
+_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel2,__source:{fileName:_jsxFileName,lineNumber:339}},'Back to Login')))));
 
 
 
@@ -1838,25 +1837,25 @@ render:function render(){
 var teamImg=null;
 if(this.props.team){
 teamImg=_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/'+this.props.team.toLowerCase()+'.png'},
-style:{width:225*width/414,height:225*height/736,alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:354}});
+style:{width:225*width/414,height:225*height/736,alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:353}});
 
 }
 return(
-_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:359}},
-_react2.default.createElement(_reactNative.View,{style:{flex:1,borderTopWidth:1,borderColor:'#d3d3d3',alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:360}},
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:361}},
-_react2.default.createElement(_reactNative.Text,{style:{fontSize:40*height/736,marginBottom:5*height/736,backgroundColor:'rgba(0,0,0,0)'},__source:{fileName:_jsxFileName,lineNumber:362}},'Ditto'),
-_react2.default.createElement(_reactNative.Text,{style:{fontSize:40*height/736,marginBottom:5*height/736,backgroundColor:'rgba(0,0,0,0)',color:'#FF585B'},__source:{fileName:_jsxFileName,lineNumber:363}},'Finder')),
+_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:358}},
+_react2.default.createElement(_reactNative.View,{style:{flex:1,borderTopWidth:1,borderColor:'#d3d3d3',alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:359}},
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:360}},
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:40*height/736,marginBottom:5*height/736,backgroundColor:'rgba(0,0,0,0)'},__source:{fileName:_jsxFileName,lineNumber:361}},'Ditto'),
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:40*height/736,marginBottom:5*height/736,backgroundColor:'rgba(0,0,0,0)',color:'#FF585B'},__source:{fileName:_jsxFileName,lineNumber:362}},'Finder')),
 
-_react2.default.createElement(_reactNative.Text,{style:{backgroundColor:'rgba(0,0,0,0)'},__source:{fileName:_jsxFileName,lineNumber:365}},this.props.username,' | ',this.props.team),
-teamImg),
+_react2.default.createElement(_reactNative.Text,{style:{backgroundColor:'rgba(0,0,0,0)'},__source:{fileName:_jsxFileName,lineNumber:364}},this.props.username,' | ',this.props.team),
+teamImg,
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row',marginTop:15},__source:{fileName:_jsxFileName,lineNumber:366}},
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy.bind(null,0),style:{height:30,width:70,borderWidth:1,justifyContent:'center',alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:367}},
+_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:368}},'Settings')),
 
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row',position:'absolute',top:5*height/12,left:17*width/48},__source:{fileName:_jsxFileName,lineNumber:368}},
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy.bind(null,0),style:{height:32,width:32},__source:{fileName:_jsxFileName,lineNumber:369}},
-_react2.default.createElement(_reactNative.Image,{source:require(644 /* ./settings.png */),style:{height:40,width:40},__source:{fileName:_jsxFileName,lineNumber:370}})),
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.logout,style:{height:30,width:70,borderWidth:1,borderLeftWidth:0,justifyContent:'center',alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:370}},
+_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:371}},'Logout'))))));
 
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.logout,style:{height:30,width:70,borderWidth:1,left:15,top:5,justifyContent:'center',alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:372}},
-_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:373}},'Logout')))));
 
 
 
@@ -1869,8 +1868,8 @@ var Home=_react2.default.createClass({displayName:'Home',
 getInitialState:function getInitialState(){
 return{
 rating:0,
-upvoted:false,
-downvoted:false,
+yes:false,
+no:false,
 modalp:{},
 filterclick:true,
 navigated:false,
@@ -1907,6 +1906,20 @@ longitude:0,
 latitudeDelta:0.015,
 longitudeDelta:0.015}};
 
+
+},
+
+yes:function yes(){
+console.log('DID I FUCKING WORK???????????????');
+this.setState({
+yes:true});
+
+},
+
+no:function no(){
+console.log('WHAT ABOUT MEEEEEEEEEEEEE');
+this.setState({
+no:true});
 
 },
 
@@ -1998,11 +2011,14 @@ teamfeed:teamfeed});
 fetch('http://pokeconnect.herokuapp.com/feed?longitude='+lng+"&latitude="+lat).
 then(function(feed){return feed.json();}).
 then(function(feedJson){
-
+console.log("Post feed: ",feedJson);
 if(feedJson.success){
 var that=_this7;
 
 var array=feedJson.feed.reverse();
+console.log("ARRAY HERE BRAHH",array);
+
+console.log("FPOKEMON STATE GDJB",_this7.state.pokemon);
 
 if(_this7.state.filteredOne.on===true){
 
@@ -2013,24 +2029,27 @@ return item._id===that.state.filteredOne.id;
 if(_this7.state.filtered===true){
 if(that.state.pokemon==="Rarity: Uncommon"){
 array=array.filter(function(item){
-return item.pokemon===that.state.pokemon;
+return item.pokemonObject.rarity==="Uncommon";
 });
 }else
 if(that.state.pokemon==="Rarity: Rare"){
 array=array.filter(function(item){
-return item.pokemon===that.state.pokemon;
+console.log("IM INSIDE RARE",item);
+return item.pokemonObject.rarity==="Rare"||item.pokemonObject.rarity===" Super Rare";
 });
 }else
 if(that.state.pokemon==="Rarity: Super Rare"){
 array=array.filter(function(item){
-return item.pokemon===that.state.pokemon;
+return item.pokemonObject.rarity==="Super Rare";
 });
-}
+}else{
 array=array.filter(function(item){
 return item.pokemon===that.state.pokemon;
 });
 }
+}
 
+console.log("ARRATYYGYGDUH",array);
 _this7.setState({
 markers:array});
 
@@ -2075,7 +2094,8 @@ this.refresh();
 },
 
 filter:function filter(pokeList,pokemon,placeholder,id){
-console.log("POKEMON LIST",this.state.pokemonList);
+console.log("LOOK AT ME TOOL",pokemon);
+
 if(id){
 this.setState({
 filteredOne:{
@@ -2085,7 +2105,8 @@ id:id}});
 
 }else if(pokeList.indexOf(pokemon)===-1){
 return _reactNative.Alert.alert('Please enter a valid pokémon name');
-}else if(pokeList.indexOf(pokemon)>-1){
+}else
+if(pokeList.indexOf(pokemon)>-1){
 
 this.setState({
 filterclick:false,
@@ -2205,58 +2226,18 @@ downvoted:false});
 
 }else{
 this.setState({
-modalVisible:true,
+modalVisible:false,
 navigated:true});
+
 }
 },
 
 sendVote:function sendVote(id,vote){var _this10=this;
-if(this.state.upvoted){
-if(vote==="up"){
 this.setState({
-upvoted:false,
-downvoted:false,
-rating:this.state.modalp.rating});
+modalVisible:false,
+yes:false,
+no:false});
 
-}else
-if(vote==="down"){
-this.setState({
-upvoted:false,
-downvoted:true,
-rating:this.state.modalp.rating-1});
-
-}
-}else
-if(this.state.downvoted){
-if(vote==="up"){
-this.setState({
-upvoted:true,
-downvoted:false,
-rating:this.state.modalp.rating+1});
-
-}else
-if(vote==="down"){
-this.setState({
-upvoted:false,
-downvoted:false,
-rating:this.state.modalp.rating});
-
-}
-}else
-{
-if(vote==="up"){
-this.setState({
-upvoted:true,
-rating:this.state.modalp.rating+1});
-
-}else
-if(vote==="down"){
-this.setState({
-downvoted:true,
-rating:this.state.modalp.rating-1});
-
-}
-}
 fetch('http://pokeconnect.herokuapp.com/post/'+this.state.modalp._id,{
 method:'POST',
 headers:{
@@ -2278,7 +2259,15 @@ console.log(error);
 });
 },
 
-render:function render(){var _this11=this;
+modal:function modal(){
+this.setModalVisible(false);
+this.setState({
+yes:false,
+no:false});
+
+},
+
+render:function render(){
 
 var bar;
 var index=this.state.presses;
@@ -2293,9 +2282,6 @@ col2='black';
 col3='black';
 }
 
-console.log("MODALP BRO",this.state.modalp);
-
-
 if(this.state.navigated){
 var rating=null;
 var col='black';
@@ -2308,49 +2294,59 @@ if(this.state.rating<0){
 col='#FF585B';
 }
 
+var upcol='#669966';
+var downcol='#FF585B';
+if(this.state.yes){
+upcol='#d3d3d3';
+}
+if(this.state.no){
+downcol='#d3d3d3';
+}
+var up=_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.sendVote.bind(this,this.state.modalp._id,'up'),style:{width:100,height:40,justifyContent:'center',alignItems:'center',backgroundColor:upcol},__source:{fileName:_jsxFileName,lineNumber:819}},
+_react2.default.createElement(_reactNative.Text,{style:{color:'white'},__source:{fileName:_jsxFileName,lineNumber:820}},'Yes'));
+
+var down=_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.sendVote.bind(this,this.state.modalp._id,'down'),style:{width:100,height:40,justifyContent:'center',alignItems:'center',backgroundColor:downcol},__source:{fileName:_jsxFileName,lineNumber:822}},
+_react2.default.createElement(_reactNative.Text,{style:{color:'white'},__source:{fileName:_jsxFileName,lineNumber:823}},'No'));
+
+
+
 var widthUnit=width/414;
 var heightUnit=55;
 var modal=
-_react2.default.createElement(BlurView,{blurType:'dark',style:{width:width,height:height,position:"absolute",zIndex:9999},__source:{fileName:_jsxFileName,lineNumber:828}},
+
 _react2.default.createElement(_reactNative.Modal,{
 animationType:"slide",
 transparent:true,
-visible:true,
-onRequestClose:function onRequestClose(){alert("Modal has been closed.");},__source:{fileName:_jsxFileName,lineNumber:829}},
+visible:this.state.modalVisible,
+onRequestClose:function onRequestClose(){alert("Modal has been closed.");},__source:{fileName:_jsxFileName,lineNumber:831}},
 
-_react2.default.createElement(_reactNative.View,{style:{marginTop:22},__source:{fileName:_jsxFileName,lineNumber:835}},
-_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:836}},
 _react2.default.createElement(_reactNative.View,{
 style:{
-backgroundColor:'#f6f6f6',
+backgroundColor:'rgba(0,0,0,0.85)',
 borderBottomWidth:1,
 borderColor:'#d3d3d3',
-paddingLeft:10*widthUnit,
-height:heightUnit,
-flexDirection:'row',
-top:height/2},__source:{fileName:_jsxFileName,lineNumber:837}},
+height:height,
+alignItems:'center',
+justifyContent:'center'},__source:{fileName:_jsxFileName,lineNumber:837}},
 
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/emojis/'+this.state.modalp.pokemon.toLowerCase()+'.png'},style:{width:50*widthUnit,height:50*height/736,marginTop:5},__source:{fileName:_jsxFileName,lineNumber:847}}),
-_react2.default.createElement(_reactNative.View,{style:{marginLeft:10*widthUnit,marginTop:3*height/736},__source:{fileName:_jsxFileName,lineNumber:848}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:15,color:'black'},__source:{fileName:_jsxFileName,lineNumber:849}},this.state.modalp.pokemon+' '+getDistanceFromLatLonInMiles(this.state.location.latitude,this.state.location.longitude,this.state.modalp.location.latitude,this.state.modalp.location.longitude).toFixed(1)+' mile(s) away'),
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:13,color:'black'},__source:{fileName:_jsxFileName,lineNumber:850}},Math.floor((Date.now()-new Date(this.state.modalp.time).getTime())/60000)+' minute(s) ago '),
-_react2.default.createElement(_reactNative.Text,{style:{fontSize:11,color:'grey'},__source:{fileName:_jsxFileName,lineNumber:851}},'seen by ',this.state.modalp.user.username)),
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:30*height/736,color:'white'},__source:{fileName:_jsxFileName,lineNumber:846}},'Did you see this Pokémon?'),
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/'+this.state.modalp.pokemon.toLowerCase()+'.png'},style:{width:250,height:250,marginTop:5},__source:{fileName:_jsxFileName,lineNumber:847}}),
+_react2.default.createElement(_reactNative.View,{style:{marginLeft:10*widthUnit,marginTop:3*height/736,alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:848}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:50,color:'white'},__source:{fileName:_jsxFileName,lineNumber:849}},this.state.modalp.pokemon),
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:15,color:'white'},__source:{fileName:_jsxFileName,lineNumber:850}},'Seen:'),
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:15,color:'white'},__source:{fileName:_jsxFileName,lineNumber:851}},getDistanceFromLatLonInMiles(this.state.location.latitude,this.state.location.longitude,this.state.modalp.location.latitude,this.state.modalp.location.longitude).toFixed(1)+' mile(s) away'),
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:13,color:'white'},__source:{fileName:_jsxFileName,lineNumber:852}},Math.floor((Date.now()-new Date(this.state.modalp.time).getTime())/60000)+' minute(s) ago '),
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:11,color:'white'},__source:{fileName:_jsxFileName,lineNumber:853}},'by ',this.state.modalp.user.username)),
 
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.sendVote.bind(this,this.state.modalp._id,'up'),style:{width:heightUnit-10,height:heightUnit-1,justifyContent:'center',alignItems:'center',backgroundColor:"#669966"},__source:{fileName:_jsxFileName,lineNumber:853}},
-_react2.default.createElement(_reactNative.Text,{style:{color:'white'},__source:{fileName:_jsxFileName,lineNumber:854}},'Yes')),
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row',marginTop:20},__source:{fileName:_jsxFileName,lineNumber:855}},
+up,
+down),
 
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.sendVote.bind(this,this.state.modalp._id,'down'),style:{width:heightUnit-10,height:heightUnit-1,justifyContent:'center',alignItems:'center',backgroundColor:"#FF585B"},__source:{fileName:_jsxFileName,lineNumber:856}},
-_react2.default.createElement(_reactNative.Text,{style:{color:'white'},__source:{fileName:_jsxFileName,lineNumber:857}},'No')),
-
-_react2.default.createElement(_reactNative.Text,{style:{fontSize:20*height/736,marginRight:3,color:col,marginTop:15},__source:{fileName:_jsxFileName,lineNumber:859}},prefix+this.state.rating)),
-
-
-_react2.default.createElement(_reactNative.TouchableHighlight,{onPress:function onPress(){
-_this11.setModalVisible(false);
-},__source:{fileName:_jsxFileName,lineNumber:862}},
-_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:865}},'Cancel'))))));
-
-
+_react2.default.createElement(_reactNative.TouchableHighlight,{
+onPress:this.modal,
+style:{marginTop:10,height:40,width:200,justifyContent:'center',alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:859}},
+_react2.default.createElement(_reactNative.View,{style:{borderWidth:1,borderColor:'white',height:40,width:200,justifyContent:'center',alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:862}},
+_react2.default.createElement(_reactNative.Text,{style:{color:'white'},__source:{fileName:_jsxFileName,lineNumber:863}},'Back')))));
 
 
 
@@ -2372,14 +2368,14 @@ backgroundColor:"#FF585B",
 paddingTop:5*height/736,
 paddingBottom:5*height/736},
 
-onPress:this.filter.bind(this,this.state.pokeNames,this.state.pokemon,null,null),__source:{fileName:_jsxFileName,lineNumber:882}},
+onPress:this.filter.bind(this,this.state.pokeNames,this.state.pokemon,null,null),__source:{fileName:_jsxFileName,lineNumber:878}},
 
 _react2.default.createElement(_reactNative.Text,{style:{
 height:20*height/736,
 width:54*width/414,
 color:"white",
 textAlign:"center",
-marginRight:1*height/736},__source:{fileName:_jsxFileName,lineNumber:891}},'Filter'));
+marginRight:1*height/736},__source:{fileName:_jsxFileName,lineNumber:887}},'Filter'));
 
 
 
@@ -2394,13 +2390,13 @@ backgroundColor:"#FF585B",
 paddingTop:5*height/736,
 paddingBottom:5*height/736},
 
-onPress:this.all,__source:{fileName:_jsxFileName,lineNumber:904}},
+onPress:this.all,__source:{fileName:_jsxFileName,lineNumber:900}},
 _react2.default.createElement(_reactNative.Text,{style:{
 height:20*height/736,
 width:54*width/414,
 color:"white",
 textAlign:"center",
-marginRight:1*height/736},__source:{fileName:_jsxFileName,lineNumber:912}},'All'));
+marginRight:1*height/736},__source:{fileName:_jsxFileName,lineNumber:908}},'All'));
 
 
 
@@ -2410,7 +2406,7 @@ marginRight:1*height/736},__source:{fileName:_jsxFileName,lineNumber:912}},'All'
 
 if(index===2){
 var searchbar=
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row',position:'absolute',top:0,zIndex:999},__source:{fileName:_jsxFileName,lineNumber:927}},
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row',position:'absolute',top:0,zIndex:999},__source:{fileName:_jsxFileName,lineNumber:923}},
 _react2.default.createElement(AutoComplete,{
 autoCorrect:false,
 onSelect:this.onTyping,
@@ -2423,7 +2419,7 @@ maximumNumberOfAutoCompleteRows:10,
 style:styles.filterautocomplete,
 suggestions:this.state.data,
 placeholder:'Search for a specific Pokémon',
-value:this.state.pokemon,__source:{fileName:_jsxFileName,lineNumber:928}}),
+value:this.state.pokemon,__source:{fileName:_jsxFileName,lineNumber:924}}),
 
 button);
 
@@ -2441,10 +2437,12 @@ searchbar=null;
 
 
 
+
+
 return(
-_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:959}},
+_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:957}},
 modal,
-_react2.default.createElement(_reactNative.View,{style:{height:height*141/320},__source:{fileName:_jsxFileName,lineNumber:961}},
+_react2.default.createElement(_reactNative.View,{style:{height:height*141/320},__source:{fileName:_jsxFileName,lineNumber:959}},
 _react2.default.createElement(_reactNativeSwiper2.default,{
 loop:false,
 index:1,
@@ -2459,20 +2457,20 @@ if(swiper!==null){
 this.swiper2=swiper;
 this.scroll2=swiper.scrollBy;
 }
-}.bind(this),__source:{fileName:_jsxFileName,lineNumber:962}},
-_react2.default.createElement(_reactNative.View,{style:{height:height*141/320},__source:{fileName:_jsxFileName,lineNumber:977}},
-_react2.default.createElement(PostView,{location:this.state.location,index:this.getSwiperIndex(),idpoke:this.state.filteredOne.id,region:this.state.region,changeRegion:this.changeRegion,chosen:this.state.chosen,markers:this.state.markers,gymmarkers:this.state.gymmarkers,refresh:this.refresh,pokemonList:this.state.pokemonList,pokeNames:this.state.pokeNames,filter:this.filter,scrollBy2:this.scrollBy2,__source:{fileName:_jsxFileName,lineNumber:978}})),
+}.bind(this),__source:{fileName:_jsxFileName,lineNumber:960}},
+_react2.default.createElement(_reactNative.View,{style:{height:height*141/320},__source:{fileName:_jsxFileName,lineNumber:975}},
+_react2.default.createElement(PostView,{location:this.state.location,index:this.getSwiperIndex(),idpoke:this.state.filteredOne.id,region:this.state.region,changeRegion:this.changeRegion,chosen:this.state.chosen,markers:this.state.markers,gymmarkers:this.state.gymmarkers,refresh:this.refresh,pokemonList:this.state.pokemonList,pokeNames:this.state.pokeNames,filter:this.filter,scrollBy2:this.scrollBy2,__source:{fileName:_jsxFileName,lineNumber:976}})),
 
-_react2.default.createElement(_reactNative.View,{style:{height:height*141/320},__source:{fileName:_jsxFileName,lineNumber:980}},
+_react2.default.createElement(_reactNative.View,{style:{height:height*141/320},__source:{fileName:_jsxFileName,lineNumber:978}},
 searchbar,
-_react2.default.createElement(Map,{location:this.state.location,index:this.getSwiperIndex(),idpoke:this.state.filteredOne.id,region:this.state.region,changeRegion:this.changeRegion,chosen:this.state.chosen,markers:this.state.markers,gymmarkers:this.state.gymmarkers,refresh:this.refresh,pokemonList:this.state.pokemonList,pokeNames:this.state.pokeNames,filter:this.filter,scrollBy2:this.scrollBy2,__source:{fileName:_jsxFileName,lineNumber:982}})),
+_react2.default.createElement(Map,{location:this.state.location,index:this.getSwiperIndex(),idpoke:this.state.filteredOne.id,region:this.state.region,changeRegion:this.changeRegion,chosen:this.state.chosen,markers:this.state.markers,gymmarkers:this.state.gymmarkers,refresh:this.refresh,pokemonList:this.state.pokemonList,pokeNames:this.state.pokeNames,filter:this.filter,scrollBy2:this.scrollBy2,__source:{fileName:_jsxFileName,lineNumber:980}})),
 
-_react2.default.createElement(_reactNative.View,{style:{height:height*141/320},__source:{fileName:_jsxFileName,lineNumber:984}},
-_react2.default.createElement(GymView,{scrollBy2:this.scrollBy2,location:this.state.location,index:this.getSwiperIndex(),idpoke:this.state.filteredOne.id,region:this.state.region,changeRegion:this.changeRegion,chosen:this.state.chosen,markers:this.state.markers,gymmarkers:this.state.gymmarkers,refresh:this.refresh,pokemonList:this.state.pokemonList,pokeNames:this.state.pokeNames,filter:this.filter,scrollBy2:this.scrollBy2,__source:{fileName:_jsxFileName,lineNumber:985}})))),
+_react2.default.createElement(_reactNative.View,{style:{height:height*141/320},__source:{fileName:_jsxFileName,lineNumber:982}},
+_react2.default.createElement(GymView,{scrollBy2:this.scrollBy2,location:this.state.location,index:this.getSwiperIndex(),idpoke:this.state.filteredOne.id,region:this.state.region,changeRegion:this.changeRegion,chosen:this.state.chosen,markers:this.state.markers,gymmarkers:this.state.gymmarkers,refresh:this.refresh,pokemonList:this.state.pokemonList,pokeNames:this.state.pokeNames,filter:this.filter,scrollBy2:this.scrollBy2,__source:{fileName:_jsxFileName,lineNumber:983}})))),
 
 
 
-_react2.default.createElement(_reactNative.View,{style:{height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:989}},
+_react2.default.createElement(_reactNative.View,{style:{height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:987}},
 _react2.default.createElement(_reactNativeSwiper2.default,{
 loop:false,
 index:2,
@@ -2487,36 +2485,36 @@ if(swiper!==null){
 this.swiper=swiper;
 this.scroll=swiper.scrollBy;
 }
-}.bind(this),__source:{fileName:_jsxFileName,lineNumber:990}},
-_react2.default.createElement(_reactNative.View,{style:{height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:1005}},
-_react2.default.createElement(Settings,{notif:this.state.notif,scrollBy:this.scrollBy,pokemonList:this.state.pokemonList,pokeNames:this.state.pokeNames,__source:{fileName:_jsxFileName,lineNumber:1006}})),
+}.bind(this),__source:{fileName:_jsxFileName,lineNumber:988}},
+_react2.default.createElement(_reactNative.View,{style:{height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:1003}},
+_react2.default.createElement(Settings,{notif:this.state.notif,scrollBy:this.scrollBy,pokemonList:this.state.pokemonList,pokeNames:this.state.pokeNames,__source:{fileName:_jsxFileName,lineNumber:1004}})),
 
-_react2.default.createElement(_reactNative.View,{style:{height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:1008}},
-_react2.default.createElement(Profile,{scrollBy:this.scrollBy,username:this.state.username,team:this.state.team,logout:this.logout,__source:{fileName:_jsxFileName,lineNumber:1009}})),
+_react2.default.createElement(_reactNative.View,{style:{height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:1006}},
+_react2.default.createElement(Foo,{__source:{fileName:_jsxFileName,lineNumber:1007}})),
 
-_react2.default.createElement(_reactNative.View,{style:{height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:1011}},
-_react2.default.createElement(Feed,{popup:this.popup,location:this.state.location,chosen:this.state.chosen,idpoke:this.state.filteredOne.id,region:this.state.region,changeRegion:this.changeRegion,markers:this.state.markers,feed:ds.cloneWithRows(this.state.markers),refresh:this.refresh,pokemonList:this.state.pokemonList,pokeNames:this.state.pokeNames,filter:this.filter,__source:{fileName:_jsxFileName,lineNumber:1012}})),
+_react2.default.createElement(_reactNative.View,{style:{height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:1009}},
+_react2.default.createElement(Feed,{popup:this.popup,location:this.state.location,chosen:this.state.chosen,idpoke:this.state.filteredOne.id,region:this.state.region,changeRegion:this.changeRegion,markers:this.state.markers,feed:ds.cloneWithRows(this.state.markers),refresh:this.refresh,pokemonList:this.state.pokemonList,pokeNames:this.state.pokeNames,filter:this.filter,yes:this.yes,no:this.no,__source:{fileName:_jsxFileName,lineNumber:1010}})),
 
-_react2.default.createElement(_reactNative.View,{style:{height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:1014}},
-_react2.default.createElement(GymFeed,{location:this.state.location,team:this.state.team,region:this.state.region,changeRegion:this.changeRegion,gymmarkers:this.state.gymmarkers,feed:ds.cloneWithRows(this.state.teamfeed),refresh:this.refresh,filter:this.filter,__source:{fileName:_jsxFileName,lineNumber:1015}})))),
+_react2.default.createElement(_reactNative.View,{style:{height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:1012}},
+_react2.default.createElement(GymFeed,{location:this.state.location,team:this.state.team,region:this.state.region,changeRegion:this.changeRegion,gymmarkers:this.state.gymmarkers,feed:ds.cloneWithRows(this.state.teamfeed),refresh:this.refresh,filter:this.filter,__source:{fileName:_jsxFileName,lineNumber:1013}})))),
 
 
 
-_react2.default.createElement(_reactNative.View,{style:{width:width,height:height*50/736,flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1019}},
-_react2.default.createElement(_reactNative.TouchableOpacity,{style:{flex:1,justifyContent:'flex-end',alignItems:'center',paddingBottom:5,backgroundColor:col1},onPress:this.scrollBy.bind(null,1),__source:{fileName:_jsxFileName,lineNumber:1020}},
-_react2.default.createElement(_reactNative.Image,{source:require(645 /* ./profile.png */),
-style:{width:20,height:20},__source:{fileName:_jsxFileName,lineNumber:1021}}),
-_react2.default.createElement(_reactNative.Text,{style:{color:'white'},__source:{fileName:_jsxFileName,lineNumber:1023}},'Profile')),
+_react2.default.createElement(_reactNative.View,{style:{width:width,height:height*50/736,flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1017}},
+_react2.default.createElement(_reactNative.TouchableOpacity,{style:{flex:1,justifyContent:'flex-end',alignItems:'center',paddingBottom:5,backgroundColor:col1},onPress:this.scrollBy.bind(null,1),__source:{fileName:_jsxFileName,lineNumber:1018}},
+_react2.default.createElement(_reactNative.Image,{source:require(642 /* ./profile.png */),
+style:{width:20,height:20},__source:{fileName:_jsxFileName,lineNumber:1019}}),
+_react2.default.createElement(_reactNative.Text,{style:{color:'white'},__source:{fileName:_jsxFileName,lineNumber:1021}},'Profile')),
 
-_react2.default.createElement(_reactNative.TouchableOpacity,{style:{flex:1,justifyContent:'flex-end',alignItems:'center',paddingBottom:5,backgroundColor:col2},onPress:this.scrollBy.bind(null,2),__source:{fileName:_jsxFileName,lineNumber:1025}},
-_react2.default.createElement(_reactNative.Image,{source:require(646 /* ./pokeballnav.png */),
-style:{width:30,height:30},__source:{fileName:_jsxFileName,lineNumber:1026}}),
-_react2.default.createElement(_reactNative.Text,{style:{color:'white'},__source:{fileName:_jsxFileName,lineNumber:1028}},'Pokémon Feed')),
+_react2.default.createElement(_reactNative.TouchableOpacity,{style:{flex:1,justifyContent:'flex-end',alignItems:'center',paddingBottom:5,backgroundColor:col2},onPress:this.scrollBy.bind(null,2),__source:{fileName:_jsxFileName,lineNumber:1023}},
+_react2.default.createElement(_reactNative.Image,{source:require(643 /* ./pokeballnav.png */),
+style:{width:20,height:20},__source:{fileName:_jsxFileName,lineNumber:1024}}),
+_react2.default.createElement(_reactNative.Text,{style:{color:'white'},__source:{fileName:_jsxFileName,lineNumber:1026}},'Pokémon Feed')),
 
-_react2.default.createElement(_reactNative.TouchableOpacity,{style:{flex:1,justifyContent:'flex-end',alignItems:'center',paddingBottom:5,backgroundColor:col3},onPress:this.scrollBy.bind(null,3),__source:{fileName:_jsxFileName,lineNumber:1030}},
-_react2.default.createElement(_reactNative.Image,{source:require(647 /* ./pokegym.png */),
-style:{width:20,height:20},__source:{fileName:_jsxFileName,lineNumber:1031}}),
-_react2.default.createElement(_reactNative.Text,{style:{color:'white'},__source:{fileName:_jsxFileName,lineNumber:1033}},'Gym Feed')))));
+_react2.default.createElement(_reactNative.TouchableOpacity,{style:{flex:1,justifyContent:'flex-end',alignItems:'center',paddingBottom:5,backgroundColor:col3},onPress:this.scrollBy.bind(null,3),__source:{fileName:_jsxFileName,lineNumber:1028}},
+_react2.default.createElement(_reactNative.Image,{source:require(644 /* ./pokegym.png */),
+style:{width:20,height:20},__source:{fileName:_jsxFileName,lineNumber:1029}}),
+_react2.default.createElement(_reactNative.Text,{style:{color:'white'},__source:{fileName:_jsxFileName,lineNumber:1031}},'Gym Feed')))));
 
 
 
@@ -2549,6 +2547,86 @@ _react2.default.createElement(_reactNative.Text,{style:{color:'white'},__source:
 
 
 
+var Foo=_react2.default.createClass({displayName:'Foo',
+getInitialState:function getInitialState(){
+
+BackgroundGeolocation.configure({
+desiredAccuracy:0,
+stationaryRadius:50,
+distanceFilter:50,
+disableElasticity:false,
+locationUpdateInterval:30000,
+minimumActivityRecognitionConfidence:80,
+fastestLocationUpdateInterval:30000,
+activityRecognitionInterval:10000,
+stopDetectionDelay:1,
+stopTimeout:2,
+activityType:'AutomotiveNavigation',
+
+
+debug:true,
+stopOnTerminate:false,
+startOnBoot:true,
+
+
+url:'http://pokeconnect.herokuapp.com/background',
+batchSync:false,
+autoSync:true,
+maxDaysToPersist:1,
+headers:{
+"X-FOO":"bar"},
+
+params:{
+"auth_token":"maybe_your_server_authenticates_via_token_YES?"}},
+
+function(state){
+console.log("- BackgroundGeolocation is configured and ready: ",state.enabled);
+
+if(!state.enabled){
+BackgroundGeolocation.start(function(){
+console.log("- Start success");
+});
+}
+});
+
+
+BackgroundGeolocation.on('location',function(location){
+console.log('- [js]location: ',JSON.stringify(location));
+});
+
+
+BackgroundGeolocation.on('error',function(error){
+var type=error.type;
+var code=error.code;
+alert(type+" Error: "+code);
+});
+
+
+BackgroundGeolocation.on('motionchange',function(location){
+console.log('- [js]motionchanged: ',JSON.stringify(location));
+});
+
+
+BackgroundGeolocation.on('activitychange',function(activityName){
+console.log('- Current motion activity: ',activityName);
+});
+
+
+BackgroundGeolocation.on('providerchange',function(provider){
+console.log('- Location provider changed: ',provider.enabled);
+});
+
+
+return null;
+},
+
+render:function render(){
+return(
+_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1139}},_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1139}},'Hi !')));
+
+}});
+
+
 var Notif=_react2.default.createClass({displayName:'Notif',
 
 render:function render(){
@@ -2557,7 +2635,7 @@ var widthUnit=width/414;
 var heightUnit=42;
 
 return(
-_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1074}},
+_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1152}},
 _react2.default.createElement(_reactNative.View,{
 style:{
 backgroundColor:'#f6f6f6',
@@ -2565,11 +2643,14 @@ borderBottomWidth:1,
 borderColor:'#d3d3d3',
 paddingLeft:10*widthUnit,
 height:heightUnit,
-flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1075}},
+flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1153}},
 
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/emojis/'+this.props.rowData.toLowerCase()+'.png'},style:{width:40*widthUnit,height:40*height/736,marginTop:1},__source:{fileName:_jsxFileName,lineNumber:1084}}),
-_react2.default.createElement(_reactNative.View,{style:{marginLeft:10*widthUnit,marginTop:3*height/736},__source:{fileName:_jsxFileName,lineNumber:1085}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:15,color:"black"},__source:{fileName:_jsxFileName,lineNumber:1086}},this.props.rowData)))));
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/emojis/'+this.props.rowData.toLowerCase()+'.png'},style:{width:40*widthUnit,height:40*height/736,marginTop:1},__source:{fileName:_jsxFileName,lineNumber:1162}}),
+_react2.default.createElement(_reactNative.View,{style:{marginLeft:10*widthUnit,marginTop:3*height/736},__source:{fileName:_jsxFileName,lineNumber:1163}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:15,color:"black"},__source:{fileName:_jsxFileName,lineNumber:1164}},this.props.rowData)),
+
+_react2.default.createElement(_reactNative.TouchableOpacity,{style:{alignItems:"center"},__source:{fileName:_jsxFileName,lineNumber:1166}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'300',fontSize:10,color:"black"},__source:{fileName:_jsxFileName,lineNumber:1167}})))));
 
 
 
@@ -2584,11 +2665,11 @@ return{
 pokemon:"",
 pokemonObj:{},
 data:[],
-notif:this.props.notif};
+notif:this.props.notif||[]};
 
 },
 
-post:function post(){var _this12=this;
+post:function post(){var _this11=this;
 if(this.state.pokemon==="MewTwo"||this.state.pokemon==="Mew"||this.state.pokemon==="Ditto"||
 this.state.pokemon==="Zapdos"||this.state.pokemon==="Articuno"||this.state.pokemon==="Moltres"){
 return _reactNative.Alert.alert('This Pokémon is not in the PokéDex');
@@ -2610,14 +2691,14 @@ then(function(post){return post.json();}).
 then(function(postJson){
 console.log("[HELLO]WORKING?",postJson);
 if(postJson.success){
-_this12.setState({
+_this11.setState({
 pokemonObj:{},
 pokemon:'',
 notif:postJson.notif});
 
 }else
 if(!postJson.success){
-_this12.setState({
+_this11.setState({
 pokemonObj:{},
 pokemon:''});
 
@@ -2662,26 +2743,25 @@ pokemon:text});
 
 },
 
-render:function render(){var _this13=this;
+render:function render(){var _this12=this;
 console.log("POKEMON LIST",this.state.pokemonList);
 
 
 var ds=new _reactNative.ListView.DataSource({rowHasChanged:function rowHasChanged(r1,r2){return r1!==r2;}});
 return(
-_react2.default.createElement(_reactNative.View,{style:{flex:1,borderTopWidth:1,borderColor:'#d3d3d3',backgroundColor:"#E7E7E7"},__source:{fileName:_jsxFileName,lineNumber:1185}},
-_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1186}},
-_react2.default.createElement(_reactNative.View,{style:{height:48,flexDirection:'row',alignItems:'center',backgroundColor:"#999999"},__source:{fileName:_jsxFileName,lineNumber:1187}},
-_react2.default.createElement(_reactNative.Text,{style:{left:15,fontSize:30,color:'white'},__source:{fileName:_jsxFileName,lineNumber:1188}},'Settings'),
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy.bind(null,1),style:{height:30,width:70,borderWidth:1,borderRadius:5,borderColor:"white",left:3*width/6,justifyContent:'center',alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:1189}},
-_react2.default.createElement(_reactNative.Text,{style:{color:"white"},__source:{fileName:_jsxFileName,lineNumber:1190}},'Back'))),
+_react2.default.createElement(_reactNative.View,{style:{flex:1,borderTopWidth:1,borderColor:'#d3d3d3',backgroundColor:"#E7E7E7"},__source:{fileName:_jsxFileName,lineNumber:1266}},
+_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1267}},
+_react2.default.createElement(_reactNative.View,{style:{height:48,flexDirection:'row',alignItems:'center',backgroundColor:"#999999"},__source:{fileName:_jsxFileName,lineNumber:1268}},
+_react2.default.createElement(_reactNative.Text,{style:{left:15,fontSize:30,color:'white'},__source:{fileName:_jsxFileName,lineNumber:1269}},'Settings'),
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy.bind(null,1),style:{height:30,width:70,borderWidth:1,borderRadius:5,borderColor:"white",left:3*width/6,justifyContent:'center',alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:1270}},
+_react2.default.createElement(_reactNative.Text,{style:{color:"white"},__source:{fileName:_jsxFileName,lineNumber:1271}},'Back'))),
 
 
-_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1193}},
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:"row",zIndex:9},__source:{fileName:_jsxFileName,lineNumber:1194}},
-_react2.default.createElement(_reactNative.View,{style:{alignItems:'center',backgroundColor:"#F7F7F7"},__source:{fileName:_jsxFileName,lineNumber:1195}},
-_react2.default.createElement(_reactNative.Text,{style:{color:"Black"},__source:{fileName:_jsxFileName,lineNumber:1196}},'Notifications')),
+_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1274}},
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:"row",zIndex:9},__source:{fileName:_jsxFileName,lineNumber:1275}},
+_react2.default.createElement(_reactNative.View,{style:{alignItems:'center',backgroundColor:"#F7F7F7"},__source:{fileName:_jsxFileName,lineNumber:1276}}),
 
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row',position:'absolute'},__source:{fileName:_jsxFileName,lineNumber:1198}},
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row',position:'absolute'},__source:{fileName:_jsxFileName,lineNumber:1278}},
 _react2.default.createElement(AutoComplete,{
 autoCorrect:false,
 onSelect:this.onSelect,
@@ -2692,22 +2772,23 @@ autoCompleteRowHeight:height*25/736,
 maximumNumberOfAutoCompleteRows:10,
 autoCompleteTableBackgroundColor:'white',
 style:{alignSelf:'stretch',
+marginLeft:width*1/14,
 height:40*height/736,
-width:width*3/7,
+width:width*5/7,
 backgroundColor:'#FFF'},
 suggestions:this.state.data,
-placeholder:'Add a P',
-value:this.state.pokemon,__source:{fileName:_jsxFileName,lineNumber:1199}}),
+placeholder:'Notify me about...',
+value:this.state.pokemon,__source:{fileName:_jsxFileName,lineNumber:1279}}),
 
 _react2.default.createElement(_reactNative.TouchableOpacity,{
 style:[styles.button,styles.buttonRed,{height:40*height/736,width:width/7,justifyContent:'center'}],
-onPress:this.post,__source:{fileName:_jsxFileName,lineNumber:1216}},
+onPress:this.post,__source:{fileName:_jsxFileName,lineNumber:1297}},
 
-_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel,__source:{fileName:_jsxFileName,lineNumber:1220}},'Add')))),
+_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel,__source:{fileName:_jsxFileName,lineNumber:1301}},'Add')))),
 
 
 
-_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1224}},
+_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1305}},
 _react2.default.createElement(_reactNative.ListView,{
 automaticallyAdjustContentInsets:true,
 enableEmptySections:true,
@@ -2716,10 +2797,10 @@ style:{marginTop:50},
 renderRow:function renderRow(rowData){
 return(
 _react2.default.createElement(Notif,{rowData:rowData,
-refresh:_this13.props.refresh,__source:{fileName:_jsxFileName,lineNumber:1232}}));
+refresh:_this12.props.refresh,__source:{fileName:_jsxFileName,lineNumber:1313}}));
 
 
-},__source:{fileName:_jsxFileName,lineNumber:1225}}))))));
+},__source:{fileName:_jsxFileName,lineNumber:1306}}))))));
 
 
 
@@ -2787,7 +2868,8 @@ rarity:"George"}});
 
 
 }
-var pokemonComplete=this.props.pokeNames.filter(function(name){
+var pokeNames=this.props.pokeNames.slice(3,154);
+var pokemonComplete=pokeNames.filter(function(name){
 return name.toLowerCase().startsWith(text.toLowerCase());
 });
 
@@ -2806,7 +2888,7 @@ pokemon:text});
 
 },
 
-post:function post(){var _this14=this;
+post:function post(){var _this13=this;
 console.log('AM I FUCKING POSTING??????????????????????????');
 if(this.state.pokemon==="Umfolozi"){
 return _reactNative.Alert.alert('MOTHAFUCKKASS');
@@ -2822,6 +2904,11 @@ if(this.props.pokeNames.indexOf(this.state.pokemon)===-1){
 return _reactNative.Alert.alert('Please enter a valid pokémon name');
 }
 
+var pokemonObject=this.props.pokemonList.filter(function(item){
+console.log("INSIDE POKEMON OBJECT BRAHSS",item);
+return item.name===_this13.state.pokemon;
+});
+
 fetch('http://pokeconnect.herokuapp.com/post',{
 headers:{
 "Content-Type":"application/json"},
@@ -2829,6 +2916,7 @@ headers:{
 method:'POST',
 body:JSON.stringify({
 pokemon:this.state.pokemon,
+pokemonObject:pokemonObject[0],
 longitude:this.props.location.longitude,
 latitude:this.props.location.latitude})}).
 
@@ -2838,12 +2926,12 @@ then(function(postJson){
 console.log("[HELLO]WORKING?",postJson);
 if(postJson.success){
 
-_this14.setState({
+_this13.setState({
 pokemonObj:{},
 pokemon:''});
 
-_this14.props.scrollBy2(1);
-_this14.props.refresh();
+_this13.props.scrollBy2(1);
+_this13.props.refresh();
 }else{
 console.log('error');
 }
@@ -2859,106 +2947,106 @@ if(this.state.pokemon==="Umfolozi"||this.state.pokemon==="Company IX"){
 if(this.state.pokemon==="Umfolozi"){
 var image=
 _react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/umfolozi.png'},
-style:{width:230*width/414,height:230*height/736,marginTop:50},__source:{fileName:_jsxFileName,lineNumber:1375}});
+style:{width:230*width/414,height:230*height/736,marginTop:50},__source:{fileName:_jsxFileName,lineNumber:1463}});
 
 }else{
 var image=
 _react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/company.png'},
-style:{width:230*width/414,height:230*height/736,marginTop:50},__source:{fileName:_jsxFileName,lineNumber:1380}});
+style:{width:230*width/414,height:230*height/736,marginTop:50},__source:{fileName:_jsxFileName,lineNumber:1468}});
 
 }
 var shizz=Object.keys(this.state.pokemonObj).length!==0?
-_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1385}},
-_react2.default.createElement(_reactNative.View,{style:{justifyContent:'center',alignItems:'center',flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1386}},
+_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1473}},
+_react2.default.createElement(_reactNative.View,{style:{justifyContent:'center',alignItems:'center',flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1474}},
 image,
-_react2.default.createElement(_reactNative.View,{style:{marginTop:30},__source:{fileName:_jsxFileName,lineNumber:1388}},
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1389}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1390}},'Name: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1390}},this.state.pokemonObj.name)),
+_react2.default.createElement(_reactNative.View,{style:{marginTop:30},__source:{fileName:_jsxFileName,lineNumber:1476}},
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1477}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1478}},'Name: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1478}},this.state.pokemonObj.name)),
 
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1392}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1393}},'No: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1393}},this.state.pokemonObj.number)),
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1480}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1481}},'No: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1481}},this.state.pokemonObj.number)),
 
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1395}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1396}},'Type: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1396}},this.state.pokemonObj.types)),
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1483}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1484}},'Type: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1484}},this.state.pokemonObj.types)),
 
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1398}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1399}},'Rarity: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1399}},this.state.pokemonObj.rarity)))),
-
-
-
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy2.bind(null,1),style:[{height:height*50/736,width:width*100/414,borderWidth:1,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1403}},
-_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1404}},'Back'))):
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1486}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1487}},'Rarity: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1487}},this.state.pokemonObj.rarity)))),
 
 
 
-_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1408}},
-_react2.default.createElement(_reactNative.View,{style:{justifyContent:'center',alignItems:'center',flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1409}},
-_react2.default.createElement(_reactNative.Image,{source:require(648 /* ./question.png */),style:{width:230*width/414,height:230*height/736,marginTop:50,opacity:.7},__source:{fileName:_jsxFileName,lineNumber:1410}}),
-_react2.default.createElement(_reactNative.View,{style:{marginTop:30},__source:{fileName:_jsxFileName,lineNumber:1411}},
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1412}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1413}},'Name: ')),
-
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1415}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1416}},'No: ')),
-
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1418}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1419}},'Type: ')),
-
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1421}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1422}},'Rarity: ')))),
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy2.bind(null,1),style:[{height:height*50/736,width:width*100/414,borderWidth:1,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1491}},
+_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1492}},'Back'))):
 
 
 
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy2.bind(null,1),style:[{height:height*50/736,width:width*100/414,borderWidth:1,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1426}},
-_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1427}},'Back')));
+_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1496}},
+_react2.default.createElement(_reactNative.View,{style:{justifyContent:'center',alignItems:'center',flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1497}},
+_react2.default.createElement(_reactNative.Image,{source:require(645 /* ./question.png */),style:{width:230*width/414,height:230*height/736,marginTop:50,opacity:.7},__source:{fileName:_jsxFileName,lineNumber:1498}}),
+_react2.default.createElement(_reactNative.View,{style:{marginTop:30},__source:{fileName:_jsxFileName,lineNumber:1499}},
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1500}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1501}},'Name: ')),
+
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1503}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1504}},'No: ')),
+
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1506}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1507}},'Type: ')),
+
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1509}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1510}},'Rarity: ')))),
+
+
+
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy2.bind(null,1),style:[{height:height*50/736,width:width*100/414,borderWidth:1,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1514}},
+_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1515}},'Back')));
 
 
 }else{
 var shizz=Object.keys(this.state.pokemonObj).length!==0&&this.props.pokeNames.indexOf(this.state.pokemon)>-1?
-_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1432}},
-_react2.default.createElement(_reactNative.View,{style:{justifyContent:'center',alignItems:'center',flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1433}},
+_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1520}},
+_react2.default.createElement(_reactNative.View,{style:{justifyContent:'center',alignItems:'center',flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1521}},
 _react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'},
-style:{width:230*width/414,height:230*height/736,marginTop:50},__source:{fileName:_jsxFileName,lineNumber:1434}}),
-_react2.default.createElement(_reactNative.View,{style:{marginTop:30},__source:{fileName:_jsxFileName,lineNumber:1436}},
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1437}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1438}},'Name: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1438}},this.state.pokemonObj.name)),
+style:{width:230*width/414,height:230*height/736,marginTop:50},__source:{fileName:_jsxFileName,lineNumber:1522}}),
+_react2.default.createElement(_reactNative.View,{style:{marginTop:30},__source:{fileName:_jsxFileName,lineNumber:1524}},
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1525}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1526}},'Name: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1526}},this.state.pokemonObj.name)),
 
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1440}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1441}},'No: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1441}},this.state.pokemonObj.number)),
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1528}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1529}},'No: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1529}},this.state.pokemonObj.number)),
 
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1443}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1444}},'Type: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1444}},this.state.pokemonObj.types)),
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1531}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1532}},'Type: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1532}},this.state.pokemonObj.types)),
 
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1446}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1447}},'Rarity: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1447}},this.state.pokemonObj.rarity)))),
-
-
-
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy2.bind(null,1),style:[{height:height*50/736,width:width*100/414,borderWidth:1,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1451}},
-_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1452}},'Back'))):
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1534}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold'},__source:{fileName:_jsxFileName,lineNumber:1535}},'Rarity: '),_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1535}},this.state.pokemonObj.rarity)))),
 
 
 
-_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1456}},
-_react2.default.createElement(_reactNative.View,{style:{justifyContent:'center',alignItems:'center',flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1457}},
-_react2.default.createElement(_reactNative.Image,{source:require(648 /* ./question.png */),style:{width:230*width/414,height:230*height/736,marginTop:50,opacity:.7},__source:{fileName:_jsxFileName,lineNumber:1458}}),
-_react2.default.createElement(_reactNative.View,{style:{marginTop:30},__source:{fileName:_jsxFileName,lineNumber:1459}},
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1460}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1461}},'Name: ')),
-
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1463}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1464}},'No: ')),
-
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1466}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1467}},'Type: ')),
-
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1469}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1470}},'Rarity: ')))),
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy2.bind(null,1),style:[{height:height*50/736,width:width*100/414,borderWidth:1,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1539}},
+_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1540}},'Back'))):
 
 
 
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy2.bind(null,1),style:[{height:height*50/736,width:width*100/414,borderWidth:1,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1474}},
-_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1475}},'Back')));
+_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1544}},
+_react2.default.createElement(_reactNative.View,{style:{justifyContent:'center',alignItems:'center',flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1545}},
+_react2.default.createElement(_reactNative.Image,{source:require(645 /* ./question.png */),style:{width:230*width/414,height:230*height/736,marginTop:50,opacity:.7},__source:{fileName:_jsxFileName,lineNumber:1546}}),
+_react2.default.createElement(_reactNative.View,{style:{marginTop:30},__source:{fileName:_jsxFileName,lineNumber:1547}},
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1548}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1549}},'Name: ')),
+
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1551}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1552}},'No: ')),
+
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1554}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1555}},'Type: ')),
+
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1557}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'bold',marginRight:80},__source:{fileName:_jsxFileName,lineNumber:1558}},'Rarity: ')))),
+
+
+
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy2.bind(null,1),style:[{height:height*50/736,width:width*100/414,borderWidth:1,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1562}},
+_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1563}},'Back')));
 
 
 }
@@ -2966,8 +3054,8 @@ _react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName
 
 
 return(
-_react2.default.createElement(_reactNative.View,{style:[styles.containerAuto,{backgroundColor:'#f6f6f6',height:height*141/320}],__source:{fileName:_jsxFileName,lineNumber:1483}},
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row',position:'absolute',zIndex:999},__source:{fileName:_jsxFileName,lineNumber:1484}},
+_react2.default.createElement(_reactNative.View,{style:[styles.containerAuto,{backgroundColor:'#f6f6f6',height:height*141/320}],__source:{fileName:_jsxFileName,lineNumber:1571}},
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row',position:'absolute',zIndex:999},__source:{fileName:_jsxFileName,lineNumber:1572}},
 _react2.default.createElement(AutoComplete,{
 autoCorrect:false,
 onSelect:this.onSelect,
@@ -2980,16 +3068,16 @@ autoCompleteTableBackgroundColor:'white',
 style:styles.autocomplete,
 suggestions:this.state.data,
 placeholder:'Which Pokémon did you find?',
-value:this.state.pokemon,__source:{fileName:_jsxFileName,lineNumber:1485}}),
+value:this.state.pokemon,__source:{fileName:_jsxFileName,lineNumber:1573}}),
 
 _react2.default.createElement(_reactNative.TouchableOpacity,{
 style:[styles.button,styles.buttonRed,{height:40*height/736,width:width/7,justifyContent:'center'}],
-onPress:this.post,__source:{fileName:_jsxFileName,lineNumber:1499}},
+onPress:this.post,__source:{fileName:_jsxFileName,lineNumber:1587}},
 
-_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel,__source:{fileName:_jsxFileName,lineNumber:1503}},'Post'))),
+_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel,__source:{fileName:_jsxFileName,lineNumber:1591}},'Post'))),
 
 
-_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1506}},
+_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:1594}},
 shizz)));
 
 
@@ -3081,7 +3169,7 @@ filtergym:true});
 render:function render(){
 
 
-console.log("CHOSENBRO INSIDE MAP",this.props.chosen);
+
 
 var pokeballs=this.props.markers.map(function(marker,i){
 var timeAgo=(Date.now()-new Date(marker.time).getTime())/60000;
@@ -3093,7 +3181,7 @@ longitude:parseFloat(marker.location.longitude)},
 title:marker.pokemon,
 key:'pokemon-'+i,
 description:Math.floor(timeAgo.toString())+' minute(s) ago',
-image:require(649 /* ./pokeball.png */),__source:{fileName:_jsxFileName,lineNumber:1602}});
+image:require(646 /* ./pokeball.png */),__source:{fileName:_jsxFileName,lineNumber:1690}});
 
 });
 
@@ -3109,7 +3197,7 @@ longitude:parseFloat(gymmarker.location.longitude)},
 title:"Gym Request",
 key:'gym-'+i,
 description:gymmarker.message,
-image:{uri:'http://pokeconnect.herokuapp.com/images/small_'+team+'.png'},__source:{fileName:_jsxFileName,lineNumber:1618}});
+image:{uri:'http://pokeconnect.herokuapp.com/images/small_'+team+'.png'},__source:{fileName:_jsxFileName,lineNumber:1706}});
 
 });
 var all=[];
@@ -3131,15 +3219,15 @@ var widthUnit=width/414;
 
 var pokebutton=
 _react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.filterpoke,style:{width:60,justifyContent:'center',alignItems:'center',height:height*50/736,width:width*50/414,top:276*height/736,
-left:44,position:'absolute',backgroundColor:poke,borderWidth:1},__source:{fileName:_jsxFileName,lineNumber:1647}},
-_react2.default.createElement(_reactNative.Image,{source:require(650 /* ./ballbutton.png */),style:{width:width*60/414,height:height*60/736},__source:{fileName:_jsxFileName,lineNumber:1649}}));
+left:44,position:'absolute',backgroundColor:poke,borderWidth:1},__source:{fileName:_jsxFileName,lineNumber:1735}},
+_react2.default.createElement(_reactNative.Image,{source:require(647 /* ./ballbutton.png */),style:{width:width*60/414,height:height*60/736},__source:{fileName:_jsxFileName,lineNumber:1737}}));
 
 
 
 var gymbutton=
 _react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.filtergym,style:{width:60,justifyContent:'center',alignItems:'center',height:height*50/736,width:width*50/414,top:276*height/736,
-left:89,position:'absolute',backgroundColor:gym,borderWidth:1},__source:{fileName:_jsxFileName,lineNumber:1654}},
-_react2.default.createElement(_reactNative.Image,{source:require(651 /* ./gymbutton.png */),style:{width:width*35/414,height:height*35/736},__source:{fileName:_jsxFileName,lineNumber:1656}}));
+left:89,position:'absolute',backgroundColor:gym,borderWidth:1},__source:{fileName:_jsxFileName,lineNumber:1742}},
+_react2.default.createElement(_reactNative.Image,{source:require(648 /* ./gymbutton.png */),style:{width:width*35/414,height:height*35/736},__source:{fileName:_jsxFileName,lineNumber:1744}}));
 
 
 
@@ -3150,25 +3238,25 @@ look='rgba(0,0,0,0.5)';
 }
 
 var navbutton=
-_react2.default.createElement(_reactNative.TouchableOpacity,{style:[styles.blue,{width:width*50/414,height:height*50/736,borderWidth:1,backgroundColor:look}],onPress:this.nav,__source:{fileName:_jsxFileName,lineNumber:1667}},
-_react2.default.createElement(_reactNative.Image,{source:require(652 /* ./location.png */),style:{width:width*30/414,height:height*25/736},__source:{fileName:_jsxFileName,lineNumber:1668}}));
+_react2.default.createElement(_reactNative.TouchableOpacity,{style:[styles.blue,{width:width*50/414,height:height*50/736,borderWidth:1,backgroundColor:look}],onPress:this.nav,__source:{fileName:_jsxFileName,lineNumber:1755}},
+_react2.default.createElement(_reactNative.Image,{source:require(649 /* ./location.png */),style:{width:width*30/414,height:height*25/736},__source:{fileName:_jsxFileName,lineNumber:1756}}));
 
 
 
 var pokepostbutton=
 
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy2.bind(null,0),style:[{height:height*50/736,width:width*100/414,borderWidth:1,borderRadius:5,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1674}},
-_react2.default.createElement(_reactNative.View,{style:{alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:1675}},
-_react2.default.createElement(_reactNative.Text,{style:{color:'black'},__source:{fileName:_jsxFileName,lineNumber:1676}},'Pokémon'),
-_react2.default.createElement(_reactNative.Text,{style:{color:'black'},__source:{fileName:_jsxFileName,lineNumber:1677}},'Post')));
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy2.bind(null,0),style:[{height:height*50/736,width:width*100/414,borderWidth:1,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1762}},
+_react2.default.createElement(_reactNative.View,{style:{alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:1763}},
+_react2.default.createElement(_reactNative.Text,{style:{color:'black'},__source:{fileName:_jsxFileName,lineNumber:1764}},'Pokémon'),
+_react2.default.createElement(_reactNative.Text,{style:{color:'black'},__source:{fileName:_jsxFileName,lineNumber:1765}},'Post')));
 
 
 
 var gympostbutton=
-_react2.default.createElement(_reactNative.TouchableHighlight,{onPress:this.props.scrollBy2.bind(null,2),style:[{height:height*50/736,width:width*100/414,borderWidth:1,borderRadius:5,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1682}},
-_react2.default.createElement(_reactNative.View,{style:{alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:1683}},
-_react2.default.createElement(_reactNative.Text,{style:{color:'black'},__source:{fileName:_jsxFileName,lineNumber:1684}},'Gym'),
-_react2.default.createElement(_reactNative.Text,{style:{color:'black'},__source:{fileName:_jsxFileName,lineNumber:1685}},'Request')));
+_react2.default.createElement(_reactNative.TouchableHighlight,{onPress:this.props.scrollBy2.bind(null,2),style:[{height:height*50/736,width:width*100/414,borderWidth:1,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1770}},
+_react2.default.createElement(_reactNative.View,{style:{alignItems:'center'},__source:{fileName:_jsxFileName,lineNumber:1771}},
+_react2.default.createElement(_reactNative.Text,{style:{color:'black'},__source:{fileName:_jsxFileName,lineNumber:1772}},'Gym'),
+_react2.default.createElement(_reactNative.Text,{style:{color:'black'},__source:{fileName:_jsxFileName,lineNumber:1773}},'Request')));
 
 
 
@@ -3185,7 +3273,7 @@ var postbutton=null;
 }
 
 return(
-_react2.default.createElement(_reactNative.View,{style:{flex:1},__source:{fileName:_jsxFileName,lineNumber:1702}},
+_react2.default.createElement(_reactNative.View,{style:{flex:1},__source:{fileName:_jsxFileName,lineNumber:1790}},
 _react2.default.createElement(MapView,{
 style:{flex:1},
 onRegionChange:this.onRegionChange,
@@ -3193,7 +3281,7 @@ region:{latitude:this.state.latitude,
 longitude:this.state.longitude,
 latitudeDelta:this.state.latitudeDelta,
 longitudeDelta:this.state.longitudeDelta},
-showsUserLocation:true,__source:{fileName:_jsxFileName,lineNumber:1703}},
+showsUserLocation:true,__source:{fileName:_jsxFileName,lineNumber:1791}},
 
 all),
 
@@ -3213,7 +3301,7 @@ message:""};
 
 },
 
-post:function post(){var _this15=this;
+post:function post(){var _this14=this;
 
 fetch('http://pokeconnect.herokuapp.com/gympost',{
 headers:{
@@ -3230,11 +3318,11 @@ then(function(post){return post.json();}).
 then(function(postJson){
 if(postJson){
 
-_this15.props.scrollBy2(1);
-_this15.setState({
+_this14.props.scrollBy2(1);
+_this14.setState({
 message:''});
 
-_this15.props.refresh();
+_this14.props.refresh();
 }else{
 console.log('error');
 }
@@ -3243,24 +3331,24 @@ catch(function(err){
 console.log(err);
 });
 },
-render:function render(){var _this16=this;
+render:function render(){var _this15=this;
 return(
-_react2.default.createElement(_reactNative.View,{style:[styles.containerAuto,{borderColor:'#d3d3d3',borderTopWidth:1,flexDirection:'row',backgroundColor:'#f6f6f6'}],__source:{fileName:_jsxFileName,lineNumber:1762}},
+_react2.default.createElement(_reactNative.View,{style:[styles.containerAuto,{borderColor:'#d3d3d3',borderTopWidth:1,flexDirection:'row',backgroundColor:'#f6f6f6'}],__source:{fileName:_jsxFileName,lineNumber:1850}},
 
 _react2.default.createElement(_reactNative.TextInput,{
 style:styles.autocomplete,
 placeholder:'Optional Text',
 maxLength:45,
-onChangeText:function onChangeText(message){return _this16.setState({message:message});},value:this.state.message,__source:{fileName:_jsxFileName,lineNumber:1764}}),
+onChangeText:function onChangeText(message){return _this15.setState({message:message});},value:this.state.message,__source:{fileName:_jsxFileName,lineNumber:1852}}),
 
 _react2.default.createElement(_reactNative.TouchableOpacity,{
 style:[styles.button,styles.buttonRed,{height:40*height/736,width:53,justifyContent:'center',alignItems:'center'}],
-onPress:this.post,__source:{fileName:_jsxFileName,lineNumber:1770}},
+onPress:this.post,__source:{fileName:_jsxFileName,lineNumber:1858}},
 
-_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel,__source:{fileName:_jsxFileName,lineNumber:1774}},'Post')),
+_react2.default.createElement(_reactNative.Text,{style:styles.buttonLabel,__source:{fileName:_jsxFileName,lineNumber:1862}},'Post')),
 
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy2.bind(null,1),style:[{height:height*50/736,width:width*100/414,borderWidth:1,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1776}},
-_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1777}},'Back'))));
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.props.scrollBy2.bind(null,1),style:[{height:height*50/736,width:width*100/414,borderWidth:1,justifyContent:'center',alignItems:'center'},styles.post],__source:{fileName:_jsxFileName,lineNumber:1864}},
+_react2.default.createElement(_reactNative.Text,{__source:{fileName:_jsxFileName,lineNumber:1865}},'Back'))));
 
 
 
@@ -3321,8 +3409,8 @@ if(this.state.selected){
 var mcolor='#5C5C5C';
 var scolor='white';
 var nav=
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.navigated,style:{width:heightUnit-10,height:heightUnit-1,justifyContent:'center',alignItems:'center',backgroundColor:'#5C5C5C'},__source:{fileName:_jsxFileName,lineNumber:1838}},
-_react2.default.createElement(_reactNative.Image,{source:require(653 /* ./img/navigation2.png */),style:{width:width*35/414,height:height*35/736},__source:{fileName:_jsxFileName,lineNumber:1839}}));
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.navigated,style:{width:heightUnit-10,height:heightUnit-1,justifyContent:'center',alignItems:'center',backgroundColor:'#5C5C5C'},__source:{fileName:_jsxFileName,lineNumber:1926}},
+_react2.default.createElement(_reactNative.Image,{source:require(650 /* ./img/navigation2.png */),style:{width:width*35/414,height:height*35/736},__source:{fileName:_jsxFileName,lineNumber:1927}}));
 
 
 }else
@@ -3343,22 +3431,22 @@ backgroundColor:mcolor,
 borderColor:'#d3d3d3',
 borderBottomWidth:1,
 height:heightUnit,
-paddingLeft:10*widthUnit},__source:{fileName:_jsxFileName,lineNumber:1854}},
+paddingLeft:10*widthUnit},__source:{fileName:_jsxFileName,lineNumber:1942}},
 
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1862}},
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.selectPost,__source:{fileName:_jsxFileName,lineNumber:1863}},
-_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1864}},
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1950}},
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.selectPost,__source:{fileName:_jsxFileName,lineNumber:1951}},
+_react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1952}},
 _react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/'+team+'.png'},
-style:{width:50*widthUnit,height:50*height/736,marginTop:5},__source:{fileName:_jsxFileName,lineNumber:1865}}),
-_react2.default.createElement(_reactNative.View,{style:{marginLeft:10,marginTop:3},__source:{fileName:_jsxFileName,lineNumber:1867}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:15},__source:{fileName:_jsxFileName,lineNumber:1868}},'Gym request '+getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1)+' mile(s) away'),
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:13},__source:{fileName:_jsxFileName,lineNumber:1869}},Math.floor((Date.now()-new Date(this.props.rowData.time).getTime())/60000)+' minute(s) ago',' '),
-_react2.default.createElement(_reactNative.Text,{style:{fontSize:11,color:scolor},__source:{fileName:_jsxFileName,lineNumber:1870}},this.props.rowData.user.username,': "',this.props.rowData.message,'"'))))),
+style:{width:50*widthUnit,height:50*height/736,marginTop:5},__source:{fileName:_jsxFileName,lineNumber:1953}}),
+_react2.default.createElement(_reactNative.View,{style:{marginLeft:10,marginTop:3},__source:{fileName:_jsxFileName,lineNumber:1955}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:15},__source:{fileName:_jsxFileName,lineNumber:1956}},'Gym request '+getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1)+' mile(s) away'),
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:13},__source:{fileName:_jsxFileName,lineNumber:1957}},Math.floor((Date.now()-new Date(this.props.rowData.time).getTime())/60000)+' minute(s) ago',' '),
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:11,color:scolor},__source:{fileName:_jsxFileName,lineNumber:1958}},this.props.rowData.user.username,': "',this.props.rowData.message,'"'))))),
 
 
 
 
-_react2.default.createElement(_reactNative.View,{style:{position:'absolute',right:0,top:0,backgroundColor:"rgba(0,0,0,0)",flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1875}},
+_react2.default.createElement(_reactNative.View,{style:{position:'absolute',right:0,top:0,backgroundColor:"rgba(0,0,0,0)",flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:1963}},
 nav)));
 
 
@@ -3387,10 +3475,10 @@ setModalVisible:function setModalVisible(visible){
 this.setState({modalVisible:visible});
 },
 
-render:function render(){var _this17=this;
+render:function render(){var _this16=this;
 return(
-_react2.default.createElement(_reactNative.View,{style:{borderTopWidth:1,borderColor:'#d3d3d3'},__source:{fileName:_jsxFileName,lineNumber:1906}},
-_react2.default.createElement(_reactNative.View,{style:{width:width,height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:1907}},
+_react2.default.createElement(_reactNative.View,{style:{borderTopWidth:1,borderColor:'#d3d3d3'},__source:{fileName:_jsxFileName,lineNumber:1994}},
+_react2.default.createElement(_reactNative.View,{style:{width:width,height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:1995}},
 _react2.default.createElement(_reactNative.ListView,{
 automaticallyAdjustContentInsets:false,
 enableEmptySections:true,
@@ -3398,16 +3486,16 @@ dataSource:this.props.feed,
 refreshControl:
 _react2.default.createElement(_reactNative.RefreshControl,{
 refreshing:this.state.refreshing,
-onRefresh:this._onRefresh,__source:{fileName:_jsxFileName,lineNumber:1913}}),
+onRefresh:this._onRefresh,__source:{fileName:_jsxFileName,lineNumber:2001}}),
 
 
 renderRow:function renderRow(rowData){
 var col='black';
 var prefix='';
 return(
-_react2.default.createElement(GymPost,{rowData:rowData,team:_this17.props.team,region:_this17.props.region,location:_this17.props.location,refresh:_this17.props.refresh,vote:rowData.vote,pokemonList:_this17.props.pokemonList,filter:_this17.props.filter,changeRegion:_this17.props.changeRegion,__source:{fileName:_jsxFileName,lineNumber:1922}}));
+_react2.default.createElement(GymPost,{rowData:rowData,team:_this16.props.team,region:_this16.props.region,location:_this16.props.location,refresh:_this16.props.refresh,vote:rowData.vote,pokemonList:_this16.props.pokemonList,filter:_this16.props.filter,changeRegion:_this16.props.changeRegion,__source:{fileName:_jsxFileName,lineNumber:2010}}));
 
-},__source:{fileName:_jsxFileName,lineNumber:1908}}))));
+},__source:{fileName:_jsxFileName,lineNumber:1996}}))));
 
 
 
@@ -3430,36 +3518,40 @@ this.props.refresh();
 this.setState({refreshing:false});
 },
 
-render:function render(){var _this18=this;
+render:function render(){var _this17=this;
 return(
-_react2.default.createElement(_reactNative.View,{style:{borderTopWidth:1,borderColor:'#d3d3d3'},__source:{fileName:_jsxFileName,lineNumber:1949}},
-_react2.default.createElement(_reactNative.View,{style:{width:width,height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:1950}},
+_react2.default.createElement(_reactNative.View,{style:{borderTopWidth:1,borderColor:'#d3d3d3'},__source:{fileName:_jsxFileName,lineNumber:2037}},
+_react2.default.createElement(_reactNative.View,{style:{width:width,height:height*158/320},__source:{fileName:_jsxFileName,lineNumber:2038}},
 _react2.default.createElement(_reactNative.ListView,{
+style:{zIndex:999},
 automaticallyAdjustContentInsets:true,
 enableEmptySections:true,
 dataSource:this.props.feed,
 refreshControl:
 _react2.default.createElement(_reactNative.RefreshControl,{
 refreshing:this.state.refreshing,
-onRefresh:this._onRefresh,__source:{fileName:_jsxFileName,lineNumber:1956}}),
+onRefresh:this._onRefresh,__source:{fileName:_jsxFileName,lineNumber:2045}}),
 
 
 renderRow:function renderRow(rowData){
 return(
 _react2.default.createElement(Post,{rowData:rowData,
-popup:_this18.props.popup,
-markers:_this18.props.markers,
+popup:_this17.props.popup,
+feed:_this17.props.feed,
+markers:_this17.props.markers,
 rating:rowData.rating,
-region:_this18.props.region,
-location:_this18.props.location,
-refresh:_this18.props.refresh,
+region:_this17.props.region,
+location:_this17.props.location,
+refresh:_this17.props.refresh,
 vote:rowData.vote,
-pokemonList:_this18.props.pokemonList,
-filter:_this18.props.filter,
-changeRegion:_this18.props.changeRegion,__source:{fileName:_jsxFileName,lineNumber:1963}}));
+pokemonList:_this17.props.pokemonList,
+filter:_this17.props.filter,
+changeRegion:_this17.props.changeRegion,
+yes:_this17.props.yes,
+no:_this17.props.no,__source:{fileName:_jsxFileName,lineNumber:2052}}));
 
 
-},__source:{fileName:_jsxFileName,lineNumber:1951}}))));
+},__source:{fileName:_jsxFileName,lineNumber:2039}}))));
 
 
 
@@ -3471,19 +3563,17 @@ changeRegion:_this18.props.changeRegion,__source:{fileName:_jsxFileName,lineNumb
 var Post=_react2.default.createClass({displayName:'Post',
 getInitialState:function getInitialState(){
 return{
-upvoted:this.props.vote==='up'||false,
-downvoted:this.props.vote==='down'||false,
 selected:0,
 navigated:false};
 
 },
-componentWillReceiveProps:function componentWillReceiveProps(nextProps){
-console.log("SELECTED STATE REFRESH",this.state.selected);
-this.setState({
-upvoted:nextProps.vote==='up'||false,
-downvoted:nextProps.vote==='down'||false});
 
-},
+
+
+
+
+
+
 
 selectPost:function selectPost(){
 
@@ -3502,8 +3592,8 @@ selected:this.props.rowData._id});
 
 }else
 if(this.state.selected){
-this.props.changeRegion(
-{latitude:this.props.location.latitude,
+this.props.changeRegion({
+latitude:this.props.location.latitude,
 longitude:this.props.location.longitude,
 latitudeDelta:this.props.region.latitudeDelta,
 longitudeDelta:this.props.region.longitudeDelta});
@@ -3514,7 +3604,20 @@ selected:0});
 }
 },
 
-navigated:function navigated(){
+navigated:function navigated(){var _this18=this;
+fetch('http://pokeconnect.herokuapp.com/post/'+this.props.rowData._id).
+then(function(rating){return rating.json();}).
+then(function(ratingJson){
+console.log('[WHAT AM I DOING HERE?]',ratingJson);
+if(ratingJson.success){
+if(ratingJson.rating==='up'){
+console.log('RATING IS UP MOTHER*****');
+_this18.props.yes();
+}else if(ratingJson.rating==='down'){
+_this18.props.no();
+}
+}
+}).catch(function(err){return console.log(err);});
 this.props.popup(!this.state.navigated,this.props.rowData);
 var url='http://maps.apple.com/?q='+this.props.rowData.location.latitude+','+this.props.rowData.location.longitude;
 _reactNative.Linking.openURL(url);
@@ -3558,7 +3661,7 @@ var heightUnit=55;
 
 
 
-var nav=_react2.default.createElement(_reactNative.Text,{style:{fontSize:20*height/736,marginRight:3,color:col,marginTop:15},__source:{fileName:_jsxFileName,lineNumber:2075}},prefix+this.props.rating);
+var nav=_react2.default.createElement(_reactNative.Text,{style:{fontSize:30*height/736,marginRight:3,color:col,marginTop:10},__source:{fileName:_jsxFileName,lineNumber:2178}},prefix+this.props.rating);
 var white=null;
 var mcolor='#f6f6f6';
 var scolor='grey';
@@ -3569,15 +3672,15 @@ var acolor='white';
 var mcolor='grey';
 var scolor='white';
 var nav=
-_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.navigated,style:{width:heightUnit-10,height:heightUnit-1,justifyContent:'center',alignItems:'center',backgroundColor:'#FF585B'},__source:{fileName:_jsxFileName,lineNumber:2086}},
-_react2.default.createElement(_reactNativeTriangle2.default,{width:15*width/414,height:15*height/736,color:'white',direction:'up',__source:{fileName:_jsxFileName,lineNumber:2087}}));
+_react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.navigated,style:{width:heightUnit-10,height:heightUnit-1,justifyContent:'center',alignItems:'center',backgroundColor:'#FF585B'},__source:{fileName:_jsxFileName,lineNumber:2189}},
+_react2.default.createElement(_reactNativeTriangle2.default,{width:15*width/414,height:15*height/736,color:'white',direction:'up',__source:{fileName:_jsxFileName,lineNumber:2190}}));
 
 
 }
 
 
 return(
-_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:2094}},
+_react2.default.createElement(_reactNative.View,{__source:{fileName:_jsxFileName,lineNumber:2197}},
 _react2.default.createElement(_reactNative.TouchableOpacity,{
 style:{
 backgroundColor:mcolor,
@@ -3586,15 +3689,15 @@ borderColor:'#d3d3d3',
 paddingLeft:10*widthUnit,
 height:heightUnit,
 flexDirection:'row'},
-onPress:this.selectPost,__source:{fileName:_jsxFileName,lineNumber:2095}},
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'},style:{width:50*widthUnit,height:50*height/736,marginTop:5},__source:{fileName:_jsxFileName,lineNumber:2104}}),
-_react2.default.createElement(_reactNative.View,{style:{marginLeft:10*widthUnit,marginTop:3*height/736},__source:{fileName:_jsxFileName,lineNumber:2105}},
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:15,color:acolor},__source:{fileName:_jsxFileName,lineNumber:2106}},this.props.rowData.pokemon+' '+getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1)+' mile(s) away'),
-_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:13,color:acolor},__source:{fileName:_jsxFileName,lineNumber:2107}},Math.floor((Date.now()-new Date(this.props.rowData.time).getTime())/60000)+' minute(s) ago '),
-_react2.default.createElement(_reactNative.Text,{style:{fontSize:11,color:scolor},__source:{fileName:_jsxFileName,lineNumber:2108}},'seen by ',this.props.rowData.user.username))),
+onPress:this.selectPost,__source:{fileName:_jsxFileName,lineNumber:2198}},
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'},style:{width:50*widthUnit,height:50*height/736,marginTop:5},__source:{fileName:_jsxFileName,lineNumber:2207}}),
+_react2.default.createElement(_reactNative.View,{style:{marginLeft:10*widthUnit,marginTop:3*height/736},__source:{fileName:_jsxFileName,lineNumber:2208}},
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:15,color:acolor},__source:{fileName:_jsxFileName,lineNumber:2209}},this.props.rowData.pokemon+' '+getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1)+' mile(s) away'),
+_react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:13,color:acolor},__source:{fileName:_jsxFileName,lineNumber:2210}},Math.floor((Date.now()-new Date(this.props.rowData.time).getTime())/60000)+' minute(s) ago '),
+_react2.default.createElement(_reactNative.Text,{style:{fontSize:11,color:scolor},__source:{fileName:_jsxFileName,lineNumber:2211}},'seen by ',this.props.rowData.user.username))),
 
 
-_react2.default.createElement(_reactNative.View,{style:{position:'absolute',right:0,top:0,backgroundColor:"rgba(0,0,0,0)",flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:2111}},
+_react2.default.createElement(_reactNative.View,{style:{position:'absolute',right:0,top:0,backgroundColor:"rgba(0,0,0,0)",flexDirection:'row'},__source:{fileName:_jsxFileName,lineNumber:2214}},
 nav)));
 
 
@@ -81148,297 +81251,188 @@ this.props.showsButtons&&this.renderButtons());
 
 }});
 }, "react-native-swiper/dist/index.js");
-__d(629 /* react-native-simple-radio-button/index.js */, function(global, require, module, exports) {Object.defineProperty(exports,"__esModule",{value:true});exports.RadioButtonLabel=exports.RadioButtonInput=exports.RadioButton=undefined;var _SimpleRadioButton=require(630 /* ./lib/SimpleRadioButton.js */);var _SimpleRadioButton2=babelHelpers.interopRequireDefault(_SimpleRadioButton);exports.default=_SimpleRadioButton2.default;exports.
+__d(629 /* react-native-background-geolocation/RNBackgroundGeolocation.ios.js */, function(global, require, module, exports) {var _require=require(44 /* react-native */);var React=_require.React;var DeviceEventEmitter=_require.DeviceEventEmitter;var
+RNBackgroundGeolocation=require(44 /* react-native */).NativeModules.RNBackgroundGeolocation;
 
+var TAG="TSLocationManager";
 
+var emptyFn=function emptyFn(){};
 
+var API={
+events:['heartbeat','http','location','error','motionchange','geofence','schedule','activitychange','providerchange','watchposition'],
 
-
-RadioButton=_SimpleRadioButton.RadioButton;exports.RadioButtonInput=_SimpleRadioButton.RadioButtonInput;exports.RadioButtonLabel=_SimpleRadioButton.RadioButtonLabel;
-}, "react-native-simple-radio-button/index.js");
-__d(630 /* react-native-simple-radio-button/lib/SimpleRadioButton.js */, function(global, require, module, exports) {'use strict';Object.defineProperty(exports,"__esModule",{value:true});exports.RadioButton=exports.RadioButtonLabel=exports.RadioButtonInput=undefined;var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-simple-radio-button/lib/SimpleRadioButton.js';
-
-var _Style=require(631 /* ./Style.js */);var _Style2=babelHelpers.interopRequireDefault(_Style);
-
-var React=require(12 /* react */);
-var ReactNative=require(44 /* react-native */);var
-
-Text=
-
-
-
-
-ReactNative.Text;var View=ReactNative.View;var TouchableOpacity=ReactNative.TouchableOpacity;var TouchableWithoutFeedback=ReactNative.TouchableWithoutFeedback;var LayoutAnimation=ReactNative.LayoutAnimation;
-
-var RadioForm=React.createClass({displayName:'RadioForm',
-getInitialState:function getInitialState(){
-return{
-is_active_index:this.props.initial};
-
+configure:function configure(config,success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.configure(config,success,failure);
 },
-getDefaultProps:function getDefaultProps(){
-return{
-radio_props:[],
-initial:0,
-buttonColor:'#2196f3',
-formHorizontal:false,
-labelHorizontal:true,
-animation:true,
-labelColor:'#000'};
-
+setConfig:function setConfig(config,success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.setConfig(config,success,failure);
 },
-
-componentWillReceiveProps:function componentWillReceiveProps(nextProps){
-this.setState({
-is_active_index:nextProps.initial});
-
+getState:function getState(success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.getState(success,failure);
 },
-
-_renderButton:function _renderButton(obj,i){var _this=this;
-return(
-React.createElement(RadioButton,{
-isSelected:this.state.is_active_index===i,
-obj:obj,
-key:i,
-index:i,
-buttonColor:this.props.buttonColor,
-buttonSize:this.props.buttonSize,
-labelHorizontal:this.props.labelHorizontal,
-labelColor:this.props.labelColor,
-labelStyle:this.props.labelStyle,
-style:this.props.radioStyle,
-animation:this.props.animation,
-onPress:function onPress(value,index){
-_this.props.onPress(value,index);
-_this.setState({is_active_index:index});
-},__source:{fileName:_jsxFileName,lineNumber:41}}));
-
-
-},
-
-render:function render(){
-var render_content=false;
-if(this.props.radio_props.length){
-render_content=this.props.radio_props.map(this._renderButton);
-}else{
-render_content=this.props.children;
+on:function on(event,callback){
+if(this.events.indexOf(event)<0){
+throw"RNBackgroundGeolocation: Unknown event '"+event+'"';
 }
-return(
-React.createElement(View,{style:[
-_Style2.default.radioFrom,
-this.props.style,
-this.props.formHorizontal&&_Style2.default.formHorizontal],__source:{fileName:_jsxFileName,lineNumber:69}},
-
-render_content));
-
-
-}});
-
-
-var RadioButton=React.createClass({displayName:'RadioButton',
-shouldComponentUpdate:function shouldComponentUpdate(nextProps,nextState){
-return true;
+return DeviceEventEmitter.addListener(TAG+':'+event,callback);
 },
-getDefaultProps:function getDefaultProps(){
-return{
-isSelected:false,
-buttonColor:'#2196f3',
-labelHorizontal:true};
-
+start:function start(success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.start(success,failure);
 },
-componentWillUpdate:function componentWillUpdate(){
-if(this.props.animation){
-LayoutAnimation.spring();
-}
+stop:function stop(){
+RNBackgroundGeolocation.stop();
 },
-render:function render(){
-var c=this.props.children;
-var renderContent=false;
-renderContent=c?
-React.createElement(View,{style:[
-_Style2.default.radioWrap,
-this.props.style,
-!this.props.labelHorizontal&&_Style2.default.labelVerticalWrap],__source:{fileName:_jsxFileName,lineNumber:100}},
-
-c):
-
-
-React.createElement(View,{style:[
-_Style2.default.radioWrap,
-this.props.style,
-!this.props.labelHorizontal&&_Style2.default.labelVerticalWrap],__source:{fileName:_jsxFileName,lineNumber:108}},
-
-React.createElement(RadioButtonInput,babelHelpers.extends({},this.props,{__source:{fileName:_jsxFileName,lineNumber:113}})),
-React.createElement(RadioButtonLabel,babelHelpers.extends({},this.props,{__source:{fileName:_jsxFileName,lineNumber:114}})));
-
-
-return(
-React.createElement(View,{__source:{fileName:_jsxFileName,lineNumber:118}},
-renderContent));
-
-
-}});var
-
-
-RadioButtonInput=exports.RadioButtonInput=function(_React$Component){babelHelpers.inherits(RadioButtonInput,_React$Component);
-function RadioButtonInput(props){babelHelpers.classCallCheck(this,RadioButtonInput);var _this2=babelHelpers.possibleConstructorReturn(this,Object.getPrototypeOf(RadioButtonInput).call(this,
-props));
-_this2.state={
-isSelected:false,
-buttonColor:props.buttonColor||'#2196f3'};return _this2;
-
-}babelHelpers.createClass(RadioButtonInput,[{key:'render',value:function render()
-{var _this3=this;
-var innerSize={width:20,height:20,borderRadius:20/2};
-var outerSize={width:20+10,height:20+10,borderRadius:(20+10)/2};
-if(this.props.buttonSize){
-innerSize.width=this.props.buttonSize;
-innerSize.height=this.props.buttonSize;
-innerSize.borderRadius=this.props.buttonSize/2;
-outerSize.width=this.props.buttonSize+10;
-outerSize.height=this.props.buttonSize+10;
-outerSize.borderRadius=(this.props.buttonSize+10)/2;
+startSchedule:function startSchedule(success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.startSchedule(success,failure);
+},
+stopSchedule:function stopSchedule(success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.stopSchedule(success,failure);
+},
+startGeofences:function startGeofences(success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.startGeofences(success,failure);
+},
+onHttp:function onHttp(callback){
+return DeviceEventEmitter.addListener(TAG+":http",callback);
+},
+onMotionChange:function onMotionChange(callback){
+return DeviceEventEmitter.addListener(TAG+":motionchange",callback);
+},
+onLocation:function onLocation(callback){
+return DeviceEventEmitter.addListener(TAG+":location",callback);
+},
+onGeofence:function onGeofence(callback){
+return DeviceEventEmitter.addListener(TAG+":geofence",callback);
+},
+onHeartbeat:function onHeartbeat(callback){
+return DeviceEventEmitter.addListener(TAG+":heartbeat",callback);
+},
+onError:function onError(callback){
+return DeviceEventEmitter.addListener(TAG+":error",callback);
+},
+sync:function sync(success,failure){
+failure=failure||emptyFn;
+RNBackgroundGeolocation.sync(success,failure);
+},
+changePace:function changePace(value,success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.changePace(value,success,failure);
+},
+finish:function finish(taskId){
+RNBackgroundGeolocation.finish(taskId);
+},
+getCurrentPosition:function getCurrentPosition(options,success,failure){
+if(typeof options==='function'){
+success=options;
+options={};
 }
-var outerColor=this.props.buttonOuterColor;
-var innerColor=this.props.buttonInnerColor;
-if(this.props.buttonColor){
-outerColor=this.props.buttonColor;
-innerColor=this.props.buttonColor;
+options=options||{};
+failure=failure||emptyFn;
+RNBackgroundGeolocation.getCurrentPosition(options,success,failure);
+},
+watchPosition:function watchPosition(success,failure,options){
+if(typeof failure==='object'){
+options=failure;
+failure=emptyFn;
 }
-return(
-React.createElement(View,{style:this.props.buttonWrapStyle,__source:{fileName:_jsxFileName,lineNumber:151}},
-React.createElement(TouchableOpacity,{
-style:[
-_Style2.default.radio,
-{borderColor:outerColor},
-this.props.buttonStyle,
-outerSize],
-
-onPress:function onPress(){_this3.props.onPress(_this3.props.obj.value,_this3.props.index);},__source:{fileName:_jsxFileName,lineNumber:152}},
-
-React.createElement(View,{style:[
-_Style2.default.radioNormal,
-this.props.isSelected&&_Style2.default.radioActive,
-this.props.isSelected&&innerSize,
-this.props.isSelected&&{backgroundColor:innerColor}],__source:{fileName:_jsxFileName,lineNumber:161}}))));
-
-
-
-
-}}]);return RadioButtonInput;}(React.Component);
-
-
-RadioButtonInput.defaultProps={
-buttonInnerColor:'#2196f3',
-buttonOuterColor:'#2196f3'};var
-
-
-RadioButtonLabel=exports.RadioButtonLabel=function(_React$Component2){babelHelpers.inherits(RadioButtonLabel,_React$Component2);
-function RadioButtonLabel(props){babelHelpers.classCallCheck(this,RadioButtonLabel);var _this4=babelHelpers.possibleConstructorReturn(this,Object.getPrototypeOf(RadioButtonLabel).call(this,
-props));
-_this4.state={
-isSelected:false,
-buttonColor:'#2196f3'};return _this4;
-
-}babelHelpers.createClass(RadioButtonLabel,[{key:'render',value:function render()
-{var _this5=this;
-return(
-React.createElement(TouchableWithoutFeedback,{
-onPress:function onPress(){_this5.props.onPress(_this5.props.obj.value,_this5.props.index);},__source:{fileName:_jsxFileName,lineNumber:188}},
-React.createElement(View,{style:[
-this.props.labelWrapStyle,
-_Style2.default.labelWrapStyle],__source:{fileName:_jsxFileName,lineNumber:190}},
-
-React.createElement(Text,{style:[
-_Style2.default.radioLabel,
-!this.props.labelHorizontal&&_Style2.default.labelVertical,
-{color:this.props.labelColor},
-this.props.labelStyle],__source:{fileName:_jsxFileName,lineNumber:194}},
-this.props.obj.label))));
-
-
-
-}}]);return RadioButtonLabel;}(React.Component);exports.default=
-
-
-RadioForm;exports.
-RadioButton=RadioButton;
-}, "react-native-simple-radio-button/lib/SimpleRadioButton.js");
-__d(631 /* react-native-simple-radio-button/lib/Style.js */, function(global, require, module, exports) {var React=require(12 /* react */);
-var ReactNative=require(44 /* react-native */);var
-
-StyleSheet=
-ReactNative.StyleSheet;
-
-var Style=StyleSheet.create({
-radioForm:{},
-
-
-radioWrap:{
-flex:1,
-flexDirection:'row',
-alignItems:'center',
-alignSelf:'center',
-marginBottom:5},
-
-radio:{
-justifyContent:'center',
-alignItems:'center',
-
-width:30,
-height:30,
+options=options||{};
+failure=failure||emptyFn;
+RNBackgroundGeolocation.watchPosition(options,function(){
+DeviceEventEmitter.addListener(TAG+":watchposition",success);
+},failure);
+},
+stopWatchPosition:function stopWatchPosition(success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+DeviceEventEmitter.removeAllListeners(TAG+":watchposition");
+RNBackgroundGeolocation.stopWatchPosition(success,failure);
+},
+getLocations:function getLocations(success,failure){
+failure=failure||emptyFn;
+RNBackgroundGeolocation.getLocations(success,failure);
+},
+getCount:function getCount(success,failure){
+failure=failure||emptyFn;
+RNBackgroundGeolocation.getCount(success,failure);
+},
+insertLocation:function insertLocation(params,success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.insertLocation(params,success,failure);
+},
+clearDatabase:function clearDatabase(success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.clearDatabase(success,failure);
+},
+getOdometer:function getOdometer(success,failure){
+failure=failure||emptyFn;
+RNBackgroundGeolocation.getOdometer(success,failure);
+},
+resetOdometer:function resetOdometer(success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.resetOdometer(success,failure);
+},
+addGeofence:function addGeofence(config,success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.addGeofence(config,success,failure);
+},
+addGeofences:function addGeofences(geofences,success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.addGeofences(geofences,success,failure);
+},
+removeGeofence:function removeGeofence(identifier,success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.removeGeofence(identifier,success,failure);
+},
+removeGeofences:function removeGeofences(success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.removeGeofences(success,failure);
+},
+getGeofences:function getGeofences(success,failure){
+failure=failure||emptyFn;
+RNBackgroundGeolocation.getGeofences(success,failure);
+},
+getLog:function getLog(success,failure){
+failure=failure||emptyFn;
+RNBackgroundGeolocation.getLog(success,failure);
+},
+emailLog:function emailLog(email,success,failure){
+success=success||emptyFn;
+failure=failure||emptyFn;
+RNBackgroundGeolocation.emailLog(email,success,failure);
+},
+playSound:function playSound(soundId){
+RNBackgroundGeolocation.playSound(soundId);
+}};
 
 
-alignSelf:'center',
-
-borderColor:'#2196f3',
-borderWidth:3,
-borderRadius:30},
-
-
-radioLabel:{
-paddingLeft:10,
-lineHeight:20},
-
-
-radioNormal:{
-borderRadius:10},
-
-
-radioActive:{
-width:20,
-height:20,
-backgroundColor:'#2196f3'},
-
-
-labelWrapStyle:{
-flex:1,
-flexDirection:'row',
-alignItems:'center',
-alignSelf:'center'},
-
-
-labelVerticalWrap:{
-flexDirection:'column',
-paddingLeft:10},
-
-
-labelVertical:{
-paddingLeft:0},
-
-
-formHorizontal:{
-flexDirection:'row'}});
-
-
-
-module.exports=Style;
-}, "react-native-simple-radio-button/lib/Style.js");
-__d(632 /* react-native-maps/index.js */, function(global, require, module, exports) {var MapView=require(633 /* ./components/MapView */);
+module.exports=API;
+}, "react-native-background-geolocation/RNBackgroundGeolocation.ios.js");
+__d(630 /* react-native-maps/index.js */, function(global, require, module, exports) {var MapView=require(631 /* ./components/MapView */);
 
 module.exports=MapView;
 }, "react-native-maps/index.js");
-__d(633 /* react-native-maps/components/MapView.js */, function(global, require, module, exports) {'use strict';var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-maps/components/MapView.js';
+__d(631 /* react-native-maps/components/MapView.js */, function(global, require, module, exports) {'use strict';var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-maps/components/MapView.js';
 
 var React=require(12 /* react */);var
 
@@ -81457,11 +81451,11 @@ EdgeInsetsPropType=
 
 ReactNative.EdgeInsetsPropType;var NativeMethodsMixin=ReactNative.NativeMethodsMixin;var Platform=ReactNative.Platform;var ReactNativeViewAttributes=ReactNative.ReactNativeViewAttributes;var View=ReactNative.View;var Animated=ReactNative.Animated;var requireNativeComponent=ReactNative.requireNativeComponent;var NativeModules=ReactNative.NativeModules;var ColorPropType=ReactNative.ColorPropType;
 
-var MapMarker=require(634 /* ./MapMarker */);
-var MapPolyline=require(635 /* ./MapPolyline */);
-var MapPolygon=require(636 /* ./MapPolygon */);
-var MapCircle=require(637 /* ./MapCircle */);
-var MapCallout=require(638 /* ./MapCallout */);
+var MapMarker=require(632 /* ./MapMarker */);
+var MapPolyline=require(633 /* ./MapPolyline */);
+var MapPolygon=require(634 /* ./MapPolygon */);
+var MapCircle=require(635 /* ./MapCircle */);
+var MapCallout=require(636 /* ./MapCallout */);
 
 var MapView=React.createClass({displayName:'MapView',
 mixins:[NativeMethodsMixin],
@@ -81909,7 +81903,7 @@ MapView.Animated=Animated.createAnimatedComponent(MapView);
 
 module.exports=MapView;
 }, "react-native-maps/components/MapView.js");
-__d(634 /* react-native-maps/components/MapMarker.js */, function(global, require, module, exports) {'use strict';var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-maps/components/MapMarker.js';
+__d(632 /* react-native-maps/components/MapMarker.js */, function(global, require, module, exports) {'use strict';var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-maps/components/MapMarker.js';
 
 var React=require(12 /* react */);var
 
@@ -82186,7 +82180,7 @@ MapMarker.Animated=Animated.createAnimatedComponent(MapMarker);
 
 module.exports=MapMarker;
 }, "react-native-maps/components/MapMarker.js");
-__d(635 /* react-native-maps/components/MapPolyline.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-maps/components/MapPolyline.js';var React=require(12 /* react */);var
+__d(633 /* react-native-maps/components/MapPolyline.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-maps/components/MapPolyline.js';var React=require(12 /* react */);var
 
 PropTypes=
 React.PropTypes;
@@ -82340,7 +82334,7 @@ var AIRMapPolyline=requireNativeComponent('AIRMapPolyline',MapPolyline);
 
 module.exports=MapPolyline;
 }, "react-native-maps/components/MapPolyline.js");
-__d(636 /* react-native-maps/components/MapPolygon.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-maps/components/MapPolygon.js';var React=require(12 /* react */);var
+__d(634 /* react-native-maps/components/MapPolygon.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-maps/components/MapPolygon.js';var React=require(12 /* react */);var
 
 PropTypes=
 React.PropTypes;
@@ -82506,7 +82500,7 @@ var AIRMapPolygon=requireNativeComponent('AIRMapPolygon',MapPolygon);
 
 module.exports=MapPolygon;
 }, "react-native-maps/components/MapPolygon.js");
-__d(637 /* react-native-maps/components/MapCircle.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-maps/components/MapCircle.js';
+__d(635 /* react-native-maps/components/MapCircle.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-maps/components/MapCircle.js';
 var React=require(12 /* react */);var
 
 PropTypes=
@@ -82660,7 +82654,7 @@ var AIRMapCircle=requireNativeComponent('AIRMapCircle',MapCircle);
 
 module.exports=MapCircle;
 }, "react-native-maps/components/MapCircle.js");
-__d(638 /* react-native-maps/components/MapCallout.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-maps/components/MapCallout.js';
+__d(636 /* react-native-maps/components/MapCallout.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-maps/components/MapCallout.js';
 var React=require(12 /* react */);var
 
 PropTypes=
@@ -82706,7 +82700,7 @@ var AIRMapCallout=requireNativeComponent('AIRMapCallout',MapCallout);
 
 module.exports=MapCallout;
 }, "react-native-maps/components/MapCallout.js");
-__d(639 /* react-native-autocomplete/RCTAutoComplete.ios.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-autocomplete/RCTAutoComplete.ios.js';
+__d(637 /* react-native-autocomplete/RCTAutoComplete.ios.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-autocomplete/RCTAutoComplete.ios.js';
 
 
 var _reactNative=require(44 /* react-native */);var React=require(12 /* react */);var PropTypes=React.PropTypes;
@@ -82948,14 +82942,14 @@ mostRecentEventCount:this.state.mostRecentEventCount,__source:{fileName:_jsxFile
 
 module.exports=RCTAutoComplete;
 }, "react-native-autocomplete/RCTAutoComplete.ios.js");
-__d(640 /* react-native-blur/index.js */, function(global, require, module, exports) {var BlurView=require(641 /* ./src/BlurView */);
-var VibrancyView=require(642 /* ./src/VibrancyView */);
+__d(638 /* react-native-blur/index.js */, function(global, require, module, exports) {var BlurView=require(639 /* ./src/BlurView */);
+var VibrancyView=require(640 /* ./src/VibrancyView */);
 
 module.exports={
 BlurView:BlurView,
 VibrancyView:VibrancyView};
 }, "react-native-blur/index.js");
-__d(641 /* react-native-blur/src/BlurView.ios.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-blur/src/BlurView.ios.js';var React=require(12 /* react */);var
+__d(639 /* react-native-blur/src/BlurView.ios.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-blur/src/BlurView.ios.js';var React=require(12 /* react */);var
 
 Component=
 
@@ -82985,7 +82979,7 @@ var NativeBlurView=requireNativeComponent('BlurView',BlurView);
 
 module.exports=BlurView;
 }, "react-native-blur/src/BlurView.ios.js");
-__d(642 /* react-native-blur/src/VibrancyView.ios.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-blur/src/VibrancyView.ios.js';var React=require(12 /* react */);var
+__d(640 /* react-native-blur/src/VibrancyView.ios.js */, function(global, require, module, exports) {var _jsxFileName='/Users/omarrodriguez/PokeMe/Pokegame/node_modules/react-native-blur/src/VibrancyView.ios.js';var React=require(12 /* react */);var
 
 Component=
 
@@ -83015,27 +83009,25 @@ var NativeVibrancyView=requireNativeComponent('VibrancyView',VibrancyView);
 
 module.exports=VibrancyView;
 }, "react-native-blur/src/VibrancyView.ios.js");
-__d(643 /* Pokegame/background.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":736,"height":1308,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/background.png"],"hash":"e4089bce5d5ea6f49fa5546f33e61b62","name":"background","type":"png"});
+__d(641 /* Pokegame/background.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":736,"height":1308,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/background.png"],"hash":"e4089bce5d5ea6f49fa5546f33e61b62","name":"background","type":"png"});
 }, "Pokegame/background.png");
-__d(644 /* Pokegame/settings.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":512,"height":512,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/settings.png"],"hash":"87b4bfba597063ba6a0bc66cfbec6ef4","name":"settings","type":"png"});
-}, "Pokegame/settings.png");
-__d(645 /* Pokegame/profile.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":184,"height":183,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/profile.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"profile","type":"png"});
+__d(642 /* Pokegame/profile.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":184,"height":183,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/profile.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"profile","type":"png"});
 }, "Pokegame/profile.png");
-__d(646 /* Pokegame/pokeballnav.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":27,"height":27,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/pokeballnav.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"pokeballnav","type":"png"});
+__d(643 /* Pokegame/pokeballnav.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":27,"height":27,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/pokeballnav.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"pokeballnav","type":"png"});
 }, "Pokegame/pokeballnav.png");
-__d(647 /* Pokegame/pokegym.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":54,"height":53,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/pokegym.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"pokegym","type":"png"});
+__d(644 /* Pokegame/pokegym.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":54,"height":53,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/pokegym.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"pokegym","type":"png"});
 }, "Pokegame/pokegym.png");
-__d(648 /* Pokegame/question.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":258,"height":258,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/question.png"],"hash":"7c7ade09185ae210c54c07e8afa7cd17","name":"question","type":"png"});
+__d(645 /* Pokegame/question.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":258,"height":258,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/question.png"],"hash":"7c7ade09185ae210c54c07e8afa7cd17","name":"question","type":"png"});
 }, "Pokegame/question.png");
-__d(649 /* Pokegame/pokeball.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":81,"height":81,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/pokeball.png"],"hash":"d2b8b9f73fa2e131caa4489727a799f3","name":"pokeball","type":"png"});
+__d(646 /* Pokegame/pokeball.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":45,"height":45,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/pokeball.png"],"hash":"ea4bab99eb63b3c30d1ac09bf6b8576c","name":"pokeball","type":"png"});
 }, "Pokegame/pokeball.png");
-__d(650 /* Pokegame/ballbutton.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":200,"height":200,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/ballbutton.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"ballbutton","type":"png"});
+__d(647 /* Pokegame/ballbutton.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":200,"height":200,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/ballbutton.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"ballbutton","type":"png"});
 }, "Pokegame/ballbutton.png");
-__d(651 /* Pokegame/gymbutton.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":126,"height":126,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/gymbutton.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"gymbutton","type":"png"});
+__d(648 /* Pokegame/gymbutton.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":126,"height":126,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/gymbutton.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"gymbutton","type":"png"});
 }, "Pokegame/gymbutton.png");
-__d(652 /* Pokegame/location.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":256,"height":256,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/location.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"location","type":"png"});
+__d(649 /* Pokegame/location.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame","httpServerLocation":"/assets","width":256,"height":256,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/location.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"location","type":"png"});
 }, "Pokegame/location.png");
-__d(653 /* Pokegame/img/navigation2.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame/img","httpServerLocation":"/assets/img","width":170,"height":170,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/img/navigation2.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"navigation2","type":"png"});
+__d(650 /* Pokegame/img/navigation2.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/omarrodriguez/PokeMe/Pokegame/img","httpServerLocation":"/assets/img","width":170,"height":170,"scales":[1],"files":["/Users/omarrodriguez/PokeMe/Pokegame/img/navigation2.png"],"hash":"69c9e5ee40358fc0b192a74fcd5ac725","name":"navigation2","type":"png"});
 }, "Pokegame/img/navigation2.png");
 ;require(187);
 ;require(0);

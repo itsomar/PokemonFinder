@@ -12,6 +12,7 @@
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
 #import "RCTLinkingManager.h"
+#import <Parse/Parse.h>
 
 @implementation AppDelegate
 
@@ -34,10 +35,22 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
+  [Parse initializeWithConfiguration:[ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
+    configuration.applicationId = @"PokeParse";
+    configuration.clientKey = @"dirty";
+    configuration.server = @"http://pokeconnect.herokuapp.com/parse";
+  }]];
+  UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                  UIUserNotificationTypeBadge |
+                                                  UIUserNotificationTypeSound);
+  UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                           categories:nil];
+  [application registerUserNotificationSettings:settings];
+  [application registerForRemoteNotifications];
 
   [[RCTBundleURLProvider sharedSettings] setDefaults];
-  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
-//  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+//  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"Pokegame"
@@ -51,6 +64,13 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   return YES;
+}
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  // Store the deviceToken in the current installation and save it to Parse.
+  PFInstallation *installation = [PFInstallation currentInstallation];
+  [installation setDeviceTokenFromData:deviceToken];
+  installation.channels = @[ @"global" ];
+  [installation saveInBackground];
 }
 
 @end
