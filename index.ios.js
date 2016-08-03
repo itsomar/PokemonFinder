@@ -32,6 +32,7 @@ import {
 } from 'react-native';
 
 
+
 var reactNative = require('react-native');
 var MapView = require('react-native-maps');
 var AutoComplete = require('react-native-autocomplete');
@@ -98,7 +99,7 @@ var Pokegame = React.createClass({
   },
 
   submit() {
-    fetch('http://localhost:3000/login', {
+    fetch('http://pokeconnect.herokuapp.com/login', {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -117,9 +118,7 @@ var Pokegame = React.createClass({
         this.props.navigator.push({
           component: Home,
           title: "Home",
-          passProps: {
-            notif: response.notif
-          }
+          passProps: {user: response.user}
         });
       }
       else {
@@ -211,7 +210,7 @@ var Register = React.createClass({
 
   submit() {
     console.log("Starting submit")
-    fetch('http://localhost:3000/register', {
+    fetch('http://pokeconnect.herokuapp.com/register', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
@@ -320,15 +319,15 @@ var Register = React.createClass({
 
           <View style={{height: 260/700 * height}}>
             <TouchableOpacity onPress={this.enlargeInstinct}>
-              <Image source={{uri: 'http://localhost:3000/images/instinct.png'}} style={{alignSelf: "center", width: width*this.state.instinctsize/414, height: height*this.state.instinctsize/736, marginBottom: 20}}/>
+              <Image source={{uri: 'http://pokeconnect.herokuapp.com/images/instinct.png'}} style={{alignSelf: "center", width: width*this.state.instinctsize/414, height: height*this.state.instinctsize/736, marginBottom: 20}}/>
             </TouchableOpacity>
 
             <View style={{flexWrap: 'wrap', alignSelf: "center", flexDirection:'row', marginBottom: 50 }}>
               <TouchableOpacity onPress={this.enlargeMystic}>
-                <Image source={{uri: 'http://localhost:3000/images/mystic.png'}} style={{marginRight: width*35/414, width: width*(this.state.mysticsize-5)/414, height: height*(this.state.mysticsize-5)/736}}/>
+                <Image source={{uri: 'http://pokeconnect.herokuapp.com/images/mystic.png'}} style={{marginRight: width*35/414, width: width*(this.state.mysticsize-5)/414, height: height*(this.state.mysticsize-5)/736}}/>
               </TouchableOpacity>
               <TouchableOpacity onPress={this.enlargeValor}>
-                <Image source={{uri: 'http://localhost:3000/images/valor.png'}} style={{marginLeft: width*35/414, width: width*this.state.valorsize/414, height: height*this.state.valorsize/736}}/>
+                <Image source={{uri: 'http://pokeconnect.herokuapp.com/images/valor.png'}} style={{marginLeft: width*35/414, width: width*this.state.valorsize/414, height: height*this.state.valorsize/736}}/>
               </TouchableOpacity>
             </View>
           </View>
@@ -350,7 +349,7 @@ var Profile = React.createClass({
   render() {
     var teamImg = null;
     if (this.props.team) {
-      teamImg = (<Image source={{uri: 'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'}}
+      teamImg = (<Image source={{uri: 'http://pokeconnect.herokuapp.com/images/'+this.props.team.toLowerCase()+'.png'}}
                         style={{width: 225*width/414, height: 225*height/736, alignItems: 'center'}} />
                 )
     }
@@ -406,8 +405,7 @@ var Home = React.createClass({
       markers: [],
       gymmarkers: [],
       teamfeed: [],
-      modalVisible: true,
-      notif: this.props.notif,
+      user: this.props.user,
       location: {
         latitude: 0,
         longitude: 0,
@@ -439,7 +437,9 @@ var Home = React.createClass({
 
   componentDidMount() {
 
-    fetch('http://localhost:3000/user')
+    // console.log("USERRR", this.props.user, this.state.user)
+
+    fetch('http://pokeconnect.herokuapp.com/user')
     .then((user) => user.json())
     .then((userJson) => {
       // console.log(userJson);
@@ -498,13 +498,12 @@ var Home = React.createClass({
   watchID: (null: ?number),
 
   refresh(lng, lat) {
-      console.log("USERRR NOTIF IN REFRESH", this.props.user, this.state.user)
     // console.log("Calling refresh...")
     if (!lng) lng = this.state.location.longitude;
     if (!lat) lat = this.state.location.latitude;
 
     var that = this;
-    fetch('http://localhost:3000/gymfeed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
+    fetch('http://pokeconnect.herokuapp.com/gymfeed?longitude=' + this.state.location.longitude + "&latitude=" + this.state.location.latitude)
     .then((feed) => feed.json())
     .then((feedJson) => {
       console.log("IN CURRENT GYMFEED ", feedJson);
@@ -522,7 +521,7 @@ var Home = React.createClass({
       }
     }).catch((err) => console.log(err))
 
-    fetch('http://localhost:3000/feed?longitude=' + lng + "&latitude=" + lat)
+    fetch('http://pokeconnect.herokuapp.com/feed?longitude=' + lng + "&latitude=" + lat)
     .then((feed) => feed.json())
     .then((feedJson) => {
       // console.log("Post feed: ", feedJson)
@@ -538,21 +537,7 @@ var Home = React.createClass({
           })
         }
         else if(this.state.filtered === true) {
-          if(that.state.pokemon === "Rarity: Uncommon") {
-            array = array.filter(function(item) {
-              return item.pokemon === that.state.pokemon
-            })
-          }
-          else if(that.state.pokemon === "Rarity: Rare") {
-            array = array.filter(function(item) {
-              return item.pokemon === that.state.pokemon
-            })
-          }
-          else if(that.state.pokemon === "Rarity: Super Rare") {
-            array = array.filter(function(item) {
-              return item.pokemon === that.state.pokemon
-            })
-          }
+          // filter for a single post
           array = array.filter(function(item) {
             return item.pokemon === that.state.pokemon
           })
@@ -572,7 +557,8 @@ var Home = React.createClass({
       this.setState({
         navigated: true,
         modalp: pokemon,
-        rating: pokemon.rating
+        rating: pokemon.rating,
+        modalVisible: true
       })
     }
   },
@@ -613,40 +599,22 @@ var Home = React.createClass({
     } else if (pokeList.indexOf(pokemon) === -1) {
       return Alert.alert('Please enter a valid pokémon name');
     } else if (pokeList.indexOf(pokemon) > -1) {
-      // console.log('[AM I HERE???]')
       this.setState({
         filterclick: false,
         filtered: true
       })
     }
-    // if(!this.state.filterclick) {
-    //   this.setState({
-    //     pokemon: ""
-    //   })
-    // }
-
-
-    // if (pokeList.indexOf(pokemon) === -1) {
-    //   return Alert.alert('shit');
-    // }
-    // this.setState({
-    //   filtered: true
-    // })
-    // console.log('WHY AM I DEFINED??????', placeholder)
-    // console.log('WHAT ABOUT ME?????????', id)
     return this.refresh();
   },
-//will mount everytime its rerendered??
+
   componentWillMount() {
-    // this.refresh()
     setInterval(this.refresh, 6*10*1000);
 
     var pokemonList = [];
-    var pokeNames = ["Rarity: Uncommon", "Rarity: Rare", "Rarity: Super Rare"];
-    fetch('http://localhost:3000/pokemon')
+    var pokeNames = [];
+    fetch('http://pokeconnect.herokuapp.com/pokemon')
     .then((pokemon) => pokemon.json())
     .then((pokemonJson) => {
-      // console.log(pokemonJson);
       if (pokemonJson.success) {
         for (var i = 0; i < pokemonJson.pokemon.length; i ++) {
           var pokemon = pokemonJson.pokemon[i];
@@ -660,9 +628,6 @@ var Home = React.createClass({
         });
       }
     }).catch((err) => console.log(err));
-
-        console.log("POKEMON LIST", this.state.pokemonList);
-
   },
 
   componentWillUnmount() {
@@ -670,7 +635,7 @@ var Home = React.createClass({
   },
 
   logout() {
-    fetch('http://localhost:3000/logout')
+    fetch('http://pokeconnect.herokuapp.com/logout')
     .then((logout) => logout.json())
     .then((logoutJson) => {
       if (logoutJson.success) {
@@ -725,7 +690,7 @@ var Home = React.createClass({
   setModalVisible(visible) {
     if(visible === false) {
       this.setState({
-        modalVisible: false,
+        modalVisible: true,
         navigated: false,
         upvoted: false,
         downvoted: false
@@ -744,7 +709,7 @@ var Home = React.createClass({
       yes: false,
       no: false
     });
-    fetch('http://localhost:3000/post/' + this.state.modalp._id, {
+    fetch('http://pokeconnect.herokuapp.com/post/' + this.state.modalp._id, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
@@ -756,9 +721,7 @@ var Home = React.createClass({
     .then((rating) => rating.json())
     .then((ratingJson) => {
       if(ratingJson.success) {
-        this.props.refresh();
-      } else {
-        console.log("UNSUCCESSFUL RATE")
+        this.refresh();
       }
     }).catch((error) => {
       console.log(error)
@@ -817,9 +780,7 @@ var Home = React.createClass({
 
 
       var widthUnit = width / 414;
-      var heightUnit = 55;
       var modal = (
-
         <Modal
         animationType={"slide"}
         transparent={true}
@@ -836,7 +797,7 @@ var Home = React.createClass({
             justifyContent: 'center'
           }}>
             <Text style={{fontSize: 30*height/736, color: 'white'}}>Did you see this Pokémon?</Text>
-            <Image source={{uri: 'http://localhost:3000/images/'+this.state.modalp.pokemon.toLowerCase()+'.png'}} style={{width: 250, height: 250, marginTop: 5}} />
+            <Image source={{uri: 'http://pokeconnect.herokuapp.com/images/'+this.state.modalp.pokemon.toLowerCase()+'.png'}} style={{width: 250, height: 250, marginTop: 5}} />
             <View style={{marginLeft: 10*widthUnit, marginTop: 3*height/736, alignItems: 'center'}}>
               <Text style={{fontWeight: '600', fontSize: 50, color: 'white'}}>{this.state.modalp.pokemon}</Text>
               <Text style={{fontWeight: '600', fontSize: 15, color: 'white'}}>Seen:</Text>
@@ -848,19 +809,19 @@ var Home = React.createClass({
               {up}
               {down}
             </View>
-            <TouchableHighlight
-              onPress={this.modal}
-              style={{marginTop: 10, height: 40, width: 200, justifyContent: 'center', alignItems: 'center'}}>
+            <TouchableHighlight 
+            onPress={this.modal}
+            style={{marginTop: 10, height: 40, width: 200, justifyContent: 'center', alignItems: 'center'}}>
               <View style={{borderWidth: 1, borderColor: 'white', height: 40, width: 200, justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{color: 'white'}}>Back</Text>
               </View>
             </TouchableHighlight>
           </View>
-        </Modal>
-        )
-      } else {
-        modal = null
-      }
+      </Modal>
+    )
+  } else {
+    modal = null
+  }
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -934,10 +895,10 @@ var Home = React.createClass({
       searchbar = null
     }
 
-  //   <Image source={{uri: 'http://localhost:3000/images/umfolozi.png'}}
+  //   <Image source={{uri: 'http://pokeconnect.herokuapp.com/images/umfolozi.png'}}
   //          style={{flex: 1}}>
   //   <BlurView blurType="light" style={{flex: 1}}>
-  //     <Image source={{uri: 'http://localhost:3000/images/umfolozi.png'}}
+  //     <Image source={{uri: 'http://pokeconnect.herokuapp.com/images/umfolozi.png'}}
   //            style={{width: 230*width/414, height: 230*height/736, marginTop: 50}} />
   //        </BlurView>
   // </Image>
@@ -991,7 +952,7 @@ var Home = React.createClass({
               }
             }.bind(this)}>
             <View style={{height: height*158/320}}>
-              <Settings notif={this.state.notif} scrollBy={this.scrollBy} pokemonList={this.state.pokemonList} pokeNames={this.state.pokeNames}/>
+              <Settings scrollBy={this.scrollBy} pokemonList={this.state.pokemonList} pokeNames={this.state.pokeNames}/>
             </View>
             <View style={{height: height*158/320}}>
               <Profile scrollBy={this.scrollBy} username={this.state.username} team={this.state.team} logout={this.logout}/>
@@ -1054,24 +1015,20 @@ var Home = React.createClass({
 var Notif = React.createClass({
 
 render() {
-
-  var widthUnit = width / 414;
-  var heightUnit = 42;
-
   return (
       <View>
       <View
         style={{
-          backgroundColor: '#f6f6f6',
+          backgroundColor: mcolor,
           borderBottomWidth: 1,
           borderColor: '#d3d3d3',
           paddingLeft: 10 * widthUnit,
           height: heightUnit,
           flexDirection: 'row'
         }}>
-          <Image source={{uri: 'http://localhost:3000/emojis/'+this.props.rowData.toLowerCase()+'.png'}} style={{width: 40*widthUnit, height: 40*height/736, marginTop: 1}} />
+          <Image source={{uri: 'http://pokeconnect.herokuapp.com/emojis/'+this.props.rowData.toLowerCase()+'.png'}} style={{width: 50*widthUnit, height: 50*height/736, marginTop: 5}} />
           <View style={{marginLeft: 10*widthUnit, marginTop: 3*height/736}}>
-            <Text style={{fontWeight: '600', fontSize: 15, color: "black"}}>{this.props.rowData}</Text>
+            <Text style={{fontWeight: '600', fontSize: 15, color: acolor}}>{this.props.rowData}</Text>
           </View>
       </View>
       </View>
@@ -1086,21 +1043,16 @@ var Settings = React.createClass({
       pokemon: "",
       pokemonObj: {},
       data: [],
-      notif: this.props.notif || [],
-      toggle: true
+      notif: []
     }
   },
 
   post() {
-    if(this.state.pokemon === "MewTwo" || this.state.pokemon === "Mew" || this.state.pokemon === "Ditto" ||
-  this.state.pokemon === "Zapdos" || this.state.pokemon === "Articuno" || this.state.pokemon === "Moltres") {
-    return Alert.alert('This Pokémon is not in the PokéDex');
-  }
     if (this.props.pokeNames.indexOf(this.state.pokemon) === -1) {
       return Alert.alert('Please enter a valid pokémon name');
     }
 
-    fetch('http://localhost:3000/notif', {
+    fetch('http://pokeconnect.herokuapp.com/notif', {
       headers: {
          "Content-Type": "application/json"
       },
@@ -1113,19 +1065,14 @@ var Settings = React.createClass({
     .then((postJson) => {
       console.log("[HELLO]WORKING?", postJson);
       if(postJson.success) {
-          this.setState({
-            pokemonObj: {},
-            pokemon: '',
-            notif: postJson.notif
-          })
-      }
-        else if(!postJson.success) {
-          this.setState({
-            pokemonObj: {},
-            pokemon: ''
-          })
-          return Alert.alert('You already have this Poké Alert')
-        } else {
+        // this.setModalVisible(false);
+        this.setState({
+          pokemonObj: {},
+          pokemon: '',
+          notif: postJson.notif
+        });
+        // this.props.refresh();
+      } else {
         console.log('error');
       }
     })
@@ -1167,8 +1114,8 @@ var Settings = React.createClass({
 
   render() {
     console.log("POKEMON LIST", this.state.pokemonList);
-      if (this.state.toggle) {
 
+<<<<<<< HEAD
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       return (
 
@@ -1211,84 +1158,70 @@ var Settings = React.createClass({
                           value={this.state.toggle} 
                           />
                       </View>
+=======
 
-              </View>
-              </View>
-              <View>
-                <ListView
+>>>>>>> origin/master
 
-                  automaticallyAdjustContentInsets={true}
-                  enableEmptySections={true}
-                  dataSource={ds.cloneWithRows(this.state.notif)}
-                  style={{marginTop: 50, height: height*3/7}}
-                  renderRow={(rowData) => {
-                    return (
-                      <Notif rowData={rowData}
-                        refresh={this.props.refresh}
-                      />
-                      )
-                    }
-                  } />
-              </View>
+
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    return (
+      <View style={{flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', backgroundColor:"#E7E7E7"}}>
+        <View>
+          <View style={{height: 48, flexDirection: 'row', alignItems: 'center', backgroundColor: "#999999"}}>
+            <Text style={{left: 15,fontSize: 30, color: 'white'}}>Settings</Text>
+              <TouchableOpacity onPress={this.props.scrollBy.bind(null, 1)} style={{height: 30, width: 70, borderWidth: 1, borderRadius: 5, borderColor: "white", left: 3*width/6, justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{color: "white"}}>Back</Text>
+              </TouchableOpacity>
+          </View>
+          <View style={{flexDirection: "row"}}>
+            <View style={{alignItems: 'center', backgroundColor: "#F7F7F7"}}>
+              <Text style={{color: "black"}}>Notifications</Text>
+            </View>
+            <View style={{flexDirection: 'row', position: 'absolute', zIndex: 999}}>
+              <AutoComplete
+                autoCorrect={false}
+                onSelect={this.onSelect}
+                onTyping={this.onTyping}
+                autoCompleteFontSize={15*height/736}
+                autoCompleteTableBorderWidth={1}
+                autoCompleteRowHeight={height*25/736}
+                maximumNumberOfAutoCompleteRows={10}
+                autoCompleteTableBackgroundColor='white'
+                style={{alignSelf: 'stretch',
+                    height: 40*height/736,
+                    width: width*3/7,
+                    backgroundColor: '#FFF'}}
+                suggestions={this.state.data}
+                placeholder='Which Pokémon did you find?'
+                value={this.state.pokemon}
+              />
+              <TouchableOpacity
+              style={[styles.button, styles.buttonRed, {height: 40*height/736, width: width/7, justifyContent: 'center'}]}
+              onPress={this.post}
+              >
+                <Text style={styles.buttonLabel}>Post</Text>
+              </TouchableOpacity>
             </View>
           </View>
-        </View>
-       
-      )
-    }
-
-    else{
-      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      return (
-        <View style={{flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', backgroundColor:"#999999"}}>
           <View>
-
-            <View>
-              <View style={{flexDirection: "row", zIndex: 9}}>
-              <View style={{alignItems: 'center', backgroundColor: "#F7F7F7"}}>
-              </View>
-              <View style={{flexDirection: 'row', position: 'absolute', marginTop: 10}}>
-                <AutoComplete
-                  autoCompleteFontSize={15*height/736}
-                  autoCompleteTableBorderWidth={1}
-                  autoCompleteRowHeight={height*25/736}
-                  maximumNumberOfAutoCompleteRows={10}
-                  autoCompleteTableBackgroundColor='white'
-                  style={{alignSelf: 'stretch',
-                      marginLeft: 1/56*width,
-                      height: 35*height/736,
-                      width: width*35/56,
-                      backgroundColor: '#f3f3f3'}}
-                  placeholder='Notifications Off'
-                />
-                <TouchableOpacity
-                style={[styles.button, styles.buttonRed, {marginRight: width*1.5/56, height: 35*height/736, width: 10*width/56, justifyContent: 'center'}]}
-                >
-                  <Text style={styles.buttonLabel}>Add</Text>
-                </TouchableOpacity>
-
-
-                      <View>
-                        <Switch
-                          onValueChange={(value) => this.setState({toggle: true})}
-                          style={{marginBottom: 10}}
-                          value={this.state.toggle} 
-                          />
-                      </View>
-
-              </View>
-              </View>
-              <View>
-                 <Image source={require('./ditto_notifications.png')} style={{width: 1.3*width*.5, height: 1.3*width*.46, marginTop: 70, marginLeft: width*5/28}} />
-
-              </View>
-            </View>
+            <ListView
+              automaticallyAdjustContentInsets={true}
+              enableEmptySections={true}
+              dataSource={ds.cloneWithRows(this.state.notif)}
+              renderRow={(rowData) => {
+                return (
+                  <Notif rowData={rowData}
+                    refresh={this.props.refresh}
+                  />
+                  )
+                }
+              } />
           </View>
         </View>
-        )
-      
-    }
+      </View>
+    )
   }
+
 })
 
 var PostView = React.createClass({
@@ -1348,8 +1281,7 @@ var PostView = React.createClass({
         }
       })
     }
-    var pokeNames = this.props.pokeNames.slice(3, 154)
-    var pokemonComplete = pokeNames.filter(function (name) {
+    var pokemonComplete = this.props.pokeNames.filter(function (name) {
       return name.toLowerCase().startsWith(text.toLowerCase())
     })
     // if (this.state.pokeNames.indexOf(text)) {
@@ -1376,15 +1308,18 @@ var PostView = React.createClass({
     if(this.state.pokemon === "Company IX") {
       return Alert.alert('George')
     }
+<<<<<<< HEAD
     if(this.state.pokemon === "MewTwo" || this.state.pokemon === "Mew" || this.state.pokemon === "Ditto" ||
   this.state.pokemon === "Zapdos" || this.state.pokemon === "Articuno" || this.state.pokemon === "Moltres") {
     return Alert.alert('This Pokémon is event only');
   }
+=======
+>>>>>>> origin/master
     if (this.props.pokeNames.indexOf(this.state.pokemon) === -1) {
       return Alert.alert('Please enter a valid pokémon name');
     }
 
-    fetch('http://localhost:3000/post', {
+    fetch('http://pokeconnect.herokuapp.com/post', {
       headers: {
          "Content-Type": "application/json"
       },
@@ -1420,12 +1355,12 @@ var PostView = React.createClass({
     if(this.state.pokemon === "Umfolozi" || this.state.pokemon === "Company IX") {
       if(this.state.pokemon === "Umfolozi") {
         var image = (
-          <Image source={{uri: 'http://localhost:3000/images/umfolozi.png'}}
+          <Image source={{uri: 'http://pokeconnect.herokuapp.com/images/umfolozi.png'}}
                  style={{width: 230*width/414, height: 230*height/736, marginTop: 50}} />
         )
       } else {
           var image = (
-            <Image source={{uri: 'http://localhost:3000/images/company.png'}}
+            <Image source={{uri: 'http://pokeconnect.herokuapp.com/images/company.png'}}
                    style={{width: 230*width/414, height: 230*height/736, marginTop: 50}} />
           )
       }
@@ -1479,7 +1414,7 @@ var PostView = React.createClass({
       var shizz = ((Object.keys(this.state.pokemonObj).length !== 0 && this.props.pokeNames.indexOf(this.state.pokemon) > -1) ?
       <View>
         <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
-          <Image source={{uri: 'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
+          <Image source={{uri: 'http://pokeconnect.herokuapp.com/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'}}
                    style={{width: 230*width/414, height: 230*height/736, marginTop: 50}} />
           <View style={{marginTop: 30}}>
             <View style={{flexDirection: 'row'}}>
@@ -1578,21 +1513,11 @@ var Map = React.createClass({
       pokemon: '',
       data: [],
       pokemonObj: {},
-      // modalVisible: false,
-      // modalVisible2: false
     };
   },
   componentWillReceiveProps(newProps) {
     this.setState(newProps.region)
   },
-
-  // setModalVisible(visible) {
-  //   this.setState({modalVisible: visible});
-  // },
-
-  // setModalVisible2(visible) {
-  //   this.setState({modalVisible2: visible});
-  // },
 
   onRegionChange(region) {
     this.props.changeRegion(region)
@@ -1635,11 +1560,6 @@ var Map = React.createClass({
     }
   },
 
-  // modal() {
-  //   this.setModalVisible(!this.state.modalVisible);
-  // },
-
-
   render() {
     // console.log(this.work)
 
@@ -1671,7 +1591,7 @@ var Map = React.createClass({
         title={"Gym Request"}
         key={'gym-' + i}
         description={gymmarker.message}
-        image={{uri: 'http://localhost:3000/images/small_'+team+'.png'}}
+        image={{uri: 'http://pokeconnect.herokuapp.com/images/small_'+team+'.png'}}
       />)
     })
     var all = [];
@@ -1776,7 +1696,7 @@ var GymView = React.createClass({
 
   post() {
     // console.log("IN POST GYM")
-    fetch('http://localhost:3000/gympost', {
+    fetch('http://pokeconnect.herokuapp.com/gympost', {
       headers: {
          "Content-Type": "application/json"
       },
@@ -1880,16 +1800,19 @@ var GymPost = React.createClass({
 
       if(this.state.selected) {
         var mcolor = '#5C5C5C'
+        var acolor = 'white'
         var scolor = 'white'
         var nav = (
-          <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#5C5C5C'}}>
-            <Image source={require('./img/navigation2.png')} style={{width: width*35/414, height: height*35/736}}/>
-          </TouchableOpacity>
+          <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FF585B'}}>
+          <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'up'}/>
+          <Text style={{color: 'white', fontSize: 8}}>Directions</Text>
+        </TouchableOpacity>
         )
       }
       else if (!this.state.selected) {
         var nav = null
         var white = null
+        var acolor = 'black'
         var mcolor = '#f6f6f6'
         var scolor = 'grey'
       }
@@ -1909,11 +1832,11 @@ var GymPost = React.createClass({
         <View style={{flexDirection: 'row'}}>
           <TouchableOpacity onPress={this.selectPost}>
             <View style={{flexDirection: 'row'}}>
-              <Image source={{uri: 'http://localhost:3000/images/'+team+'.png'}}
+              <Image source={{uri: 'http://pokeconnect.herokuapp.com/images/'+team+'.png'}}
               style={{width: 50*widthUnit, height: 50*height/736, marginTop: 5}} />
               <View style={{marginLeft: 10, marginTop: 3}}>
-                <Text style={{fontWeight: '600', fontSize: 15}}>{'Gym request ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mile(s) away'}</Text>
-                <Text style={{fontWeight: '600', fontSize: 13}}>{Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago'} </Text>
+                <Text style={{fontWeight: '600', fontSize: 15, color: acolor}}>{'Gym request ' + getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1) + ' mile(s) away'}</Text>
+                <Text style={{fontWeight: '600', fontSize: 13, color: acolor}}>{Math.floor((Date.now() - new Date(this.props.rowData.time).getTime()) / 60000) + ' minute(s) ago'} </Text>
                 <Text style={{fontSize: 11, color: scolor}}>{this.props.rowData.user.username}: "{this.props.rowData.message}"</Text>
               </View>
             </View>
@@ -1996,7 +1919,6 @@ var Feed = React.createClass({
       <View style={{borderTopWidth: 1, borderColor: '#d3d3d3'}}>
       <View style={{width: width, height: height * 158/320}}>
         <ListView
-          style={{zIndex: 999}}
           automaticallyAdjustContentInsets={true}
           enableEmptySections={true}
           dataSource={this.props.feed}
@@ -2065,7 +1987,7 @@ var Post = React.createClass({
       })
     }
     else if (this.state.selected) {
-      this.props.changeRegion({
+      this.props.changeRegion({ 
         latitude: this.props.location.latitude,
         longitude: this.props.location.longitude,
         latitudeDelta: this.props.region.latitudeDelta,
@@ -2078,7 +2000,7 @@ var Post = React.createClass({
   },
 
   navigated() {
-    fetch('http://localhost:3000/post/'+this.props.rowData._id)
+    fetch('http://pokeconnect.herokuapp.com/post/'+this.props.rowData._id)
     .then((rating) => rating.json())
     .then((ratingJson) => {
       console.log('[WHAT AM I DOING HERE?]', ratingJson)
@@ -2147,6 +2069,7 @@ var Post = React.createClass({
       var nav = (
         <TouchableOpacity onPress={this.navigated} style={{width: heightUnit - 10, height: heightUnit - 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FF585B'}}>
           <Triangle width={15*width/414} height={15*height/736} color={'white'} direction={'up'}/>
+          <Text style={{color: 'white', fontSize: 8}}>Directions</Text>
         </TouchableOpacity>
       )
     }
