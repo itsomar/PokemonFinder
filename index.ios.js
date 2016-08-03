@@ -526,11 +526,14 @@ var Home = React.createClass({
     fetch('http://localhost:3000/feed?longitude=' + lng + "&latitude=" + lat)
     .then((feed) => feed.json())
     .then((feedJson) => {
-      // console.log("Post feed: ", feedJson)
+      console.log("Post feed: ", feedJson)
       if (feedJson.success) {
         var that = this;
         // sort the feed chronologically
         var array = feedJson.feed.reverse();
+        console.log("ARRAY HERE BRAHH", array);
+
+        console.log("FPOKEMON STATE GDJB", this.state.pokemon)
 
         if(this.state.filteredOne.on === true) {
           // filter for one post
@@ -541,24 +544,27 @@ var Home = React.createClass({
         else if(this.state.filtered === true) {
           if(that.state.pokemon === "Rarity: Uncommon") {
             array = array.filter(function(item) {
-              return item.pokemon === that.state.pokemon
+              return item.pokemonObject.rarity === "Uncommon"
             })
           }
           else if(that.state.pokemon === "Rarity: Rare") {
             array = array.filter(function(item) {
-              return item.pokemon === that.state.pokemon
+              console.log("IM INSIDE RARE", item);
+              return item.pokemonObject.rarity === "Rare" || item.pokemonObject.rarity === " Super Rare"
             })
           }
           else if(that.state.pokemon === "Rarity: Super Rare") {
             array = array.filter(function(item) {
+              return item.pokemonObject.rarity === "Super Rare"
+            })
+          } else {
+            array = array.filter(function(item) {
               return item.pokemon === that.state.pokemon
             })
           }
-          array = array.filter(function(item) {
-            return item.pokemon === that.state.pokemon
-          })
         }
 
+        console.log("ARRATYYGYGDUH", array);
         this.setState({
           markers: array
         })
@@ -603,6 +609,7 @@ var Home = React.createClass({
   },
 
   filter(pokeList, pokemon, placeholder, id) {
+    console.log("LOOK AT ME TOOL", pokemon);
         // console.log("POKEMON LIST", this.state.pokemonList);
     if (id) {
       this.setState({
@@ -613,7 +620,8 @@ var Home = React.createClass({
       })
     } else if (pokeList.indexOf(pokemon) === -1) {
       return Alert.alert('Please enter a valid pokémon name');
-    } else if (pokeList.indexOf(pokemon) > -1) {
+      }
+    else if (pokeList.indexOf(pokemon) > -1) {
       // console.log('[AM I HERE???]')
       this.setState({
         filterclick: false,
@@ -1074,6 +1082,9 @@ render() {
           <View style={{marginLeft: 10*widthUnit, marginTop: 3*height/736}}>
             <Text style={{fontWeight: '600', fontSize: 15, color: "black"}}>{this.props.rowData}</Text>
           </View>
+          <TouchableOpacity style={{alignItems: "center"}}>
+            <Text style={{fontWeight: '300', fontSize: 10, color: "black"}}></Text>
+          </TouchableOpacity>
       </View>
       </View>
      )
@@ -1326,6 +1337,11 @@ var PostView = React.createClass({
       return Alert.alert('Please enter a valid pokémon name');
     }
 
+    var pokemonObject = this.props.pokemonList.filter((item) => {
+      console.log("INSIDE POKEMON OBJECT BRAHSS", item);
+      return item.name === this.state.pokemon
+    })
+
     fetch('http://localhost:3000/post', {
       headers: {
          "Content-Type": "application/json"
@@ -1333,6 +1349,7 @@ var PostView = React.createClass({
       method: 'POST',
       body: JSON.stringify({
         pokemon: this.state.pokemon,
+        pokemonObject: pokemonObject[0],
         longitude: this.props.location.longitude,
         latitude: this.props.location.latitude
       })
