@@ -1585,7 +1585,7 @@ catch(function(err){return console.log(err);});
 },
 
 submit:function submit(){var _this2=this;
-fetch('http://localhost:3000/login',{
+fetch('http://pokeconnect.herokuapp.com/login',{
 method:"POST",
 headers:{
 "Content-Type":"application/json"},
@@ -1696,7 +1696,7 @@ valorsize:100};
 
 submit:function submit(){var _this4=this;
 console.log("Starting submit");
-fetch('http://localhost:3000/register',{
+fetch('http://pokeconnect.herokuapp.com/register',{
 method:'POST',
 headers:{
 "Content-Type":"application/json"},
@@ -1805,15 +1805,15 @@ _react2.default.createElement(_reactNative.Text,{style:[styles.textMed,{color:'w
 
 _react2.default.createElement(_reactNative.View,{style:{height:270}},
 _react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.enlargeInstinct},
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://localhost:3000/images/instinct.png'},style:{alignSelf:"center",width:width*this.state.instinctsize/414,height:height*this.state.instinctsize/736,marginBottom:20}})),
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/instinct.png'},style:{alignSelf:"center",width:width*this.state.instinctsize/414,height:height*this.state.instinctsize/736,marginBottom:20}})),
 
 
 _react2.default.createElement(_reactNative.View,{style:{flexWrap:'wrap',alignSelf:"center",flexDirection:'row',marginBottom:50}},
 _react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.enlargeMystic},
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://localhost:3000/images/mystic.png'},style:{marginRight:width*35/414,width:width*(this.state.mysticsize-5)/414,height:height*(this.state.mysticsize-5)/736}})),
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/mystic.png'},style:{marginRight:width*35/414,width:width*(this.state.mysticsize-5)/414,height:height*(this.state.mysticsize-5)/736}})),
 
 _react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.enlargeValor},
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://localhost:3000/images/valor.png'},style:{marginLeft:width*35/414,width:width*this.state.valorsize/414,height:height*this.state.valorsize/736}})))),
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/valor.png'},style:{marginLeft:width*35/414,width:width*this.state.valorsize/414,height:height*this.state.valorsize/736}})))),
 
 
 
@@ -1835,7 +1835,7 @@ var Profile=_react2.default.createClass({displayName:'Profile',
 render:function render(){
 var teamImg=null;
 if(this.props.team){
-teamImg=_react2.default.createElement(_reactNative.Image,{source:{uri:'http://localhost:3000/images/'+this.props.team.toLowerCase()+'.png'},
+teamImg=_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/'+this.props.team.toLowerCase()+'.png'},
 style:{width:225*width/414,height:225*height/736,alignItems:'center'}});
 
 }
@@ -1925,7 +1925,7 @@ componentDidMount:function componentDidMount(){var _this6=this;
 
 
 
-fetch('http://localhost:3000/user').
+fetch('http://pokeconnect.herokuapp.com/user').
 then(function(user){return user.json();}).
 then(function(userJson){
 
@@ -1989,7 +1989,7 @@ if(!lng)lng=this.state.location.longitude;
 if(!lat)lat=this.state.location.latitude;
 
 var that=this;
-fetch('http://localhost:3000/gymfeed?longitude='+this.state.location.longitude+"&latitude="+this.state.location.latitude).
+fetch('http://pokeconnect.herokuapp.com/gymfeed?longitude='+this.state.location.longitude+"&latitude="+this.state.location.latitude).
 then(function(feed){return feed.json();}).
 then(function(feedJson){
 console.log("IN CURRENT GYMFEED ",feedJson);
@@ -2007,7 +2007,7 @@ teamfeed:teamfeed});
 }
 }).catch(function(err){return console.log(err);});
 
-fetch('http://localhost:3000/feed?longitude='+lng+"&latitude="+lat).
+fetch('http://pokeconnect.herokuapp.com/feed?longitude='+lng+"&latitude="+lat).
 then(function(feed){return feed.json();}).
 then(function(feedJson){
 
@@ -2098,7 +2098,7 @@ setInterval(this.refresh,6*10*1000);
 
 var pokemonList=[];
 var pokeNames=[];
-fetch('http://localhost:3000/pokemon').
+fetch('http://pokeconnect.herokuapp.com/pokemon').
 then(function(pokemon){return pokemon.json();}).
 then(function(pokemonJson){
 if(pokemonJson.success){
@@ -2121,7 +2121,7 @@ navigator.geolocation.clearWatch(this.watchId);
 },
 
 logout:function logout(){var _this9=this;
-fetch('http://localhost:3000/logout').
+fetch('http://pokeconnect.herokuapp.com/logout').
 then(function(logout){return logout.json();}).
 then(function(logoutJson){
 if(logoutJson.success){
@@ -2195,7 +2195,7 @@ modalVisible:false,
 yes:false,
 no:false});
 
-fetch('http://localhost:3000/post/'+this.state.modalp._id,{
+fetch('http://pokeconnect.herokuapp.com/post/'+this.state.modalp._id,{
 method:'POST',
 headers:{
 "Content-Type":"application/json"},
@@ -2283,7 +2283,7 @@ alignItems:'center',
 justifyContent:'center'}},
 
 _react2.default.createElement(_reactNative.Text,{style:{fontSize:30*height/736,color:'white'}},'Did you see this Pokémon?'),
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://localhost:3000/images/'+this.state.modalp.pokemon.toLowerCase()+'.png'},style:{width:250,height:250,marginTop:5}}),
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/'+this.state.modalp.pokemon.toLowerCase()+'.png'},style:{width:250,height:250,marginTop:5}}),
 _react2.default.createElement(_reactNative.View,{style:{marginLeft:10*widthUnit,marginTop:3*height/736,alignItems:'center'}},
 _react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:50,color:'white'}},this.state.modalp.pokemon),
 _react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:15,color:'white'}},'Seen:'),
@@ -2512,7 +2512,7 @@ paddingLeft:10*widthUnit,
 height:heightUnit,
 flexDirection:'row'}},
 
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://localhost:3000/emojis/'+this.props.rowData.toLowerCase()+'.png'},style:{width:50*widthUnit,height:50*height/736,marginTop:5}}),
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/emojis/'+this.props.rowData.toLowerCase()+'.png'},style:{width:50*widthUnit,height:50*height/736,marginTop:5}}),
 _react2.default.createElement(_reactNative.View,{style:{marginLeft:10*widthUnit,marginTop:3*height/736}},
 _react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:15,color:acolor}},this.props.rowData)))));
 
@@ -2538,7 +2538,7 @@ if(this.props.pokeNames.indexOf(this.state.pokemon)===-1){
 return _reactNative.Alert.alert('Please enter a valid pokémon name');
 }
 
-fetch('http://localhost:3000/notif',{
+fetch('http://pokeconnect.herokuapp.com/notif',{
 headers:{
 "Content-Type":"application/json"},
 
@@ -2753,7 +2753,7 @@ if(this.props.pokeNames.indexOf(this.state.pokemon)===-1){
 return _reactNative.Alert.alert('Please enter a valid pokémon name');
 }
 
-fetch('http://localhost:3000/post',{
+fetch('http://pokeconnect.herokuapp.com/post',{
 headers:{
 "Content-Type":"application/json"},
 
@@ -2789,12 +2789,12 @@ render:function render(){
 if(this.state.pokemon==="Umfolozi"||this.state.pokemon==="Company IX"){
 if(this.state.pokemon==="Umfolozi"){
 var image=
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://localhost:3000/images/umfolozi.png'},
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/umfolozi.png'},
 style:{width:230*width/414,height:230*height/736,marginTop:50}});
 
 }else{
 var image=
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://localhost:3000/images/company.png'},
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/company.png'},
 style:{width:230*width/414,height:230*height/736,marginTop:50}});
 
 }
@@ -2848,7 +2848,7 @@ _react2.default.createElement(_reactNative.Text,null,'Back')));
 var shizz=Object.keys(this.state.pokemonObj).length!==0&&this.props.pokeNames.indexOf(this.state.pokemon)>-1?
 _react2.default.createElement(_reactNative.View,null,
 _react2.default.createElement(_reactNative.View,{style:{justifyContent:'center',alignItems:'center',flexDirection:'row'}},
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://localhost:3000/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'},
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/'+this.state.pokemonObj.name.toLowerCase()+'.png'},
 style:{width:230*width/414,height:230*height/736,marginTop:50}}),
 _react2.default.createElement(_reactNative.View,{style:{marginTop:30}},
 _react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'}},
@@ -3025,7 +3025,7 @@ longitude:parseFloat(gymmarker.location.longitude)},
 title:"Gym Request",
 key:'gym-'+i,
 description:gymmarker.message,
-image:{uri:'http://localhost:3000/images/small_'+team+'.png'}});
+image:{uri:'http://pokeconnect.herokuapp.com/images/small_'+team+'.png'}});
 
 });
 var all=[];
@@ -3131,7 +3131,7 @@ message:""};
 
 post:function post(){var _this14=this;
 
-fetch('http://localhost:3000/gympost',{
+fetch('http://pokeconnect.herokuapp.com/gympost',{
 headers:{
 "Content-Type":"application/json"},
 
@@ -3267,7 +3267,7 @@ paddingLeft:10*widthUnit}},
 _react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'}},
 _react2.default.createElement(_reactNative.TouchableOpacity,{onPress:this.selectPost},
 _react2.default.createElement(_reactNative.View,{style:{flexDirection:'row'}},
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://localhost:3000/images/'+team+'.png'},
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/images/'+team+'.png'},
 style:{width:50*widthUnit,height:50*height/736,marginTop:5}}),
 _react2.default.createElement(_reactNative.View,{style:{marginLeft:10,marginTop:3}},
 _react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:15,color:acolor}},'Gym request '+getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1)+' mile(s) away'),
@@ -3435,7 +3435,7 @@ selected:0});
 },
 
 navigated:function navigated(){var _this18=this;
-fetch('http://localhost:3000/post/'+this.props.rowData._id).
+fetch('http://pokeconnect.herokuapp.com/post/'+this.props.rowData._id).
 then(function(rating){return rating.json();}).
 then(function(ratingJson){
 console.log('[WHAT AM I DOING HERE?]',ratingJson);
@@ -3521,7 +3521,7 @@ paddingLeft:10*widthUnit,
 height:heightUnit,
 flexDirection:'row'},
 onPress:this.selectPost},
-_react2.default.createElement(_reactNative.Image,{source:{uri:'http://localhost:3000/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'},style:{width:50*widthUnit,height:50*height/736,marginTop:5}}),
+_react2.default.createElement(_reactNative.Image,{source:{uri:'http://pokeconnect.herokuapp.com/emojis/'+this.props.rowData.pokemon.toLowerCase()+'.png'},style:{width:50*widthUnit,height:50*height/736,marginTop:5}}),
 _react2.default.createElement(_reactNative.View,{style:{marginLeft:10*widthUnit,marginTop:3*height/736}},
 _react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:15,color:acolor}},this.props.rowData.pokemon+' '+getDistanceFromLatLonInMiles(this.props.location.latitude,this.props.location.longitude,this.props.rowData.location.latitude,this.props.rowData.location.longitude).toFixed(1)+' mile(s) away'),
 _react2.default.createElement(_reactNative.Text,{style:{fontWeight:'600',fontSize:13,color:acolor}},Math.floor((Date.now()-new Date(this.props.rowData.time).getTime())/60000)+' minute(s) ago '),
@@ -82673,7 +82673,7 @@ __d(643 /* Pokegame/pokegym.png */, function(global, require, module, exports) {
 }, "Pokegame/pokegym.png");
 __d(644 /* Pokegame/question.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/stevenlin18/Desktop/Horizons/PokemonFinder","httpServerLocation":"/assets","width":258,"height":258,"scales":[1],"files":["/Users/stevenlin18/Desktop/Horizons/PokemonFinder/question.png"],"hash":"6c783fdbf9c93ab04858bc7cc54c1e4e","name":"question","type":"png"});
 }, "Pokegame/question.png");
-__d(645 /* Pokegame/pokeball.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/stevenlin18/Desktop/Horizons/PokemonFinder","httpServerLocation":"/assets","width":45,"height":45,"scales":[1],"files":["/Users/stevenlin18/Desktop/Horizons/PokemonFinder/pokeball.png"],"hash":"bc12456359e115a34456bcd393c9ff29","name":"pokeball","type":"png"});
+__d(645 /* Pokegame/pokeball.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/stevenlin18/Desktop/Horizons/PokemonFinder","httpServerLocation":"/assets","width":45,"height":45,"scales":[1],"files":["/Users/stevenlin18/Desktop/Horizons/PokemonFinder/pokeball.png"],"hash":"fa1eb6c4fa4b187b017e184656978f9c","name":"pokeball","type":"png"});
 }, "Pokegame/pokeball.png");
 __d(646 /* Pokegame/ballbutton.png */, function(global, require, module, exports) {module.exports = require(161 /* react-native/Libraries/Image/AssetRegistry */).registerAsset({"__packager_asset":true,"fileSystemLocation":"/Users/stevenlin18/Desktop/Horizons/PokemonFinder","httpServerLocation":"/assets","width":200,"height":200,"scales":[1],"files":["/Users/stevenlin18/Desktop/Horizons/PokemonFinder/ballbutton.png"],"hash":"9cd96b1a3478c67dc41df5bb4cf83d4b","name":"ballbutton","type":"png"});
 }, "Pokegame/ballbutton.png");
