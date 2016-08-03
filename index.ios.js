@@ -408,7 +408,6 @@ var Home = React.createClass({
       filterclick: true,
       navigated: false,
       selectedTab: 'redTab',
-      notifCount: 0,
       presses: 2,
       presses2: 1,
       modalVisible: true,
@@ -514,6 +513,7 @@ var Home = React.createClass({
   watchID: (null: ?number),
 
   refresh(lng, lat) {
+    console.log('[REFRESHING MOASDFPAOJPOJGWAOEHDSFAPFJAPOGH[APHERG]')
     if (!lng) lng = this.state.location.longitude;
     if (!lat) lat = this.state.location.latitude;
     var that = this;
@@ -566,8 +566,10 @@ var Home = React.createClass({
             })
           }
         }
+        console.log("FEDD JSONN", feedJson.notif)
         this.setState({
-          markers: array
+          markers: array,
+          notif: feedJson.notif
         });
       }
     })
@@ -626,6 +628,14 @@ var Home = React.createClass({
       })
     }
     this.refresh();
+  },
+
+  pullupfilterbuttonagain() {
+    this.all();
+    this.setState({
+      filterclick: true,
+      filtered: false
+    })
   },
 
   componentWillMount() {
@@ -749,6 +759,13 @@ var Home = React.createClass({
     })
   },
 
+  updateNotif(notif) {
+    console.log("[notif]", notif);
+    this.setState({
+      notif
+    })
+  },
+
   render() {
 
     var bar;
@@ -845,7 +862,9 @@ var Home = React.createClass({
         <View style={{flexDirection: 'row', position: 'absolute', top: 0, zIndex: 999}}>
           <AutoComplete
             autoCorrect={false}
+            clearTextOnFocus={true}
             onSelect={this.onTyping}
+            onFocus={this.pullupfilterbuttonagain}
             onTyping={this.onTyping}
             autoCompleteFontSize={15*height/736}
             autoCompleteTableBorderWidth={1}
@@ -912,7 +931,7 @@ var Home = React.createClass({
               }
             }.bind(this)}>
             <View style={{height: height*158/320}}>
-              <Settings notif={this.state.notif} scrollBy={this.scrollBy} pokemonList={this.state.pokemonList} pokeNames={this.state.pokeNames}/>
+              <Settings refresh={this.refresh} notif={this.state.notif} scrollBy={this.scrollBy} pokemonList={this.state.pokemonList} pokeNames={this.state.pokeNames} changeNotif={this.updateNotif}/>
             </View>
             <View style={{height: height*158/320}}>
               <Profile scrollBy={this.scrollBy} username={this.state.username} team={this.state.team} logout={this.logout}/>
@@ -956,34 +975,47 @@ var Home = React.createClass({
 
 var Notif = React.createClass({
 
-render() {
-  var widthUnit = width / 414;
-  var heightUnit = 47;
-  return (
-      <View>
+  remove(pokemon) {
+    console.log("ROW DATA", this.props.rowData)
+
+    fetch('http://localhost:3000/notif/remove?pokemon='+pokemon)
+    .then((notif) => notif.json())
+    .then((notifJson) => {
+      console.log('[WHAT AM I DOING HERE?]', notifJson)
+      if (notifJson.success) {
+        this.props.refresh();
+        console.log("[new notifJson]", notifJson);
+        // this.props.onRemove(notifJson.notif)
+      }
+    }).catch((err) => console.log(err));
+  },
+
+  render() {
+    var widthUnit = width / 414;
+    var heightUnit = 47;
+    return (
       <View
-        style={{
-          backgroundColor: '#f6f6f6',
-          borderBottomWidth: 1,
-          borderColor: '#d3d3d3',
-          paddingLeft: 10 * widthUnit,
-          height: heightUnit,
-          flexDirection: 'row',
-          alignItems: 'center'
-        }}>
-          <Image 
-            source={{uri: 'http://localhost:3000/emojis/'+this.props.rowData.toLowerCase()+'.png'}} 
-            style={{width: 40*widthUnit, height: 40*height/736}} 
-          />
-          <View style={{marginLeft: 10*widthUnit, justifyContent: 'center'}}>
-            <Text style={{fontWeight: '600', fontSize: 15, color: "black"}}>{this.props.rowData}</Text>
-          </View>
-          <TouchableOpacity style={{alignItems: "center"}}>
-            <Text style={{fontWeight: '300', fontSize: 10, color: "black"}}></Text>
-          </TouchableOpacity>
+      style={{
+        backgroundColor: '#f6f6f6',
+        borderBottomWidth: 1,
+        borderColor: '#d3d3d3',
+        paddingLeft: 10 * widthUnit,
+        height: heightUnit,
+        flexDirection: 'row',
+        alignItems: 'center'
+      }}>
+        <Image 
+          source={{uri: 'http://localhost:3000/emojis/'+this.props.rowData.toLowerCase()+'.png'}} 
+          style={{width: 40*widthUnit, height: 40*height/736}} 
+        />
+        <View style={{marginLeft: 10*widthUnit, justifyContent: 'center'}}>
+          <Text style={{fontWeight: '600', fontSize: 15, color: "black"}}>{this.props.rowData}</Text>
+        </View>
+        <TouchableOpacity onPress={this.remove.bind(this, this.props.rowData)} style={{alignItems: "center", position: "absolute", right: 10, top: 15}}>
+          <Text style={{fontWeight: '300', fontSize: 10, color: "black"}}>Remove</Text>
+        </TouchableOpacity>
       </View>
-      </View>
-     )
+    )
   }
 })
 
@@ -1003,6 +1035,10 @@ var Settings = React.createClass({
       notif: this.props.notif || [],
       toggle: true
     }
+  },
+
+  componentWillReceiveProps(nextProps) {
+      this.setState({notif: nextProps.notif})  
   },
 
   post() {
@@ -1086,12 +1122,13 @@ var Settings = React.createClass({
                 <View style={{flexDirection: 'row', position: 'absolute', marginTop: 10}}>
                   <AutoComplete
                     autoCorrect={false}
+                    clearTextOnFocus={true}
                     onSelect={this.onSelect}
                     onTyping={this.onTyping}
                     autoCompleteFontSize={15*height/736}
                     autoCompleteTableBorderWidth={1}
                     autoCompleteRowHeight={height*25/736}
-                    maximumNumberOfAutoCompleteRows={10}
+                    maximumNumberOfAutoCompleteRows={5}
                     autoCompleteTableBackgroundColor='white'
                     style={{alignSelf: 'stretch',
                         marginLeft: 1/56*width,
@@ -1121,12 +1158,13 @@ var Settings = React.createClass({
                 <ListView
                   automaticallyAdjustContentInsets={true}
                   enableEmptySections={true}
-                  dataSource={ds.cloneWithRows(this.state.notif)}
+                  dataSource={ds.cloneWithRows(this.state.notif || [])}
                   style={{marginTop: 50, height: height*3/7}}
                   renderRow={(rowData) => {
                     return (
                       <Notif rowData={rowData}
                         refresh={this.props.refresh}
+                        onRemove={this.props.changeNotif}
                       />
                       )
                     }
@@ -1147,6 +1185,7 @@ var Settings = React.createClass({
                 </View>
                 <View style={{flexDirection: 'row', position: 'absolute', marginTop: 10}}>
                   <AutoComplete
+                    clearTextOnFocus={true}
                     autoCompleteFontSize={15*height/736}
                     autoCompleteTableBorderWidth={1}
                     autoCompleteRowHeight={height*25/736}
@@ -1423,6 +1462,7 @@ var PostView = React.createClass({
       <View style={[styles.containerAuto, {backgroundColor: '#f6f6f6', height: height*141/320}]}>
         <View style={{flexDirection: 'row', position: 'absolute', zIndex: 999}}>
           <AutoComplete
+            clearTextOnFocus={true}
             autoCorrect={false}
             onSelect={this.onSelect}
             onTyping={this.onTyping}
@@ -1560,14 +1600,14 @@ var Map = React.createClass({
     var widthUnit = width / 414;
 
     var pokebutton = (
-      <TouchableOpacity onPress={this.filterpoke} style={{width: 60, justifyContent: 'center', alignItems: 'center', height: height*50/736, width: width*50/414, top: 276*height/736,
+      <TouchableOpacity onPress={this.filterpoke} style={{width: 60, justifyContent: 'center', alignItems: 'center', height: height*50/736, width: width*50/414, top: 275*height/736,
       left: 44, position: 'absolute', backgroundColor: poke, borderWidth: 1}}>
         <Image source={require('./ballbutton.png')} style={{width: width*60/414, height: height*60/736}}/>
       </TouchableOpacity>
     )
 
     var gymbutton = (
-      <TouchableOpacity onPress={this.filtergym} style={{width: 60, justifyContent: 'center', alignItems: 'center', height: height*50/736, width: width*50/414, top: 276*height/736,
+      <TouchableOpacity onPress={this.filtergym} style={{width: 60, justifyContent: 'center', alignItems: 'center', height: height*50/736, width: width*50/414, top: 275*height/736,
       left: 89, position: 'absolute', backgroundColor: gym, borderWidth: 1}}>
         <Image source={require('./gymbutton.png')} style={{width: width*35/414, height: height*35/736}}/>
       </TouchableOpacity>
@@ -1586,7 +1626,7 @@ var Map = React.createClass({
     )
 
     var pokepostbutton = (
-      <TouchableOpacity onPress={this.props.scrollBy2.bind(null, 0)} style={[{height: height*50/736, width: width*100/414, borderWidth: 1, justifyContent: 'center', alignItems: 'center'}, styles.post]}>
+      <TouchableOpacity onPress={this.props.scrollBy2.bind(null, 0)} style={[{height: height*50/736, width: width*125/414, borderWidth: 1, justifyContent: 'center', alignItems: 'center'}, styles.post]}>
         <View style={{alignItems: 'center'}}>
           <Text style={{color: 'black'}}>Pokémon</Text>
           <Text style={{color: 'black'}}>Post</Text>
@@ -1594,7 +1634,7 @@ var Map = React.createClass({
       </TouchableOpacity>
     )
     var gympostbutton = (
-      <TouchableHighlight onPress={this.props.scrollBy2.bind(null,2)} style={[{height: height*50/736, width: width*100/414, borderWidth: 1, justifyContent: 'center', alignItems: 'center'}, styles.post]}>
+      <TouchableHighlight onPress={this.props.scrollBy2.bind(null,2)} style={[{height: height*50/736, width: width*125/414, borderWidth: 1, justifyContent: 'center', alignItems: 'center'}, styles.post]}>
         <View style={{alignItems: 'center'}}>
           <Text style={{color: 'black'}}>Gym</Text>
           <Text style={{color: 'black'}}>Request</Text>
@@ -1671,19 +1711,22 @@ var GymView = React.createClass({
   },
   render() {
     return (
-      <View style={[styles.containerAuto, {borderColor: '#d3d3d3', borderTopWidth: 1, flexDirection: 'row', backgroundColor: '#f6f6f6'}]}>
-        <TextInput
-         style={styles.autocomplete}
-         placeholder="Optional Text"
-         maxLength={45}
-         onChangeText={(message) => this.setState({message})} value={this.state.message}
-        />
-        <TouchableOpacity
-        style={[styles.button, styles.buttonRed, {height: 40*height/736, width: 53, justifyContent: 'center', alignItems: 'center'}]}
-        onPress={this.post}
-        >
-          <Text style={styles.buttonLabel}>Post</Text>
-        </TouchableOpacity>
+      <View style={{height: height*141/320}}>
+        <Image source={require('./GYM.png')} style={[{borderColor: '#d3d3d3', position: "absolute", height: height * 0.3, width: width * 0.5, left: 100, top: 60}]} />
+        <View style={{flexDirection: "row"}}>
+          <TextInput
+           style={styles.autocomplete}
+           placeholder="Optional Message"
+           maxLength={45}
+           onChangeText={(message) => this.setState({message})} value={this.state.message}
+          />
+          <TouchableOpacity
+            style={[styles.button, styles.buttonRed, {height: 40*height/736, width: 53, justifyContent: 'center', alignItems: 'center'}]}
+            onPress={this.post}
+            >
+            <Text style={styles.buttonLabel}>Post</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity onPress={this.props.scrollBy2.bind(null, 1)} style={[{height: height*50/736, width: width*100/414, borderWidth: 1, justifyContent: 'center', alignItems: 'center'}, styles.post]}>
           <Text>Back</Text>
         </TouchableOpacity>
@@ -1939,6 +1982,9 @@ var Post = React.createClass({
         }
       }
     }).catch((err) => console.log(err));
+    this.setState({
+      selected:false
+    })
     this.props.popup(!this.state.navigated, this.props.rowData);
     var url = 'http://maps.apple.com/?q=' + this.props.rowData.location.latitude + ',' + this.props.rowData.location.longitude;
     Linking.openURL(url);
@@ -2102,7 +2148,7 @@ const styles = StyleSheet.create({
     marginRight: 1*height/736
   },
   blue: {
-    top: 276*height/736,
+    top: 275*height/736,
     left: -1,
     position: 'absolute',
     borderWidth: 1,
@@ -2110,8 +2156,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   post: {
-    top: 276*height/736,
-    right: 0,
+    top: 275*height/736,
+    right: -1,
     position: 'absolute'
   },
   absoluteb: {
