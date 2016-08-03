@@ -36,6 +36,8 @@
 		49E598A61D5191F4001D01EA /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49E598A51D5191F4001D01EA /* StoreKit.framework */; };
 		49E598A81D5191FF001D01EA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49E598A71D5191FF001D01EA /* SystemConfiguration.framework */; };
 		49E598AA1D519216001D01EA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 49E598A91D519216001D01EA /* libz.tbd */; };
+		49E598AC1D51B775001D01EA /* InstallManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E598AB1D51B775001D01EA /* InstallManager.m */; };
+		49E598B11D5209BE001D01EA /* ditto_icon_final.png in Resources */ = {isa = PBXBuildFile; fileRef = 49E598B01D5209BE001D01EA /* ditto_icon_final.png */; };
 		5DCE397B1D46961500EE4D1D /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCE39411D468FA700EE4D1D /* libAirMaps.a */; };
 		5DCE397C1D46961800EE4D1D /* libRCTAutoComplete.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCE395A1D46959200EE4D1D /* libRCTAutoComplete.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -206,6 +208,9 @@
 		49E598A51D5191F4001D01EA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		49E598A71D5191FF001D01EA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		49E598A91D519216001D01EA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		49E598AB1D51B775001D01EA /* InstallManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstallManager.m; path = Pokegame/InstallManager.m; sourceTree = "<group>"; };
+		49E598AD1D51B78C001D01EA /* InstallManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InstallManager.h; path = Pokegame/InstallManager.h; sourceTree = "<group>"; };
+		49E598B01D5209BE001D01EA /* ditto_icon_final.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ditto_icon_final.png; path = ../../../Downloads/ditto_icon_final.png; sourceTree = "<group>"; };
 		5DCE393C1D468FA700EE4D1D /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		5DCE39421D468FBA00EE4D1D /* RCTAutoComplete.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAutoComplete.xcodeproj; path = "../node_modules/react-native-autocomplete/RCTAutoComplete.xcodeproj"; sourceTree = "<group>"; };
 		6DF9D69B296D430881A081E9 /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
@@ -340,6 +345,8 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				49E598AD1D51B78C001D01EA /* InstallManager.h */,
+				49E598AB1D51B775001D01EA /* InstallManager.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -445,6 +452,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				49E598B01D5209BE001D01EA /* ditto_icon_final.png */,
 				49E598A91D519216001D01EA /* libz.tbd */,
 				49E598A71D5191FF001D01EA /* SystemConfiguration.framework */,
 				49E598A51D5191F4001D01EA /* StoreKit.framework */,
@@ -760,6 +768,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				49E598B11D5209BE001D01EA /* ditto_icon_final.png in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -797,6 +806,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				49E598AC1D51B775001D01EA /* InstallManager.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

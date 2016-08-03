@@ -57,5 +57,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UILaunchImageFile</key>
+	<string>ditto_icon_final</string>
 </dict>
 </plist>

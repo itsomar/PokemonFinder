@@ -9,9 +9,12 @@
 
 #import "AppDelegate.h"
 
+#import "RCTBridge.h"
 #import "RCTBundleURLProvider.h"
+#import "RCTEventDispatcher.h"
 #import "RCTRootView.h"
 #import "RCTLinkingManager.h"
+#import "InstallManager.h"
 #import <Parse/Parse.h>
 
 @implementation AppDelegate
@@ -35,20 +38,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
-  [Parse initializeWithConfiguration:[ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
-    configuration.applicationId = @"PokeParse";
-    configuration.clientKey = @"dirty";
-    configuration.server = @"http://pokeconnect.herokuapp.com/parse";
-  }]];
-  UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-                                                  UIUserNotificationTypeBadge |
-                                                  UIUserNotificationTypeSound);
-  UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-                                                                           categories:nil];
-  [application registerUserNotificationSettings:settings];
-  [application registerForRemoteNotifications];
-
-  [[RCTBundleURLProvider sharedSettings] setDefaults];
+    [[RCTBundleURLProvider sharedSettings] setDefaults];
 //  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 
@@ -63,13 +53,41 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  [Parse initializeWithConfiguration:[ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
+    configuration.applicationId = @"PokeParse";
+    configuration.clientKey = @"dirty";
+    configuration.server = @"http://pokeconnect.herokuapp.com/parse";
+  }]];
+  UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                  UIUserNotificationTypeBadge |
+                                                  UIUserNotificationTypeSound);
+  UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                           categories:nil];
+  
+
+  
+  [application registerUserNotificationSettings:settings];
+  [application registerForRemoteNotifications];
+  
   return YES;
 }
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   // Store the deviceToken in the current installation and save it to Parse.
   PFInstallation *installation = [PFInstallation currentInstallation];
+  NSString * token = [[[[deviceToken description]
+                                    stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                                   stringByReplacingOccurrencesOfString: @">" withString: @""]
+                                  stringByReplacingOccurrencesOfString: @" " withString: @""];
+  
   [installation setDeviceTokenFromData:deviceToken];
   installation.channels = @[ @"global" ];
+  
+  NSLog(@"Token received here %@", token);
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"InstallNotification"
+                                                      object:self
+                                                    userInfo:@{@"deviceToken": token}];
+  
   [installation saveInBackground];
 }
 
