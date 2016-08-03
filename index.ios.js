@@ -1043,7 +1043,8 @@ var Settings = React.createClass({
       pokemon: "",
       pokemonObj: {},
       data: [],
-      notif: []
+      notif: this.props.notif || [],
+      toggle: true
     }
   },
 
@@ -1114,69 +1115,128 @@ var Settings = React.createClass({
 
   render() {
     console.log("POKEMON LIST", this.state.pokemonList);
+      if (this.state.toggle) {
 
-
-
-
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    return (
-      <View style={{flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', backgroundColor:"#E7E7E7"}}>
-        <View>
-          <View style={{height: 48, flexDirection: 'row', alignItems: 'center', backgroundColor: "#999999"}}>
-            <Text style={{left: 15,fontSize: 30, color: 'white'}}>Settings</Text>
-              <TouchableOpacity onPress={this.props.scrollBy.bind(null, 1)} style={{height: 30, width: 70, borderWidth: 1, borderRadius: 5, borderColor: "white", left: 3*width/6, justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{color: "white"}}>Back</Text>
-              </TouchableOpacity>
-          </View>
-          <View style={{flexDirection: "row"}}>
-            <View style={{alignItems: 'center', backgroundColor: "#F7F7F7"}}>
-              <Text style={{color: "black"}}>Notifications</Text>
-            </View>
-            <View style={{flexDirection: 'row', position: 'absolute', zIndex: 999}}>
-              <AutoComplete
-                autoCorrect={false}
-                onSelect={this.onSelect}
-                onTyping={this.onTyping}
-                autoCompleteFontSize={15*height/736}
-                autoCompleteTableBorderWidth={1}
-                autoCompleteRowHeight={height*25/736}
-                maximumNumberOfAutoCompleteRows={10}
-                autoCompleteTableBackgroundColor='white'
-                style={{alignSelf: 'stretch',
-                    height: 40*height/736,
-                    width: width*3/7,
-                    backgroundColor: '#FFF'}}
-                suggestions={this.state.data}
-                placeholder='Which Pokémon did you find?'
-                value={this.state.pokemon}
-              />
-              <TouchableOpacity
-              style={[styles.button, styles.buttonRed, {height: 40*height/736, width: width/7, justifyContent: 'center'}]}
-              onPress={this.post}
-              >
-                <Text style={styles.buttonLabel}>Post</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+      return (
+        <View style={{flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', backgroundColor:"white"}}>
           <View>
-            <ListView
-              automaticallyAdjustContentInsets={true}
-              enableEmptySections={true}
-              dataSource={ds.cloneWithRows(this.state.notif)}
-              renderRow={(rowData) => {
-                return (
-                  <Notif rowData={rowData}
-                    refresh={this.props.refresh}
-                  />
-                  )
-                }
-              } />
+            <View>
+              <View style={{flexDirection: "row", zIndex: 9}}>
+              <View style={{alignItems: 'center', backgroundColor: "#F7F7F7"}}>
+              </View>
+              <View style={{flexDirection: 'row', position: 'absolute', marginTop: 10}}>
+                <AutoComplete
+                  autoCorrect={false}
+                  onSelect={this.onSelect}
+                  onTyping={this.onTyping}
+                  autoCompleteFontSize={15*height/736}
+                  autoCompleteTableBorderWidth={1}
+                  autoCompleteRowHeight={height*25/736}
+                  maximumNumberOfAutoCompleteRows={10}
+                  autoCompleteTableBackgroundColor='white'
+                  style={{alignSelf: 'stretch',
+                      marginLeft: 1/56*width,
+                      height: 35*height/736,
+                      width: width*35/56,
+                      backgroundColor: '#f3f3f3'}}
+                  suggestions={this.state.data}
+                  placeholder='Notify me about...'
+                  value={this.state.pokemon}
+                />
+                <TouchableOpacity
+                style={[styles.button, styles.buttonRed, {marginRight: width*1.5/56, height: 35*height/736, width: 10*width/56, justifyContent: 'center'}]}
+                onPress={this.post}
+                >
+                  <Text style={styles.buttonLabel}>Add</Text>
+                </TouchableOpacity>
+
+
+                      <View>
+                        <Switch
+                          onValueChange={(value) => this.setState({toggle: false})}
+                          style={{marginBottom: 10}}
+                          value={this.state.toggle} 
+                          />
+                      </View>
+
+              </View>
+              </View>
+              <View>
+                <ListView
+
+                  automaticallyAdjustContentInsets={true}
+                  enableEmptySections={true}
+                  dataSource={ds.cloneWithRows(this.state.notif)}
+                  style={{marginTop: 50, height: height*3/7}}
+                  renderRow={(rowData) => {
+                    return (
+                      <Notif rowData={rowData}
+                        refresh={this.props.refresh}
+                      />
+                      )
+                    }
+                  } />
+              </View>
+            </View>
           </View>
         </View>
-      </View>
-    )
-  }
+       
+      )
+    }
 
+    else{
+      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+      return (
+        <View style={{flex: 1, borderTopWidth: 1, borderColor: '#d3d3d3', backgroundColor:"#999999"}}>
+          <View>
+
+            <View>
+              <View style={{flexDirection: "row", zIndex: 9}}>
+              <View style={{alignItems: 'center', backgroundColor: "#F7F7F7"}}>
+              </View>
+              <View style={{flexDirection: 'row', position: 'absolute', marginTop: 10}}>
+                <AutoComplete
+                  autoCompleteFontSize={15*height/736}
+                  autoCompleteTableBorderWidth={1}
+                  autoCompleteRowHeight={height*25/736}
+                  maximumNumberOfAutoCompleteRows={10}
+                  autoCompleteTableBackgroundColor='white'
+                  style={{alignSelf: 'stretch',
+                      marginLeft: 1/56*width,
+                      height: 35*height/736,
+                      width: width*35/56,
+                      backgroundColor: '#f3f3f3'}}
+                  placeholder='Notifications Off'
+                />
+                <TouchableOpacity
+                style={[styles.button, styles.buttonRed, {marginRight: width*1.5/56, height: 35*height/736, width: 10*width/56, justifyContent: 'center'}]}
+                >
+                  <Text style={styles.buttonLabel}>Add</Text>
+                </TouchableOpacity>
+
+
+                      <View>
+                        <Switch
+                          onValueChange={(value) => this.setState({toggle: true})}
+                          style={{marginBottom: 10}}
+                          value={this.state.toggle} 
+                          />
+                      </View>
+
+              </View>
+              </View>
+              <View>
+                 <Image source={require('./ditto_notifications.png')} style={{width: 1.3*width*.5, height: 1.3*width*.46, marginTop: 70, marginLeft: width*5/28}} />
+
+              </View>
+            </View>
+          </View>
+        </View>
+        )
+      
+    }
+  }
 })
 
 var PostView = React.createClass({

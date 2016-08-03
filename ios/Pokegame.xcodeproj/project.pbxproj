@@ -92,11 +92,7 @@
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
 		};
-<<<<<<< HEAD
-		287DA63D1D5074AA006A720B /* PBXContainerItemProxy */ = {
-=======
 		49E598671D5073F4001D01EA /* PBXContainerItemProxy */ = {
->>>>>>> origin/master
 			isa = PBXContainerItemProxy;
 			containerPortal = 6DF9D69B296D430881A081E9 /* RNBlur.xcodeproj */;
 			proxyType = 2;
@@ -304,17 +300,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
-		287DA62C1D5074A9006A720B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				287DA63E1D5074AA006A720B /* libRNBlur.a */,
-=======
 		49E598561D5073F3001D01EA /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				49E598681D5073F4001D01EA /* libRNBlur.a */,
->>>>>>> origin/master
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -536,11 +525,7 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-<<<<<<< HEAD
-					ProductGroup = 287DA62C1D5074A9006A720B /* Products */;
-=======
 					ProductGroup = 49E598561D5073F3001D01EA /* Products */;
->>>>>>> origin/master
 					ProjectRef = 6DF9D69B296D430881A081E9 /* RNBlur.xcodeproj */;
 				},
 			);
@@ -609,19 +594,11 @@
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-<<<<<<< HEAD
-		287DA63E1D5074AA006A720B /* libRNBlur.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNBlur.a;
-			remoteRef = 287DA63D1D5074AA006A720B /* PBXContainerItemProxy */;
-=======
 		49E598681D5073F4001D01EA /* libRNBlur.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNBlur.a;
 			remoteRef = 49E598671D5073F4001D01EA /* PBXContainerItemProxy */;
->>>>>>> origin/master
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5DCE39411D468FA700EE4D1D /* libAirMaps.a */ = {
@@ -811,11 +788,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-<<<<<<< HEAD
-				PRODUCT_BUNDLE_IDENTIFIER = com.pokegame.stevenbuild;
-=======
 				PRODUCT_BUNDLE_IDENTIFIER = com.pokegame.omarbuild;
->>>>>>> origin/master
 				PRODUCT_NAME = Pokegame;
 				PROVISIONING_PROFILE = "";
 			};
@@ -843,11 +816,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-<<<<<<< HEAD
-				PRODUCT_BUNDLE_IDENTIFIER = com.pokegame.stevenbuild;
-=======
 				PRODUCT_BUNDLE_IDENTIFIER = com.pokegame.omarbuild;
->>>>>>> origin/master
 				PRODUCT_NAME = Pokegame;
 				PROVISIONING_PROFILE = "";
 			};
